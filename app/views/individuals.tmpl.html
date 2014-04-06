@@ -1,0 +1,18 @@
+<h1>Tournament participants</h1>
+
+<form ng-init="firstName = null; lastName = null;" ng-submit="add(firstName, lastName); firstName = null; lastName = null;">
+
+	<fieldset>
+		<legend>Add</legend>
+		<input type="text" placeholder="First Name" ng-model="firstName" />
+		<input type="text" placeholder="Last Name" ng-model="lastName" />
+		<button type="submit">Add</button>
+	</fieldset>
+
+</form>
+
+<div ng-repeat="p in people()">
+	{{$index + 1}}.
+	<strong>{{p.lastName}}</strong>
+	<small><i>{{p.firstName}}</i></small>
+</div>
