@@ -30,8 +30,14 @@
 <div class="panel panel-default">
     <div class="panel-heading">Teams</div>
     <div class="panel-body">
-        <div class="well well-sm pull-left" style="margin: 2px;" ng-repeat="t in teams()">
-            <div>{{$index + 1}}. <strong>{{t.name}}</strong></div>
+        <div class="well well-sm pull-left" style="margin: 2px;" ng-repeat="t in teams()" ng-init="editTitle = false;">
+            <div ng-click="editTitle = true;" ng-hide="editTitle">{{$index + 1}}. <strong>{{t.name}}</strong></div>
+            <div class="input-group input-group-sm" ng-show="editTitle">
+                <input type="text" class="form-control" ng-model="t.name" />
+                <span class="input-group-btn">
+                    <button class="btn btn-default" type="button" ng-click="editTitle = false;">OK</button>
+                </span>
+            </div>
             <div>
                 <ul>
                     <li ng-repeat="i in t.individuals()"><small>{{i.fullName}}</small></li>
