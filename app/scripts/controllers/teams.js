@@ -1,4 +1,4 @@
-(function(angular, Individual, sks, undefined){
+(function(angular, Individual, Team, sks, undefined){
 
 	'use strict';
 
@@ -23,10 +23,19 @@
 		    teams = new sks.RandomPartiesGenerator(individuals).partiesOf(memberCount);
 		}
 
+		function generateEmptyTeamsOf(memberCount) {
+		    var teamCount = Math.ceil(individuals.length / memberCount);
+		    teams = [];
+		    for (var i = 1; i <= teamCount; i++) {
+		        teams.push(new Team("Team " + i));
+		    }
+		}
+
 		$scope.people = function () { return individuals; };
 		$scope.teams = function () { return teams; };
-		$scope.randomize = generateRandomTeamsOf;
+		$scope.randomOf = generateRandomTeamsOf;
+		$scope.emptyOf = generateEmptyTeamsOf;
 
 	}]);
 
-}).call(this, this.angular, this.H.ScoreKeeper.Individual, this.H.ScoreKeeper.Sattelites);
+}).call(this, this.angular, this.H.ScoreKeeper.Individual, this.H.ScoreKeeper.Party, this.H.ScoreKeeper.Sattelites);
