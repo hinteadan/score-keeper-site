@@ -27,7 +27,7 @@
 		    var teamCount = Math.ceil(individuals.length / memberCount);
 		    teams = [];
 		    for (var i = 1; i <= teamCount; i++) {
-		        teams.push(new Team("Team " + i));
+		        teams.push(new Team('Team ' + i));
 		    }
 		}
 
