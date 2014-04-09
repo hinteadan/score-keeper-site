@@ -3,7 +3,7 @@
 <div class="panel panel-default">
     <div class="panel-heading">People pool</div>
     <div class="panel-body">
-        <div class="well well-sm pull-left" style="margin: 2px;" ng-repeat="p in people()">{{$index + 1}}. {{p.fullName}}</div>
+        <div class="well well-sm pull-left" style="margin: 2px;" ng-repeat="p in people()">{{$index + 1}}. {{p.fullName()}}</div>
     </div>
 </div>
 
@@ -40,7 +40,7 @@
             </div>
             <div>
                 <ul>
-                    <li ng-repeat="i in t.individuals()"><small>{{i.fullName}}</small></li>
+                    <li ng-repeat="i in t.individuals()"><small>{{i.fullName()}}</small></li>
                 </ul>
             </div>
         </div>
