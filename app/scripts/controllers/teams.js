@@ -53,10 +53,29 @@
 			_.each(individuals, extendIndividualWithViewData);
 		}
 
+		function removeIndividualFromTeam(individual){
+			if(!individual.viewData.team){
+				return;
+			}
+			individual.viewData.team.zapMember(individual);
+			individual.viewData.team = null;
+		}
+
+		function addIndividualToTeam(individual, team){
+			if(individual.viewData.team === team){
+				return;
+			}
+			removeIndividualFromTeam(individual);
+			team.addMember(individual);
+			individual.viewData.team = team;
+		}
+
 		$scope.people = function () { return individuals; };
 		$scope.teams = function () { return teams; };
 		$scope.randomOf = generateRandomTeamsOf;
 		$scope.emptyOf = generateEmptyTeamsOf;
+		$scope.unteam = removeIndividualFromTeam;
+		$scope.team = addIndividualToTeam;
 		initialize();
 	}]);
 

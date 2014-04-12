@@ -78,6 +78,10 @@ body {
   }
 }
 
+.clickable {
+  cursor: pointer;
+}
+
 .engaged {
   opacity: 0.35;
 }
