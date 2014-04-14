@@ -66,6 +66,12 @@
             ///<returns type='StepThree' />
             return new StepThree(teams);
         };
+        this.toJson = function () {
+            return {
+                individuals: individuals,
+                teams: teams
+            };
+        };
     }
 
     function StepOne() {
@@ -97,13 +103,23 @@
             ///<returns type='StepTwo' />
             return new StepTwo(participants);
         };
+        this.toJson = function () {
+            return {
+                participants: participants
+            };
+        };
     }
-
-    function TournamentWizard() {
-        return new StepOne();
-    }
+    StepOne.fromJson = function (dto) {
+        return new StepOne()
+            .addParticipants(_.map(dto.participants, function (p) {
+                return new sk.Individual(p.firstName, p.lastName);
+            }));
+    };
 
     this.Wizard = this.Wizard || {};
-    this.Wizard.Tournament = TournamentWizard;
+    this.Wizard.Tournament = this.Wizard.Tournament || {};
+    this.Wizard.Tournament.StepOne = StepOne;
+    this.Wizard.Tournament.StepTwo = StepTwo;
+    this.Wizard.Tournament.StepThree = StepThree;
 
 }).call(this, this._, this.H.ScoreKeeper);
