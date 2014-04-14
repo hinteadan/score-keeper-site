@@ -40,7 +40,7 @@
         function checkAllPartyMembersAreSubscribed(party) {
             /// <param name='party' type='H.ScoreKeeper.Party' />
             if (_.any(party.individuals(), function (i) { return !_.contains(individuals, i); })) {
-                throw new Error('Team ' + party.name + ' has unsubscripted member(s).')
+                throw new Error('Team ' + party.name + ' has unsubscripted member(s).');
             }
         }
 
