@@ -69,10 +69,28 @@
         this.toJson = function () {
             return {
                 individuals: individuals,
-                teams: teams
+                teams: _.map(teams, function (t) {
+                    /// <param name='t' type='H.ScoreKeeper.Party' />
+                    return {
+                        name: t.name,
+                        individuals: _.map(t.individuals(), function (p) {
+                            /// <param name='p' type='H.ScoreKeeper.Individual' />
+                            return p.id();
+                        })
+                    };
+                })
             };
         };
     }
+    StepTwo.fromJson = function (dto) {
+        var individuals = _.map(dto.individuals, function (p) { return new sk.Individual(p.firstName, p.lastName); });
+        return new StepTwo(individuals)
+            .teams(_.map(dto.teams, function (t) {
+                return new sk.Party(t.name).addMembers(_.map(t.individuals, function (pId) {
+                    return _.find(individuals, function (p) { return p.id() === pId; });
+                }));
+            }));
+    };
 
     function StepOne() {
 
