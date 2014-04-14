@@ -26,7 +26,26 @@
             return this;
         };
         this.finish = constructTournament;
+        this.toJson = function () {
+            return {
+                name: name,
+                teams: _.map(teams, function (t) {
+                    /// <param name='t' type='H.ScoreKeeper.Party' />
+                    return {
+                        name: t.name,
+                        individuals: t.individuals()
+                    };
+                })
+            };
+        };
     }
+    StepThree.fromJson = function (dto) {
+        return new StepThree(_.map(dto.teams, function (t) {
+            return new sk.Party(t.name).addMembers(_.map(t.individuals, function (p) {
+                return new sk.Individual(p.firstName, p.lastName);
+            }));
+        })).tournamentName(dto.name);
+    };
 
     function StepTwo(individuals) {
         ///<param name='individuals' type='Array' elementType='H.ScoreKeeper.Individual' />
