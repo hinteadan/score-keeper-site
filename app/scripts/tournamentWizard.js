@@ -27,7 +27,7 @@
         };
         this.finish = constructTournament;
 
-        this.isLast = function () { return false; };
+        this.isLast = function () { return true; };
         this.toJson = function () {
             return {
                 name: name,
@@ -165,7 +165,7 @@
     this.Wizard.Tournament.StepTwo = StepTwo;
     this.Wizard.Tournament.StepThree = StepThree;
 
-    this.TournamentWizardService = new function () {
+    function TournamentWizardService() {
         var currentStep = new StepOne();
         
         this.currentStep = function () { return currentStep; };
@@ -183,6 +183,7 @@
             }
             return currentStep.finish();
         };
-    };
+    }
+    this.TournamentWizardService = new TournamentWizardService();
 
 }).call(this, this._, this.H.ScoreKeeper, this.console);
