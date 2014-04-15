@@ -69,6 +69,10 @@
 	    $scope.emptyOf = generateEmptyTeamsOf;
 	    $scope.unteam = removeIndividualFromTeam;
 	    $scope.team = addIndividualToTeam;
+	    $scope.next = function () {
+	    	wizard.next();
+	    	$location.path('/step3');
+	    };
 	    initialize();
 	}]);
 

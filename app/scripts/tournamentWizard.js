@@ -22,9 +22,13 @@
 		}
 
 		this.tournamentName = function (tournamentName) {
+			if(!tournamentName){
+				return name;
+			}
 			name = tournamentName;
 			return this;
 		};
+		this.tournament = constructTournament;
 		this.finish = constructTournament;
 
 		this.isLast = function () { return true; };
