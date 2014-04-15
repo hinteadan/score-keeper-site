@@ -1,82 +1,75 @@
-(function(angular, Individual, Team, sks, _, undefined){
+(function (angular, Individual, Team, sks, _, wizard, undefined) {
 
-	'use strict';
+    'use strict';
 
-	function IndividualViewData(){
-		this.team = null;
-	}
+    function IndividualViewData() {
+        this.team = null;
+    }
 
-	angular.module('scoreKeeperSiteApp')
-	.controller('TeamsCtrl', ['$scope', function ($scope) {
+    angular.module('scoreKeeperSiteApp')
+	.controller('TeamsCtrl', ['$scope', '$location', function ($scope, $location) {
 
-		var individuals = [
-			    new Individual('Dan', 'Hintea'),
-			    new Individual('Roger', 'Federer'),
-			    new Individual('Rafael', 'Nadal'),
-			    new Individual('Stanislas', 'Wawrinka'),
-			    new Individual('Novak', 'Djokovic'),
-			    new Individual('Eugenie', 'Bouchard'),
-			    new Individual('Caroline', 'Wozniaki'),
-			    new Individual('Maria', 'Sharapova'),
-			    new Individual('Serena', 'Williams'),
-			    new Individual('Andy', 'Murray')
-		    ],
-	        teams = [];
-
-        function resetIndividualsAssignedTeam(){
-        	_.each(individuals, function(i){ i.viewData.team = null; });
-        }
-
-		function generateRandomTeamsOf(memberCount) {
-		    teams = new sks.RandomPartiesGenerator(individuals).partiesOf(memberCount);
-		    _.each(teams, function(t){
-	    		_.each(t.individuals(), function(i){
-	    			i.viewData.team = t;
-	    		});
-		    });
+		if (wizard.isAtStart()) {
+			$location.path('/');
 		}
 
-		function generateEmptyTeamsOf(memberCount) {
-		    var teamCount = Math.ceil(individuals.length / memberCount);
-		    teams = [];
-		    for (var i = 1; i <= teamCount; i++) {
-		        teams.push(new Team('Team ' + i));
-		    }
-		    resetIndividualsAssignedTeam();
-		}
+	    var individuals = wizard.currentStep().participants(),
+			teams = wizard.currentStep().teams;
 
-		function extendIndividualWithViewData(individual){
-			individual.viewData = new IndividualViewData();
-		}
+	    function resetIndividualsAssignedTeam() {
+	        _.each(individuals, function (i) { i.viewData.team = null; });
+	    }
 
-		function initialize(){
-			_.each(individuals, extendIndividualWithViewData);
-		}
+	    function generateRandomTeamsOf(memberCount) {
+	    	wizard.currentStep().clear().teams(new sks.RandomPartiesGenerator(individuals).partiesOf(memberCount));
+	        _.each(teams(), function (t) {
+	            _.each(t.individuals(), function (i) {
+	                i.viewData.team = t;
+	            });
+	        });
+	    }
 
-		function removeIndividualFromTeam(individual){
-			if(!individual.viewData.team){
-				return;
-			}
-			individual.viewData.team.zapMember(individual);
-			individual.viewData.team = null;
-		}
+	    function generateEmptyTeamsOf(memberCount) {
+	        var teamCount = Math.ceil(individuals.length / memberCount);
+	        wizard.currentStep().clear();
+	        for (var i = 1; i <= teamCount; i++) {
+	            teams().push(new Team('Team ' + i));
+	        }
+	        resetIndividualsAssignedTeam();
+	    }
 
-		function addIndividualToTeam(individual, team){
-			if(individual.viewData.team === team){
-				return;
-			}
-			removeIndividualFromTeam(individual);
-			team.addMember(individual);
-			individual.viewData.team = team;
-		}
+	    function extendIndividualWithViewData(individual) {
+	        individual.viewData = new IndividualViewData();
+	    }
 
-		$scope.people = function () { return individuals; };
-		$scope.teams = function () { return teams; };
-		$scope.randomOf = generateRandomTeamsOf;
-		$scope.emptyOf = generateEmptyTeamsOf;
-		$scope.unteam = removeIndividualFromTeam;
-		$scope.team = addIndividualToTeam;
-		initialize();
+	    function initialize() {
+	        _.each(individuals, extendIndividualWithViewData);
+	    }
+
+	    function removeIndividualFromTeam(individual) {
+	        if (!individual.viewData.team) {
+	            return;
+	        }
+	        individual.viewData.team.zapMember(individual);
+	        individual.viewData.team = null;
+	    }
+
+	    function addIndividualToTeam(individual, team) {
+	        if (individual.viewData.team === team) {
+	            return;
+	        }
+	        removeIndividualFromTeam(individual);
+	        team.addMember(individual);
+	        individual.viewData.team = team;
+	    }
+
+	    $scope.people = function () { return individuals; };
+	    $scope.teams = teams;
+	    $scope.randomOf = generateRandomTeamsOf;
+	    $scope.emptyOf = generateEmptyTeamsOf;
+	    $scope.unteam = removeIndividualFromTeam;
+	    $scope.team = addIndividualToTeam;
+	    initialize();
 	}]);
 
-}).call(this, this.angular, this.H.ScoreKeeper.Individual, this.H.ScoreKeeper.Party, this.H.ScoreKeeper.Sattelites, this._);
+}).call(this, this.angular, this.H.ScoreKeeper.Individual, this.H.ScoreKeeper.Party, this.H.ScoreKeeper.Sattelites, this._, this.TournamentWizardService);

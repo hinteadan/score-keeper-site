@@ -1,22 +1,11 @@
-(function(angular, Individual, undefined){
+(function(angular, Individual, wizard, undefined){
 
 	'use strict';
 
 	angular.module('scoreKeeperSiteApp')
-	.controller('IndividualsCtrl', ['$scope', function ($scope) {
+	.controller('IndividualsCtrl', ['$scope', '$location', function ($scope, $location) {
 
-		var individuals = [
-			new Individual('Dan', 'Hintea'),
-			new Individual('Roger', 'Federer'),
-			new Individual('Rafael', 'Nadal'),
-			new Individual('Stanislas', 'Wawrinka'),
-			new Individual('Novak', 'Djokovic'),
-			new Individual('Eugenie', 'Bouchard'),
-			new Individual('Caroline', 'Wozniaki'),
-			new Individual('Maria', 'Sharapova'),
-			new Individual('Serena', 'Williams'),
-			new Individual('Andy', 'Murray')
-			];
+	    var individuals = wizard.currentStep().participants();
 
 		function addIndividualNamed(firstName, lastName){
 			if(!lastName){
@@ -36,7 +25,11 @@
 		$scope.people = function(){ return individuals; };
 		$scope.add = addIndividualNamed;
 		$scope.remove = removeIndividual;
+		$scope.next = function () {
+		    wizard.next();
+		    $location.path('/step2');
+		};
 
 	}]);
 
-}).call(this, this.angular, this.H.ScoreKeeper.Individual);
+}).call(this, this.angular, this.H.ScoreKeeper.Individual, this.TournamentWizardService);
