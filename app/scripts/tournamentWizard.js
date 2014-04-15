@@ -1,4 +1,4 @@
-﻿(function (_, sk, undefined) {
+﻿(function (_, sk, console, undefined) {
     'use strict';
 
     function Tournament(championship) {
@@ -26,6 +26,8 @@
             return this;
         };
         this.finish = constructTournament;
+
+        this.isLast = function () { return false; };
         this.toJson = function () {
             return {
                 name: name,
@@ -81,6 +83,8 @@
             _.each(parties, addTeam);
             return this;
         };
+
+        this.isLast = function () { return false; };
         this.next = function () {
             ///<returns type='StepThree' />
             return new StepThree(teams);
@@ -136,6 +140,8 @@
             _.each(individuals, addParticipant);
             return this;
         };
+
+        this.isLast = function () { return false; };
         this.next = function () {
             ///<returns type='StepTwo' />
             return new StepTwo(participants);
@@ -159,4 +165,24 @@
     this.Wizard.Tournament.StepTwo = StepTwo;
     this.Wizard.Tournament.StepThree = StepThree;
 
-}).call(this, this._, this.H.ScoreKeeper);
+    this.TournamentWizardService = new function () {
+        var currentStep = new StepOne();
+        
+        this.currentStep = function () { return currentStep; };
+        this.next = function () {
+            if (currentStep.isLast()) {
+                console.warn('This is the last step, you should call finish() not next()!');
+                return;
+            }
+            currentStep = currentStep.next();
+        };
+        this.finish = function () {
+            if (!currentStep.isLast()) {
+                console.warn('This is not the last step, you should call next() not finish()!');
+                return null;
+            }
+            return currentStep.finish();
+        };
+    };
+
+}).call(this, this._, this.H.ScoreKeeper, this.console);
