@@ -2,3 +2,4 @@
 /// <reference path="app/bower_components/lodash/dist/lodash.js" />
 /// <reference path="app/bower_components/jquery.gracket/jquery.gracket.js" />
 /// <reference path="app/scripts/tournamentWizard.js" />
+/// <reference path="app/bower_components/angular/angular.js" />
