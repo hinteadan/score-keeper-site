@@ -10,7 +10,8 @@
     "h.scoreKeeper": "https://github.com/hinteadan/h.scoreKeeper.git",
     "jquery.gracket": "https://github.com/erik5388/jquery.gracket.js.git",
     "bootstrap": "~3.1.1",
-    "lodash": "~2.4.1"
+    "lodash": "~2.4.1",
+	"h.dataStore": "https://github.com/hinteadan/h.dataStore.client.js.git"
   },
   "devDependencies": {
     "angular-mocks": "1.2.15",
