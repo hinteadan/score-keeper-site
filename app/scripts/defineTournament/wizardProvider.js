@@ -1,4 +1,4 @@
-﻿(function (angular, ds) {
+﻿(function (angular) {
     'use strict';
 
 
@@ -14,6 +14,6 @@
 
             };
         }];
-    }])
+    }]);
 
-}).call(this, this.angular, this.H.DataStore);
+}).call(this, this.angular);
