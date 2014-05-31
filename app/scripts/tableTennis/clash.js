@@ -6,6 +6,9 @@
 		this.firstToServe = firstToServe;
 		this.firstToReceive = firstToReceive;
 		this.serveChangeAfter = 5;
+		this.isValid = function () {
+			return this.firstToServe && this.firstToReceive;
+		};
 	}
 
 	angular.module('ScoreKeeper.TableTennis')
