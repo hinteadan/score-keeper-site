@@ -1,15 +1,24 @@
 <div>
 	<h1>Clash parties</h1>
 	<ol>
-		<li>
-			<input class="form-control" type="text" placeholder="Team name goes here" />
+		<li ng-repeat="party in parties">
+			<input class="form-control" type="text" ng-model="party.name" placeholder="Team name goes here" />
 			<ol>
-				<li>
-					<input class="form-control" type="text" placeholder="Member name" />
-					<button>Remove member</button>
+				<li ng-repeat="member in party.individuals()">
+					{{member.fullName()}}
+					<button ng-click="party.zapMember(member)">Remove member</button>
 				</li>
 			</ol>
-			<button>Add member</button>
+			<div ng-init="isAdding = false; firstName = null; lastName = null;">
+				<div ng-hide="isAdding">
+					<button ng-click="isAdding = true; firstName = null; lastName = null;">Add member</button>
+				</div>
+				<div ng-show="isAdding">
+					<input type="text" ng-model="firstName" placeholder="First name" />
+					<input type="text" ng-model="lastName" placeholder="Last name" />
+					<button ng-click="add.member(firstName, lastName).to(party); isAdding = false;">Add</button>
+				</div>
+			</div>
 		</li>
 	</ol>
 	<button>Next, define clash</button>
