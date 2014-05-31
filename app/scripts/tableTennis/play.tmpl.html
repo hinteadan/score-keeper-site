@@ -6,35 +6,28 @@
 		<div>
 			<h3>{{clash.pointsFor(party).length || 0}}</h3>
 		</div>
-		<button ng-click="clash.pointFor(party)">+1</button>
-		<button>+1 as winner shot</button>
-		<button>+1 as forced on opponent</button>
-		<button>+1 as unforced error made by opponent</button>
-		<br />
-		Shot type:
-		<ul>
-			<li>
-				<label>
-					<input type="radio" name="shotStyle" />
-					Topspin
-				</label>
-			</li>
-			<li>
-				<label>
-					<input type="radio" name="shotStyle" checked="checked" />
-					Flat
-				</label>
-			</li>
-			<li>
-				<label>
-					<input type="radio" name="shotStyle" />
-					Slice
-				</label>
-			</li>
-		</ul>
+		<fieldset>
+			<legend>Score point</legend>
+			<div ng-hide="party.individuals.length == 1">
+				Credit to: 
+				<button ng-repeat="member in party.individuals" ng-disabled="pointDetails.current.creditTo == member" ng-click="pointDetails.current.creditTo = member">{{member.fullName()}}</button>
+			</div>
+			<div>
+				<button ng-repeat="reason in pointDetails.reasons" ng-disabled="pointDetails.current.reason == reason" ng-click="pointDetails.current.reason = reason">{{reason|pointLabel}}</button>
+			</div>
+			<div>
+				<button ng-repeat="handle in pointDetails.handles" ng-disabled="pointDetails.current.handle == handle" ng-click="pointDetails.current.handle = handle">{{handle|pointLabel}}</button>
+			</div>
+			<div>
+				<button ng-repeat="spin in pointDetails.spins" ng-disabled="pointDetails.current.spin == spin" ng-click="pointDetails.current.spin = spin">{{spin|pointLabel}}</button>
+			</div>
+		</fieldset>
+		<button style="width: 100%; height: 30px;" ng-click="pointFor(party)">+1</button>
 	</div>
 
 	<button ng-click="clash.undoPoint()">Undo last point</button>
 	<button>Commit clash</button>
+
+	<pre>{{clash|json:true}}</pre>
 
 </div>

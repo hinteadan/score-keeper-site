@@ -4,9 +4,9 @@
 	var pointReason = {
 			winningShot: 'WinningShot',
 			forcedErrorOnOpponent: 'ForcedErrorOnOpponent',
-			unforcedErrorOnOpponent: 'UnforcedErrorOnOpponent'
+			unforcedErrorByOpponent: 'UnforcedErrorByOpponent'
 		},
-		spin = {
+		shotSpin = {
 			topspin: 'Topspin',
 			flat: 'Flat',
 			slice: 'Slice'
@@ -17,12 +17,13 @@
 		};
 
 	function PointDetails(reason, spin, handle) {
+		this.creditTo = null;
 		this.reason = reason || pointReason.winningShot;
-		this.spin = spin || spin.flat;
+		this.spin = spin || shotSpin.flat;
 		this.handle = handle || handling.forehand;
 	}
 	PointDetails.reason = pointReason;
-	PointDetails.spin = spin;
+	PointDetails.spin = shotSpin;
 	PointDetails.handle = handling;
 
 	angular.module('ScoreKeeper.TableTennis').value('PointDetails', PointDetails);
