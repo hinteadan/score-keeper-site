@@ -4,7 +4,7 @@
 		<li ng-repeat="party in parties">
 			<input class="form-control" type="text" ng-model="party.name" placeholder="Team name goes here" />
 			<ol>
-				<li ng-repeat="member in party.individuals()">
+				<li ng-repeat="member in party.individuals">
 					{{member.fullName()}}
 					<button ng-click="party.zapMember(member)">Remove member</button>
 				</li>
@@ -21,5 +21,5 @@
 			</div>
 		</li>
 	</ol>
-	<button>Next, define clash</button>
+	<button ng-click="next()">Next, define clash</button>
 </div>

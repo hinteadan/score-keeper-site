@@ -2,7 +2,7 @@
 	'use strict';
 
 	angular.module('ScoreKeeper.TableTennis')
-		.controller('defineParties', ['$scope', 'Clash', function ($scope, clash) {
+		.controller('defineParties', ['$scope', '$location', 'Clash', function ($scope, $location, clash) {
 			$scope.parties = clash.parties;
 			$scope.add = {
 				member: function (firstName, lastName) {
@@ -13,6 +13,9 @@
 						}
 					};
 				}
+			};
+			$scope.next = function () {
+				$location.path('/clash');
 			};
 
 		}]);
