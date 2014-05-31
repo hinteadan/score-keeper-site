@@ -1,12 +1,12 @@
 ﻿<div>
 	<h1>Playing clash</h1>
 
-	<div style="width: 50%; float: left;">
-		<h2>Team 1</h2>
+	<div style="width: 50%; float: left;" ng-repeat="party in clash.parties">
+		<h2>{{party.name}}</h2>
 		<div>
-			<h3>6</h3>
+			<h3>{{clash.pointsFor(party).length || 0}}</h3>
 		</div>
-		<button>+1</button>
+		<button ng-click="clash.pointFor(party)">+1</button>
 		<button>+1 as winner shot</button>
 		<button>+1 as forced on opponent</button>
 		<button>+1 as unforced error made by opponent</button>
@@ -34,40 +34,7 @@
 		</ul>
 	</div>
 
-	<div style="width: 50%; float: right;">
-		<h2>Team 2</h2>
-		<div>
-			<h3>11</h3>
-		</div>
-		<button>+1</button>
-		<button>+1 as winner shot</button>
-		<button>+1 as forced on opponent</button>
-		<button>+1 as unforced error made by opponent</button>
-		<br />
-		Shot type:
-		<ul>
-			<li>
-				<label>
-					<input type="radio" name="shotStyle" />
-					Topspin
-				</label>
-			</li>
-			<li>
-				<label>
-					<input type="radio" name="shotStyle" checked="checked" />
-					Flat
-				</label>
-			</li>
-			<li>
-				<label>
-					<input type="radio" name="shotStyle" />
-					Slice
-				</label>
-			</li>
-		</ul>
-	</div>
-
-	<button>Undo last point</button>
+	<button ng-click="clash.undoPoint()">Undo last point</button>
 	<button>Commit clash</button>
 
 </div>
