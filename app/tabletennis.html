@@ -1,0 +1,28 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" ng-app="ScoreKeeper.TableTennis">
+<head>
+	<title>Table Tennis Clash</title>
+</head>
+<body>
+	<div ng-view></div>
+
+	<!-- build:js scripts/vendor.js -->
+	<!-- bower:js -->
+	<script src="bower_components/jquery/dist/jquery.js"></script>
+	<script src="bower_components/angular/angular.js"></script>
+	<script src="bower_components/angular-route/angular-route.js"></script>
+	<script src="bower_components/h.scoreKeeper/h.scoreKeeper.js"></script>
+	<script src="bower_components/jquery.gracket/jquery.gracket.js"></script>
+	<script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
+	<script src="bower_components/lodash/dist/lodash.compat.js"></script>
+	<script src="bower_components/h.dataStore/h.dataStore.js"></script>
+	<!-- endbower -->
+	<!-- endbuild -->
+
+	<!-- build:js({.tmp,app}) scripts/scripts.js -->
+	<script src="scripts/tableTennis/module.js"></script>
+	<script src="scripts/tableTennis/definePartiesCtrl.js"></script>
+	<!-- endbuild -->
+
+</body>
+</html>
