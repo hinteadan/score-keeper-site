@@ -3,22 +3,28 @@
 	<ul>
 		<li>
 			Set points:
-			<button>10 (small)</button>
-			<button>20 (large)</button>
+			<button ng-disabled="clashDetails.pointsToWin == 10" ng-click="clashDetails.pointsToWin = 10">10 (small)</button>
+			<button ng-disabled="clashDetails.pointsToWin == 20" ng-click="clashDetails.pointsToWin = 20">20 (large)</button>
 		</li>
 		<li>
 			First serve:
 			<ol>
-				<li>
-					Team 1
+				<li ng-repeat="party in parties">
+					{{party.name}}
 					<ol>
-						<li>
-							<label>
-								<input type="radio" name="memberToServe" />
-								Team member
-							</label>
+						<li ng-repeat="member in party.individuals">
+							<button ng-disabled="clashDetails.firstToServe == member" ng-click="clashDetails.firstToServe = member">{{member.fullName()}}</button>
 						</li>
 					</ol>
+				</li>
+			</ol>
+		</li>
+		<li>
+			First to receive:
+			<span ng-hide="receivingParty()">will enable after selecting first server.</span>
+			<ol>
+				<li ng-repeat="member in receivingParty().individuals">
+					<button ng-disabled="clashDetails.firstToReceive == member" ng-click="clashDetails.firstToReceive = member">{{member.fullName()}}</button>
 				</li>
 			</ol>
 		</li>
