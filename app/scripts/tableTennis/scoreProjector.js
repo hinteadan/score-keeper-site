@@ -5,6 +5,8 @@
 		this.scorePerPartyName = {};
 		this.serving = null;
 		this.receiving = null;
+		this.isWon = false;
+		this.winner = null;
 	}
 
 	function ScoreProjector(clash) {
@@ -12,6 +14,23 @@
 		
 		function other(member, party) {
 			return party.individuals[0] === member ? party.individuals[1] : party.individuals[0];
+		}
+
+		function projectWinnerOn(projection) {
+			///<param name="projection" type="Projection" />
+			projection.isWon = false;
+			projection.winner = null;
+			if (clash.pointsFor(clash.parties[0]).length === clash.details.pointsToWin) {
+				projection.isWon = true;
+				projection.winner = clash.parties[0];
+				return projection;
+			}
+			if (clash.pointsFor(clash.parties[1]).length === clash.details.pointsToWin) {
+				projection.isWon = true;
+				projection.winner = clash.parties[1];
+				return projection;
+			}
+			return projection;
 		}
 
 		function projectCurrentClashState() {
@@ -54,7 +73,7 @@
 					break;
 			}
 
-			return projection;
+			return projectWinnerOn(projection);
 		}
 
 		this.now = projectCurrentClashState;

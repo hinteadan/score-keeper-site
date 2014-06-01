@@ -16,6 +16,12 @@
 		ok(p.receiving === receiving, 'Person to receive is not correct @ ' + scoreA + ' / ' + scoreB);
 	}
 
+	function projectionWonBy(party) {
+		var p = projector.now();
+		ok(p.isWon === true, 'isWon flag not set');
+		ok(p.winner === party, 'Winning party is not correct');
+	}
+
 	function score(n) {
 		var n = n || 1;
 		return {
@@ -92,6 +98,11 @@
 		projectionOk(11, 12, parties[1].individuals[1], parties[0].individuals[0]);
 		score().for(clash.parties[1]);
 		projectionOk(11, 13, parties[0].individuals[0], parties[1].individuals[0]);
+	});
+
+	test('Straight win', function(){
+		score(11).for(clash.parties[0]);
+		projectionWonBy(clash.parties[0]);
 	});
 
 }).call(this, this.angular, this.H.ScoreKeeper, this._);
