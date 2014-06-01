@@ -38,7 +38,7 @@
 						: clash.details.firstToServe;
 					break;
 				case 2:
-					projection.serving = other(clash.details.firstToReceive, clash.parties[currentServingPartyIndex]);
+					projection.serving = other(clash.details.firstToServe, clash.parties[currentServingPartyIndex]);
 					projection.receiving = clash.points.length % 2 === 0
 						? other(clash.details.firstToReceive, clash.parties[currentReceivingPartyIndex])
 						: clash.details.firstToReceive;
