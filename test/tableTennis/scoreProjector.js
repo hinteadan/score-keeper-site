@@ -16,6 +16,17 @@
 		ok(p.receiving === receiving, 'Person to receive is not correct');
 	}
 
+	function score(n) {
+		var n = n || 1;
+		return {
+			for: function (party) {
+				for (var i = 0; i < n; i++) {
+					clash.pointFor(party);
+				}
+			}
+		};
+	}
+
 	module('Table Tennis');
 	test('AngularJS Injections', function () {
 		ok(angular.isFunction(ScoreProjector), 'We don\'t have the ScoreProjector class');
@@ -49,38 +60,28 @@
 	});
 
 	test('4 points are scored', function () {
-		clash
-			.pointFor(clash.parties[0])
-			.pointFor(clash.parties[1])
-			.pointFor(clash.parties[0])
-			.pointFor(clash.parties[0]);
+		score(3).for(clash.parties[0]);
+		score(1).for(clash.parties[1]);
 
 		projectionOk(3, 1, parties[0].individuals[0], parties[1].individuals[0]);
 	});
 
 	test('5 points are scored', function () {
-		clash
-			.pointFor(clash.parties[0])
-			.pointFor(clash.parties[1])
-			.pointFor(clash.parties[0])
-			.pointFor(clash.parties[0])
-			.pointFor(clash.parties[1]);
+		score(3).for(clash.parties[0]);
+		score(2).for(clash.parties[1]);
+
 		projectionOk(3, 2, parties[1].individuals[0], parties[0].individuals[1]);
 	});
 
 	test('10 points are scored', function () {
-		clash
-			.pointFor(clash.parties[0])
-			.pointFor(clash.parties[1])
-			.pointFor(clash.parties[0])
-			.pointFor(clash.parties[0])
-			.pointFor(clash.parties[1])
-			.pointFor(clash.parties[0])
-			.pointFor(clash.parties[1])
-			.pointFor(clash.parties[0])
-			.pointFor(clash.parties[0])
-			.pointFor(clash.parties[1]);
+		score(6).for(clash.parties[0]);
+		score(4).for(clash.parties[1]);
+
 		projectionOk(6, 4, parties[0].individuals[1], parties[1].individuals[1]);
+	});
+
+	test('Tiebreak', function () {
+		ok(true);
 	});
 
 }).call(this, this.angular, this.H.ScoreKeeper, this._);
