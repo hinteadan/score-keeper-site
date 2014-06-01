@@ -40,19 +40,22 @@
 	});
 
 	test('Initial projection', function () {
-		projectionOk(0, 0, clash.details.firstToServe, clash.details.firstToReceive);
+		projectionOk(0, 0, parties[0].individuals[0], parties[1].individuals[0]);
 	});
 
 	test('A point is scored', function () {
 		clash.pointFor(clash.parties[0]);
+		projectionOk(1, 0, parties[0].individuals[0], parties[1].individuals[1]);
+	});
 
-		var servingParty = _.contains(clash.parties[0].individuals, clash.details.firstToServe) ? clash.parties[0] : clash.parties[1],
-			receivingParty = servingParty === clash.parties[0] ? clash.parties[1] : clash.parties[0],
-			receiverShouldBe = receivingParty.individuals.length === 1
-				? receivingParty.individuals[0]
-				: _.find(receivingParty.individuals, function (m) { return m !== clash.details.firstToReceive });
+	test('4 points are scored', function () {
+		clash
+			.pointFor(clash.parties[0])
+			.pointFor(clash.parties[1])
+			.pointFor(clash.parties[0])
+			.pointFor(clash.parties[0]);
 
-		projectionOk(1, 0, clash.details.firstToServe, receiverShouldBe);
+		projectionOk(3, 1, parties[0].individuals[0], parties[1].individuals[0]);
 	});
 
 }).call(this, this.angular, this.H.ScoreKeeper, this._);
