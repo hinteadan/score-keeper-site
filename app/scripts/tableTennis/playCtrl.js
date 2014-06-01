@@ -17,6 +17,10 @@
 				$scope.pointDetails.current = new PointDetails();
 				$scope.scoreProjection = clash.projectScore().now();
 			};
+			$scope.undoPoint = function () {
+				$scope.clash.undoPoint();
+				$scope.scoreProjection = clash.projectScore().now();
+			};
 		}])
 
 		.filter('pointLabel', ['PointDetails', function (PointDetails) {

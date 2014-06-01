@@ -25,7 +25,17 @@
 		<button style="width: 100%; height: 30px;" ng-click="pointFor(party)">+1</button>
 	</div>
 
-	<button ng-click="clash.undoPoint()">Undo last point</button>
+	<div>
+		<strong>{{scoreProjection.serving.fullName()}}</strong>
+		serves to
+		<em>{{scoreProjection.receiving.fullName()}}</em>
+	</div>
+
+	<div ng-show="scoreProjection.isWon">
+		<h1>Game won by <strong>{{scoreProjection.winner.name}}</strong></h1>
+	</div>
+
+	<button ng-click="undoPoint()">Undo last point</button>
 	<button>Commit clash</button>
 
 	{{scoreProjection|json}}
