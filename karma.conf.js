@@ -15,6 +15,7 @@ module.exports = function(config) {
 	  'app/bower_components/angular-route/angular-route.js',
 	  'app/bower_components/qunit/build/release.js',
 	  'app/bower_components/h.scoreKeeper/h.scoreKeeper.js',
+	  'app/bower_components/lodash/dist/lodash.js',
 
 	  'app/scripts/tableTennis/module.js',
 	  'app/scripts/tableTennis/clash.js',
