@@ -5,6 +5,7 @@
 
 		.controller('play', ['$scope', 'Clash', 'PointDetails', function ($scope, clash, PointDetails) {
 			$scope.clash = clash.clash();
+			$scope.scoreProjection = clash.projectScore().now();
 			$scope.pointDetails = {
 				current: new PointDetails(),
 				reasons: PointDetails.reason,
@@ -14,6 +15,7 @@
 			$scope.pointFor = function (party) {
 				$scope.clash.pointWith($scope.pointDetails.current).for(party);
 				$scope.pointDetails.current = new PointDetails();
+				$scope.scoreProjection = clash.projectScore().now();
 			};
 		}])
 

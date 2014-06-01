@@ -12,13 +12,14 @@
 	}
 
 	angular.module('ScoreKeeper.TableTennis')
-	.service('Clash', [function () {
+	.service('Clash', ['ScoreProjector', function (ScoreProjector) {
 		var parties = [
 				new k.Party('Team Awesome').addMembers([new k.Individual('Hintea', 'Dan'), new k.Individual('Pascalau', 'Anca')]),
 				new k.Party('Team D&G').addMembers([new k.Individual('Pacurar', 'Georgiana'), new k.Individual('Mis', 'Diana Alina')])
 			],
 			clashDetails = new ClashDetails(10, parties[0].individuals[0], parties[1].individuals[0]),
-			clash = null;
+			clash = null,
+			projector = null;
 
 		this.parties = parties;
 		this.details = clashDetails;
@@ -28,6 +29,12 @@
 				clash = new k.Clash(parties, clashDetails);
 			}
 			return clash;
+		};
+		this.projectScore = function () {
+			if (!projector) {
+				projector = new ScoreProjector(this.clash());
+			}
+			return projector;
 		};
 	}]);
 

@@ -9,7 +9,7 @@
 		<fieldset>
 			<legend>Score point</legend>
 			<div ng-hide="party.individuals.length == 1">
-				Credit to: 
+				Credit to:
 				<button ng-repeat="member in party.individuals" ng-disabled="pointDetails.current.creditTo == member" ng-click="pointDetails.current.creditTo = member">{{member.fullName()}}</button>
 			</div>
 			<div>
@@ -27,5 +27,7 @@
 
 	<button ng-click="clash.undoPoint()">Undo last point</button>
 	<button>Commit clash</button>
+
+	{{scoreProjection|json}}
 
 </div>
