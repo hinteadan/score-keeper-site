@@ -2,7 +2,7 @@
 	'use strict';
 
 	function ClashDetails(pointsToWin, firstToServe, firstToReceive) {
-		this.pointsToWin = pointsToWin || 20;
+		this.pointsToWin = pointsToWin || 21;
 		this.firstToServe = firstToServe;
 		this.firstToReceive = firstToReceive;
 		this.serveChangeAfter = 5;

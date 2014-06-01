@@ -18,13 +18,16 @@
 			var projection = new Projection(),
 				firstServingPartyIndex = _.contains(clash.parties[0].individuals, clash.details.firstToServe) ? 0 : 1,
 				firstReceivingPartyIndex = firstServingPartyIndex === 0 ? 1 : 0,
-				currentServingPartyIndex = Math.floor(clash.points.length / clash.details.serveChangeAfter) % 2 === 0 ? firstServingPartyIndex : firstReceivingPartyIndex,
+				isTie = clash.pointsFor(clash.parties[0]).length >= clash.details.pointsToWin - 1
+					&& clash.pointsFor(clash.parties[1]).length >= clash.details.pointsToWin - 1,
+				serveChangeOn = !isTie ? clash.details.serveChangeAfter : 1,
+				currentServingPartyIndex = Math.floor(clash.points.length / serveChangeOn) % 2 === 0 ? firstServingPartyIndex : firstReceivingPartyIndex,
 				currentReceivingPartyIndex = currentServingPartyIndex === 0 ? 1 : 0;
 
 			projection.scorePerPartyName[clash.parties[0].name] = clash.pointsFor(clash.parties[0]).length;
 			projection.scorePerPartyName[clash.parties[1].name] = clash.pointsFor(clash.parties[1]).length;
 
-			switch (Math.floor(clash.points.length / clash.details.serveChangeAfter) % (clash.parties.length * clash.parties[0].individuals.length)) {
+			switch (Math.floor(clash.points.length / serveChangeOn) % (clash.parties.length * clash.parties[0].individuals.length)) {
 				case 0:
 					projection.serving = clash.details.firstToServe;
 					projection.receiving = clash.points.length % 2 === 0

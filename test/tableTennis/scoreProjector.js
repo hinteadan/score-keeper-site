@@ -12,8 +12,8 @@
 		var p = projector.now();
 		ok(p.scorePerPartyName[clash.parties[0].name] === scoreA, 'Team 1 score is not correct');
 		ok(p.scorePerPartyName[clash.parties[1].name] === scoreB, 'Team 2 score is not correct');
-		ok(p.serving === serving, 'Person to serve is not correct');
-		ok(p.receiving === receiving, 'Person to receive is not correct');
+		ok(p.serving === serving, 'Person to serve is not correct @ ' + scoreA + ' / ' + scoreB);
+		ok(p.receiving === receiving, 'Person to receive is not correct @ ' + scoreA + ' / ' + scoreB);
 	}
 
 	function score(n) {
@@ -39,7 +39,7 @@
 				new k.Party('Team Awesome').addMembers([new k.Individual('Hintea', 'Dan'), new k.Individual('Pascalau', 'Anca')]),
 				new k.Party('Team D&G').addMembers([new k.Individual('Pacurar', 'Georgiana'), new k.Individual('Mis', 'Diana Alina')])
 			];
-			clash = new k.Clash(parties, new clashService.ClashDetails(10, parties[0].individuals[0], parties[1].individuals[0]));
+			clash = new k.Clash(parties, new clashService.ClashDetails(11, parties[0].individuals[0], parties[1].individuals[0]));
 			projector = new ScoreProjector(clash);
 		},
 		teardown: function () { }
@@ -81,7 +81,17 @@
 	});
 
 	test('Tiebreak', function () {
-		ok(true);
+		score(10).for(clash.parties[0]);
+		score(10).for(clash.parties[1]);
+		projectionOk(10, 10, parties[0].individuals[0], parties[1].individuals[0]);
+		score().for(clash.parties[0]);
+		projectionOk(11, 10, parties[1].individuals[0], parties[0].individuals[1]);
+		score().for(clash.parties[1]);
+		projectionOk(11, 11, parties[0].individuals[1], parties[1].individuals[1]);
+		score().for(clash.parties[1]);
+		projectionOk(11, 12, parties[1].individuals[1], parties[0].individuals[0]);
+		score().for(clash.parties[1]);
+		projectionOk(11, 13, parties[0].individuals[0], parties[1].individuals[0]);
 	});
 
 }).call(this, this.angular, this.H.ScoreKeeper, this._);
