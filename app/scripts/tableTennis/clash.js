@@ -22,6 +22,7 @@
 
 		this.parties = parties;
 		this.details = clashDetails;
+		this.ClashDetails = ClashDetails;
 		this.clash = function () {
 			if (!clash) {
 				clash = new k.Clash(parties, clashDetails);

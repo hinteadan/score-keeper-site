@@ -4,16 +4,9 @@
 	var inject = angular.injector(['ScoreKeeper.TableTennis', 'ngRoute']),
 		ScoreProjector = inject.get('ScoreProjector'),
 		clashService = inject.get('Clash'),
+		parties = null,
 		clash = null,
 		projector = null;
-
-	module('Table Tennis', {
-		setup: function () {
-			clash = clashService.clash();
-			projector = new ScoreProjector(clash);
-		},
-		teardown: function () { }
-	})
 
 	function projectionOk(scoreA, scoreB, serving, receiving) {
 		var p = projector.now();
@@ -23,9 +16,25 @@
 		ok(p.receiving === receiving, 'Person to receive is not correct');
 	}
 
+	module('Table Tennis');
 	test('AngularJS Injections', function () {
 		ok(angular.isFunction(ScoreProjector), 'We don\'t have the ScoreProjector class');
 		ok(angular.isObject(clashService), 'We don\'t have the clash service');
+	});
+
+	module('Table Tennis - Doubles', {
+		setup: function () {
+			parties = [
+				new k.Party('Team Awesome').addMembers([new k.Individual('Hintea', 'Dan'), new k.Individual('Pascalau', 'Anca')]),
+				new k.Party('Team D&G').addMembers([new k.Individual('Pacurar', 'Georgiana'), new k.Individual('Mis', 'Diana Alina')])
+			];
+			clash = new k.Clash(parties, new clashService.ClashDetails(10, parties[0].individuals[0], parties[1].individuals[0]));
+			projector = new ScoreProjector(clash);
+		},
+		teardown: function () { }
+	});
+
+	test('AngularJS Injections', function () {
 		ok(angular.isObject(clash), 'We don\'t have the clash instance');
 		ok(angular.isObject(projector), 'We don\'t have the projector instance');
 	});
