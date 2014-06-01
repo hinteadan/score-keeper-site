@@ -105,4 +105,14 @@
 		projectionWonBy(clash.parties[0]);
 	});
 
+	test('Win on tie', function () {
+		score(10).for(clash.parties[0]);
+		score(11).for(clash.parties[1]);
+		ok(!projector.now().isWon, 'Clash shouldn\'t be won since it\'s tie');
+		score().for(clash.parties[0]);
+		ok(!projector.now().isWon, 'Clash shouldn\'t be won since it\'s tie');
+		score(2).for(clash.parties[1]);
+		projectionWonBy(clash.parties[1]);
+	});
+
 }).call(this, this.angular, this.H.ScoreKeeper, this._);

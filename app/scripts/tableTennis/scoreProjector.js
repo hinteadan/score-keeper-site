@@ -18,14 +18,18 @@
 
 		function projectWinnerOn(projection) {
 			///<param name="projection" type="Projection" />
+			var partyOnePoints = clash.pointsFor(clash.parties[0]).length,
+				partyTwoPoints = clash.pointsFor(clash.parties[1]).length;
+
 			projection.isWon = false;
 			projection.winner = null;
-			if (clash.pointsFor(clash.parties[0]).length === clash.details.pointsToWin) {
+
+			if (partyOnePoints >= clash.details.pointsToWin && partyOnePoints - partyTwoPoints >= 2) {
 				projection.isWon = true;
 				projection.winner = clash.parties[0];
 				return projection;
 			}
-			if (clash.pointsFor(clash.parties[1]).length === clash.details.pointsToWin) {
+			if (partyTwoPoints >= clash.details.pointsToWin && partyTwoPoints - partyOnePoints >= 2) {
 				projection.isWon = true;
 				projection.winner = clash.parties[1];
 				return projection;
