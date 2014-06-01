@@ -13,6 +13,7 @@
 
 
 	}
+	ScoreProjector.Projection = Projection;
 
 	angular.module('ScoreKeeper.TableTennis').value('ScoreProjector', ScoreProjector);
 
