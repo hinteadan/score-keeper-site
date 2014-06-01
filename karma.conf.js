@@ -7,16 +7,18 @@ module.exports = function(config) {
     basePath: '',
 
     // testing framework to use (jasmine/mocha/qunit/...)
-    frameworks: ['jasmine'],
+    frameworks: ['qunit'],
 
     // list of files / patterns to load in the browser
     files: [
       'app/bower_components/angular/angular.js',
-      'app/bower_components/angular-mocks/angular-mocks.js',
-      'app/scripts/*.js',
-      'app/scripts/**/*.js',
-      'test/mock/**/*.js',
-      'test/spec/**/*.js'
+	  'app/bower_components/angular-route/angular-route.js',
+	  'app/bower_components/qunit/build/release.js',
+
+	  'app/scripts/tableTennis/module.js',
+      'app/scripts/tableTennis/scoreProjector.js',
+
+      'test/tableTennis/**/*.js'
     ],
 
     // list of files / patterns to exclude
@@ -42,7 +44,7 @@ module.exports = function(config) {
     // - Safari (only Mac)
     // - PhantomJS
     // - IE (only Windows)
-    browsers: ['Chrome'],
+    browsers: ['Firefox'],
 
 
     // Continuous Integration mode
