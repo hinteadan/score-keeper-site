@@ -13,7 +13,7 @@
 		ok(p.scorePerPartyName[clash.parties[0].name] === scoreA, 'Team 1 score is not correct');
 		ok(p.scorePerPartyName[clash.parties[1].name] === scoreB, 'Team 2 score is not correct');
 		ok(p.serving === serving, 'Person to serve is not correct');
-		ok(p.receiving === receiving, 'Person to receive is not correct');
+		ok(p.receiving === receiving, 'Person to receive is not correct' + p.receiving.fullName());
 	}
 
 	module('Table Tennis');
@@ -43,7 +43,7 @@
 		projectionOk(0, 0, parties[0].individuals[0], parties[1].individuals[0]);
 	});
 
-	test('A point is scored', function () {
+	test('1 point is scored', function () {
 		clash.pointFor(clash.parties[0]);
 		projectionOk(1, 0, parties[0].individuals[0], parties[1].individuals[1]);
 	});
@@ -56,6 +56,16 @@
 			.pointFor(clash.parties[0]);
 
 		projectionOk(3, 1, parties[0].individuals[0], parties[1].individuals[0]);
+	});
+
+	test('5 points are scored', function () {
+		clash
+			.pointFor(clash.parties[0])
+			.pointFor(clash.parties[1])
+			.pointFor(clash.parties[0])
+			.pointFor(clash.parties[0])
+			.pointFor(clash.parties[1]);
+		projectionOk(3, 2, parties[1].individuals[0], parties[0].individuals[1]);
 	});
 
 }).call(this, this.angular, this.H.ScoreKeeper, this._);
