@@ -56,27 +56,19 @@
 			switch (Math.floor(clash.points.length / serveChangeOn) % (clash.parties.length * clash.parties[0].individuals.length)) {
 				case 0:
 					projection.serving = clash.details.firstToServe;
-					projection.receiving = clash.points.length % 2 === 0
-						? clash.details.firstToReceive
-						: other(clash.details.firstToReceive, clash.parties[currentReceivingPartyIndex]);
+					projection.receiving = clash.details.firstToReceive;
 					break;
 				case 1:
 					projection.serving = clash.details.firstToReceive;
-					projection.receiving = clash.points.length % 2 !== 0
-						? other(clash.details.firstToServe, clash.parties[currentReceivingPartyIndex])
-						: clash.details.firstToServe;
+					projection.receiving = other(clash.details.firstToServe, clash.parties[currentReceivingPartyIndex]);
 					break;
 				case 2:
 					projection.serving = other(clash.details.firstToServe, clash.parties[currentServingPartyIndex]);
-					projection.receiving = clash.points.length % 2 === 0
-						? other(clash.details.firstToReceive, clash.parties[currentReceivingPartyIndex])
-						: clash.details.firstToReceive;
+					projection.receiving = other(clash.details.firstToReceive, clash.parties[currentReceivingPartyIndex]);
 					break;
 				case 3:
 					projection.serving = other(clash.details.firstToReceive, clash.parties[currentServingPartyIndex]);
-					projection.receiving = clash.points.length % 2 !== 0
-						? clash.details.firstToServe
-						: other(clash.details.firstToServe, clash.parties[currentReceivingPartyIndex]);
+					projection.receiving = clash.details.firstToServe;
 					break;
 			}
 

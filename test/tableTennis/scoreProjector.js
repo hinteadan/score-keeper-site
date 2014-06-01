@@ -62,7 +62,7 @@
 
 	test('1 point is scored', function () {
 		clash.pointFor(clash.parties[0]);
-		projectionOk(1, 0, parties[0].individuals[0], parties[1].individuals[1]);
+		projectionOk(1, 0, parties[0].individuals[0], parties[1].individuals[0]);
 	});
 
 	test('4 points are scored', function () {
