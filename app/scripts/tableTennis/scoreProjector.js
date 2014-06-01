@@ -13,6 +13,9 @@
 		/// <param name="clash" type="H.ScoreKeeper.Clash" />
 		
 		function other(member, party) {
+			if (party.individuals.length === 1) {
+				return member;
+			}
 			return party.individuals[0] === member ? party.individuals[1] : party.individuals[0];
 		}
 
