@@ -1,180 +1,174 @@
 ﻿(function (angular, k, _) {
-	'use strict';
+    'use strict';
 
-	var inject = angular.injector(['ScoreKeeper.TableTennis', 'ngRoute']),
+    var inject = angular.injector(['ScoreKeeper.TableTennis', 'ngRoute']),
 		ScoreProjector = inject.get('ScoreProjector'),
 		clashService = inject.get('Clash'),
 		parties = null,
 		clash = null,
 		projector = null;
 
-	function projectionOk(scoreA, scoreB, serving, receiving) {
-		var p = projector.now();
-		ok(p.scorePerPartyName[clash.parties[0].name] === scoreA, 'Team 1 score is not correct');
-		ok(p.scorePerPartyName[clash.parties[1].name] === scoreB, 'Team 2 score is not correct');
-		ok(p.serving === serving, 'Person to serve is not correct @ ' + scoreA + ' / ' + scoreB);
-		ok(p.receiving === receiving, 'Person to receive is not correct @ ' + scoreA + ' / ' + scoreB);
-	}
+    function projectionOk(scoreA, scoreB, serving, receiving) {
+        var p = projector.now();
+        expect(p.scorePerPartyName[clash.parties[0].name]).toEqual(scoreA);
+        expect(p.scorePerPartyName[clash.parties[1].name]).toEqual(scoreB);
+        expect(p.serving).toBe(serving);
+        expect(p.receiving).toBe(receiving);
+    }
 
-	function projectionWonBy(party) {
-		var p = projector.now();
-		ok(p.isWon === true, 'isWon flag not set');
-		ok(p.winner === party, 'Winning party is not correct');
-	}
+    function projectionWonBy(party) {
+        var p = projector.now();
+        expect(p.isWon).toBe(true);
+        expect(p.winner).toBe(party);
+    }
 
-	function score(n) {
-		var n = n || 1;
-		return {
-			for: function (party) {
-				for (var i = 0; i < n; i++) {
-					clash.pointFor(party);
-				}
-			}
-		};
-	}
+    function score(n) {
+        var n = n || 1;
+        return {
+            for: function (party) {
+                for (var i = 0; i < n; i++) {
+                    clash.pointFor(party);
+                }
+            }
+        };
+    }
 
-	module('Table Tennis');
-	test('AngularJS Injections', function () {
-		ok(angular.isFunction(ScoreProjector), 'We don\'t have the ScoreProjector class');
-		ok(angular.isObject(clashService), 'We don\'t have the clash service');
-	});
+    describe('Table Tennis scoring', function () {
 
-	module('Table Tennis - Doubles', {
-		setup: function () {
-			parties = [
-				new k.Party('Team Awesome').addMembers([new k.Individual('Hintea', 'Dan'), new k.Individual('Pascalau', 'Anca')]),
-				new k.Party('Team D&G').addMembers([new k.Individual('Pacurar', 'Georgiana'), new k.Individual('Mis', 'Diana Alina')])
-			];
-			clash = new k.Clash(parties, new clashService.ClashDetails(11, parties[0].individuals[0], parties[1].individuals[0]));
-			projector = new ScoreProjector(clash);
-		},
-		teardown: function () { }
-	});
+        it('uses inject-ables', function () {
+            expect(ScoreProjector).toBeDefined();
+            expect(clashService).toBeDefined();
+        });
 
-	test('AngularJS Injections', function () {
-		ok(angular.isObject(clash), 'We don\'t have the clash instance');
-		ok(angular.isObject(projector), 'We don\'t have the projector instance');
-	});
+        describe('For Doubles', function () {
 
-	test('Initial projection', function () {
-		projectionOk(0, 0, parties[0].individuals[0], parties[1].individuals[0]);
-	});
+            beforeEach(function () {
+                parties = [
+				    new k.Party('Team Awesome').addMembers([new k.Individual('Hintea', 'Dan'), new k.Individual('Pascalau', 'Anca')]),
+				    new k.Party('Team D&G').addMembers([new k.Individual('Pacurar', 'Georgiana'), new k.Individual('Mis', 'Diana Alina')])
+                ];
+                clash = new k.Clash(parties, new clashService.ClashDetails(11, parties[0].individuals[0], parties[1].individuals[0]));
+                projector = new ScoreProjector(clash);
+            });
 
-	test('1 point is scored', function () {
-		clash.pointFor(clash.parties[0]);
-		projectionOk(1, 0, parties[0].individuals[0], parties[1].individuals[0]);
-	});
+            it('initially projects according to clash definition', function () {
+                projectionOk(0, 0, parties[0].individuals[0], parties[1].individuals[0]);
+            });
 
-	test('4 points are scored', function () {
-		score(3).for(clash.parties[0]);
-		score(1).for(clash.parties[1]);
+            it('projects correctly when 1 point is scored', function () {
+                score().for(clash.parties[0]);
+                projectionOk(1, 0, parties[0].individuals[0], parties[1].individuals[0]);
+            });
 
-		projectionOk(3, 1, parties[0].individuals[0], parties[1].individuals[0]);
-	});
+            it('projects correctly when 4 points are scored', function () {
+                score(3).for(clash.parties[0]);
+                score(1).for(clash.parties[1]);
 
-	test('5 points are scored', function () {
-		score(3).for(clash.parties[0]);
-		score(2).for(clash.parties[1]);
+                projectionOk(3, 1, parties[0].individuals[0], parties[1].individuals[0]);
+            });
 
-		projectionOk(3, 2, parties[1].individuals[0], parties[0].individuals[1]);
-	});
+            it('projects correctly when 5 points are scored', function () {
+                score(3).for(clash.parties[0]);
+                score(2).for(clash.parties[1]);
 
-	test('10 points are scored', function () {
-		score(6).for(clash.parties[0]);
-		score(4).for(clash.parties[1]);
+                projectionOk(3, 2, parties[1].individuals[0], parties[0].individuals[1]);
+            });
 
-		projectionOk(6, 4, parties[0].individuals[1], parties[1].individuals[1]);
-	});
+            it('projects correctly when 10 points are scored', function () {
+                score(6).for(clash.parties[0]);
+                score(4).for(clash.parties[1]);
 
-	test('Tiebreak', function () {
-		score(10).for(clash.parties[0]);
-		score(10).for(clash.parties[1]);
-		projectionOk(10, 10, parties[0].individuals[0], parties[1].individuals[0]);
-		score().for(clash.parties[0]);
-		projectionOk(11, 10, parties[1].individuals[0], parties[0].individuals[1]);
-		score().for(clash.parties[1]);
-		projectionOk(11, 11, parties[0].individuals[1], parties[1].individuals[1]);
-		score().for(clash.parties[1]);
-		projectionOk(11, 12, parties[1].individuals[1], parties[0].individuals[0]);
-		score().for(clash.parties[1]);
-		projectionOk(11, 13, parties[0].individuals[0], parties[1].individuals[0]);
-	});
+                projectionOk(6, 4, parties[0].individuals[1], parties[1].individuals[1]);
+            });
 
-	test('Straight win', function(){
-		score(11).for(clash.parties[0]);
-		projectionWonBy(clash.parties[0]);
-	});
+            it('projects correctly when playing on tie-break', function () {
+                score(10).for(clash.parties[0]);
+                score(10).for(clash.parties[1]);
+                projectionOk(10, 10, parties[0].individuals[0], parties[1].individuals[0]);
+                score().for(clash.parties[0]);
+                projectionOk(11, 10, parties[1].individuals[0], parties[0].individuals[1]);
+                score().for(clash.parties[1]);
+                projectionOk(11, 11, parties[0].individuals[1], parties[1].individuals[1]);
+                score().for(clash.parties[1]);
+                projectionOk(11, 12, parties[1].individuals[1], parties[0].individuals[0]);
+                score().for(clash.parties[1]);
+                projectionOk(11, 13, parties[0].individuals[0], parties[1].individuals[0]);
+            });
 
-	test('Win on tie', function () {
-		score(10).for(clash.parties[0]);
-		score(11).for(clash.parties[1]);
-		ok(!projector.now().isWon, 'Clash shouldn\'t be won since it\'s tie');
-		score().for(clash.parties[0]);
-		ok(!projector.now().isWon, 'Clash shouldn\'t be won since it\'s tie');
-		score(2).for(clash.parties[1]);
-		projectionWonBy(clash.parties[1]);
-	});
+            it('projects correctly on straight win', function () {
+                score(11).for(clash.parties[0]);
+                projectionWonBy(clash.parties[0]);
+            });
 
+            it('projects correctly when winning on tie-break', function () {
+                score(10).for(clash.parties[0]);
+                score(11).for(clash.parties[1]);
+                expect(projector.now().isWon).toBe(false);
+                score().for(clash.parties[0]);
+                expect(projector.now().isWon).toBe(false);
+                score(2).for(clash.parties[1]);
+                projectionWonBy(clash.parties[1]);
+            });
 
-	module('Table Tennis - Singles', {
-		setup: function () {
-			parties = [
+        });
+
+        describe('For Singles', function () {
+
+            beforeEach(function () {
+                parties = [
 				new k.Party('Team Hintea').addMembers([new k.Individual('Hintea', 'Dan')]),
 				new k.Party('Team Gicu').addMembers([new k.Individual('Orian', 'Georgian')])
-			];
-			clash = new k.Clash(parties, new clashService.ClashDetails(11, parties[0].individuals[0], parties[1].individuals[0]));
-			projector = new ScoreProjector(clash);
-		},
-		teardown: function () { }
-	});
+                ];
+                clash = new k.Clash(parties, new clashService.ClashDetails(11, parties[0].individuals[0], parties[1].individuals[0]));
+                projector = new ScoreProjector(clash);
+            });
 
-	test('AngularJS Injections', function () {
-		ok(angular.isObject(clash), 'We don\'t have the clash instance');
-		ok(angular.isObject(projector), 'We don\'t have the projector instance');
-	});
+            it('initially projects according to clash definition', function () {
+                projectionOk(0, 0, parties[0].individuals[0], parties[1].individuals[0]);
+            });
 
-	test('Initial projection', function () {
-		projectionOk(0, 0, parties[0].individuals[0], parties[1].individuals[0]);
-	});
+            it('projects correctly when 1 point is scored', function () {
+                score().for(clash.parties[0]);
+                projectionOk(1, 0, parties[0].individuals[0], parties[1].individuals[0]);
+            });
 
-	test('1 point is scored', function () {
-		clash.pointFor(clash.parties[0]);
-		projectionOk(1, 0, parties[0].individuals[0], parties[1].individuals[0]);
-	});
+            it('projects correctly when 4 points are scored', function () {
+                score(3).for(clash.parties[0]);
+                score(1).for(clash.parties[1]);
 
-	test('4 points are scored', function () {
-		score(3).for(clash.parties[0]);
-		score(1).for(clash.parties[1]);
+                projectionOk(3, 1, parties[0].individuals[0], parties[1].individuals[0]);
+            });
 
-		projectionOk(3, 1, parties[0].individuals[0], parties[1].individuals[0]);
-	});
+            it('projects correctly when 5 points are scored', function () {
+                score(3).for(clash.parties[0]);
+                score(2).for(clash.parties[1]);
 
-	test('5 points are scored', function () {
-		score(3).for(clash.parties[0]);
-		score(2).for(clash.parties[1]);
+                projectionOk(3, 2, parties[1].individuals[0], parties[0].individuals[0]);
+            });
 
-		projectionOk(3, 2, parties[1].individuals[0], parties[0].individuals[0]);
-	});
+            it('projects correctly when 10 points are scored', function () {
+                score(6).for(clash.parties[0]);
+                score(4).for(clash.parties[1]);
 
-	test('10 points are scored', function () {
-		score(6).for(clash.parties[0]);
-		score(4).for(clash.parties[1]);
+                projectionOk(6, 4, parties[0].individuals[0], parties[1].individuals[0]);
+            });
 
-		projectionOk(6, 4, parties[0].individuals[0], parties[1].individuals[0]);
-	});
+            it('projects correctly when playing on tie-break', function () {
+                score(10).for(clash.parties[0]);
+                score(10).for(clash.parties[1]);
+                projectionOk(10, 10, parties[0].individuals[0], parties[1].individuals[0]);
+                score().for(clash.parties[0]);
+                projectionOk(11, 10, parties[1].individuals[0], parties[0].individuals[0]);
+                score().for(clash.parties[1]);
+                projectionOk(11, 11, parties[0].individuals[0], parties[1].individuals[0]);
+                score().for(clash.parties[1]);
+                projectionOk(11, 12, parties[1].individuals[0], parties[0].individuals[0]);
+                score().for(clash.parties[1]);
+                projectionOk(11, 13, parties[0].individuals[0], parties[1].individuals[0]);
+            });
 
-	test('Tiebreak', function () {
-		score(10).for(clash.parties[0]);
-		score(10).for(clash.parties[1]);
-		projectionOk(10, 10, parties[0].individuals[0], parties[1].individuals[0]);
-		score().for(clash.parties[0]);
-		projectionOk(11, 10, parties[1].individuals[0], parties[0].individuals[0]);
-		score().for(clash.parties[1]);
-		projectionOk(11, 11, parties[0].individuals[0], parties[1].individuals[0]);
-		score().for(clash.parties[1]);
-		projectionOk(11, 12, parties[1].individuals[0], parties[0].individuals[0]);
-		score().for(clash.parties[1]);
-		projectionOk(11, 13, parties[0].individuals[0], parties[1].individuals[0]);
-	});
+        });
+
+    });
 
 }).call(this, this.angular, this.H.ScoreKeeper, this._);
