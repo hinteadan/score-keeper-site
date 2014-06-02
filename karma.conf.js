@@ -7,13 +7,12 @@ module.exports = function(config) {
     basePath: '',
 
     // testing framework to use (jasmine/mocha/qunit/...)
-    frameworks: ['qunit'],
+    frameworks: ['jasmine', 'qunit'],
 
     // list of files / patterns to load in the browser
     files: [
       'app/bower_components/angular/angular.js',
 	  'app/bower_components/angular-route/angular-route.js',
-	  'app/bower_components/qunit/build/release.js',
 	  'app/bower_components/h.scoreKeeper/h.scoreKeeper.js',
 	  'app/bower_components/lodash/dist/lodash.js',
 

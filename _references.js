@@ -6,3 +6,5 @@
 /// <reference path="app/bower_components/h.dataStore/h.dataStore.js" />
 
 /// <reference path="app/bower_components/qunit/qunit/qunit.js" />
+/// <reference path="app/bower_components/jasmine/lib/jasmine-core/jasmine.js" />
+/// <reference path="app/bower_components/jasmine/lib/jasmine-core/boot/boot.js" />

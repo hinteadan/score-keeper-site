@@ -12,7 +12,8 @@
     "bootstrap": "~3.1.1",
     "lodash": "~2.4.1",
     "h.dataStore": "https://github.com/hinteadan/h.dataStore.client.js.git",
-    "qunit": "~1.14.0"
+    "qunit": "~1.14.0",
+    "jasmine": "~2.0.0"
   },
   "devDependencies": {
     "angular-mocks": "1.2.15",
