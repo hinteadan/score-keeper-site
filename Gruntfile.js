@@ -94,6 +94,15 @@ module.exports = function (grunt) {
                     open: true,
                     base: '<%= yeoman.dist %>'
                 }
+            },
+            tabletennis: {
+                options: {
+                    open: 'http://localhost:9000/tabletennis.html',
+                    base: [
+                      '.tmp',
+                      '<%= yeoman.app %>'
+                    ]
+                }
             }
         },
 
@@ -346,6 +355,7 @@ module.exports = function (grunt) {
 
 
     grunt.registerTask('serve', function (target) {
+
         if (target === 'dist') {
             return grunt.task.run(['build', 'connect:dist:keepalive']);
         }
@@ -355,7 +365,7 @@ module.exports = function (grunt) {
           //'bowerInstall',
           'concurrent:server',
           'autoprefixer',
-          'connect:livereload',
+          'connect:' + (target || 'livereload'),
           'watch'
         ]);
     });
