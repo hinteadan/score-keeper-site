@@ -19,6 +19,7 @@
 
 					<div class="small-box bg-aqua">
 						<div class="inner">
+
 							<div class="btn-group btn-group-justified">
 								<div class="btn-group btn-group-lg" ng-repeat="reason in pointDetails.reasons">
 									<button class="btn bg-olive btn-block" ng-disabled="pointDetails.current.reason == reason" ng-click="pointDetails.current.reason = reason">{{reason|pointLabel}}</button>
@@ -34,6 +35,17 @@
 									<button class="btn btn-info btn-block" ng-disabled="pointDetails.current.spin == spin" ng-click="pointDetails.current.spin = spin">{{spin|pointLabel}}</button>
 								</div>
 							</div>
+							<div class="text-center" ng-hide="party.individuals.length == 1">
+								Credit for point goes to:
+								<div class="btn-group btn-group-justified">
+									<div class="btn-group btn-group-lg" ng-repeat="member in pointCreditPossibleMembers(party)">
+										<button class="btn btn-info btn-block" ng-disabled="pointDetails.current.creditTo == member" ng-click="pointDetails.current.creditTo = member">{{member.fullName()}}</button>
+									</div>
+								</div>
+							</div>
+							<span class="text-center" ng-show="party.individuals.length == 1">
+								{{pointCreditPossibleMembers(party)[0].fullName()}}
+							</span>
 						</div>
 						<div class="small-box-footer clickable">
 							<button class="btn btn-success btn-lg btn-block" ng-click="pointFor(party)">

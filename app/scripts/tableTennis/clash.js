@@ -22,6 +22,9 @@
 			projector = null;
 
 		this.parties = parties;
+		this.theOtherParty = function (currentParty) {
+			return currentParty === parties[0] ? parties[1] : parties[0];
+		};
 		this.details = clashDetails;
 		this.ClashDetails = ClashDetails;
 		this.clash = function () {

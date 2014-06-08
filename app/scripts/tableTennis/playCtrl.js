@@ -21,6 +21,11 @@
 				$scope.clash.undoPoint();
 				$scope.scoreProjection = clash.projectScore().now();
 			};
+			$scope.pointCreditPossibleMembers = function (scoringParty) {
+				return $scope.pointDetails.current.reason == PointDetails.reason.unforcedErrorByOpponent ?
+					clash.theOtherParty(scoringParty).individuals :
+					scoringParty.individuals;
+			};
 		}])
 
 		.filter('pointLabel', ['PointDetails', function (PointDetails) {
