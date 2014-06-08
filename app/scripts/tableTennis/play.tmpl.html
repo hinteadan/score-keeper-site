@@ -1,4 +1,62 @@
 ﻿<div>
+	<h1 class="page-header">
+		Playing...
+		<small>
+			<strong><em>{{clash.parties[0].name}}</em></strong>
+			vs.
+			<strong><em>{{clash.parties[1].name}}</em></strong>
+		</small>
+	</h1>
+
+	<div class="row">
+		<div class="col-xs-6" ng-repeat="party in clash.parties">
+			<div class="box" ng-class="{ 'box-success': $index == 0, 'box-warning': $index == 1 }">
+				<div class="box-header">
+					<h2 class="box-title text-center" style="width: 100%;"><strong>{{party.name}}</strong></h2>
+				</div>
+				<div class="box-body">
+					<h1 class="text-center"><strong>{{clash.pointsFor(party).length || 0}}</strong></h1>
+
+					<div class="small-box bg-aqua">
+						<div class="inner">
+							<div class="btn-group btn-group-justified">
+								<div class="btn-group btn-group-lg" ng-repeat="reason in pointDetails.reasons">
+									<button class="btn bg-olive btn-block" ng-disabled="pointDetails.current.reason == reason" ng-click="pointDetails.current.reason = reason">{{reason|pointLabel}}</button>
+								</div>
+							</div>
+							<div class="btn-group btn-group-justified">
+								<div class="btn-group btn-group-lg" ng-repeat="handle in pointDetails.handles">
+									<button class="btn btn-warning btn-block" ng-disabled="pointDetails.current.handle == handle" ng-click="pointDetails.current.handle = handle">{{handle|pointLabel}}</button>
+								</div>
+							</div>
+							<div class="btn-group btn-group-justified">
+								<div class="btn-group btn-group-lg" ng-repeat="spin in pointDetails.spins">
+									<button class="btn btn-info btn-block" ng-disabled="pointDetails.current.spin == spin" ng-click="pointDetails.current.spin = spin">{{spin|pointLabel}}</button>
+								</div>
+							</div>
+						</div>
+						<div class="small-box-footer clickable">
+							<button class="btn btn-success btn-lg btn-block" ng-click="pointFor(party)">
+								<h4><i class="fa fa-plus"></i></h4>
+							</button>
+						</div>
+					</div>
+
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="box box-primary">
+		<div class="box-body">
+			<button class="btn bg-orange btn-lg btn-block" ng-click="undoPoint()">
+				<i class="fa fa-undo"></i>
+				Undo last point
+			</button>
+		</div>
+	</div>
+
+
 	<h1>Playing clash</h1>
 
 	<div style="width: 50%; float: left;" ng-repeat="party in clash.parties">
