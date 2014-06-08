@@ -1,33 +1,72 @@
 <div>
-	<h1>Clash definition</h1>
-	<ul>
-		<li>
-			Set points:
-			<button ng-disabled="clashDetails.pointsToWin == 11" ng-click="clashDetails.pointsToWin = 11">11 (small)</button>
-			<button ng-disabled="clashDetails.pointsToWin == 21" ng-click="clashDetails.pointsToWin = 21">21 (large)</button>
-		</li>
-		<li>
-			First serve:
-			<ol>
-				<li ng-repeat="party in parties">
-					{{party.name}}
-					<ol>
-						<li ng-repeat="member in party.individuals">
-							<button ng-disabled="clashDetails.firstToServe == member" ng-click="clashDetails.firstToServe = member">{{member.fullName()}}</button>
-						</li>
-					</ol>
-				</li>
-			</ol>
-		</li>
-		<li>
-			First to receive:
-			<span ng-hide="receivingParty()">will enable after selecting first server.</span>
-			<ol>
-				<li ng-repeat="member in receivingParty().individuals">
-					<button ng-disabled="clashDetails.firstToReceive == member" ng-click="clashDetails.firstToReceive = member">{{member.fullName()}}</button>
-				</li>
-			</ol>
-		</li>
-	</ul>
-	<button ng-disabled="!clashDetails.isValid()" ng-click="next();">Next, Play!</button>
+	<h1 class="page-header">
+		Define clash
+		<small>Enter clash details: first to serve, set type, etc.</small>
+	</h1>
+
+	<div class="box box-primary">
+		<div class="box-body">
+			<form role="form">
+				<div class="form-group">
+					<label>Set points</label>
+					<div class="row">
+						<div class="col-md-6">
+							<button class="btn btn-default btn-block" ng-disabled="clashDetails.pointsToWin == 11" ng-click="clashDetails.pointsToWin = 11">11 (small)</button>
+						</div>
+						<div class="col-md-6">
+							<button class="btn btn-default btn-block" ng-disabled="clashDetails.pointsToWin == 21" ng-click="clashDetails.pointsToWin = 21">21 (large)</button>
+						</div>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label>First to serve:</label>
+					<div class="row">
+						<div class="col-md-6" ng-repeat="party in parties">
+							<div class="box" ng-class="{ 'box-success': $index == 0, 'box-warning': $index == 1 }">
+								<div class="box-header">
+									<h3 class="box-title">
+										{{party.name}}
+									</h3>
+								</div>
+								<div class="box-body">
+									<ul class="nav nav-pills nav-stacked">
+										<li ng-repeat="member in party.individuals" ng-class="{ active: clashDetails.firstToServe == member }">
+											<a class="clickable" ng-click="clashDetails.firstToServe = member; clashDetails.firstToReceive = null;">
+												{{member.fullName()}}
+											</a>
+										</li>
+									</ul>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label>First to receive:</label>
+					<span ng-hide="receivingParty()">will enable after selecting first server.</span>
+					<div class="row" ng-show="receivingParty()">
+						<div class="col-md-6" ng-repeat="member in receivingParty().individuals">
+							<ul class="nav nav-pills nav-stacked">
+								<li ng-class="{ active: clashDetails.firstToReceive == member }">
+									<a class="clickable" ng-click="clashDetails.firstToReceive = member">
+										{{member.fullName()}}
+									</a>
+								</li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+
+	<div class="box box-solid">
+		<div class="box-body text-center">
+			<button class="btn btn-primary btn-lg btn-block" ng-disabled="!clashDetails.isValid()" ng-click="next()">
+				Next, Play!
+			</button>
+		</div>
+	</div>
 </div>
