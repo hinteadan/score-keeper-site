@@ -31,9 +31,9 @@
 		.filter('pointLabel', ['PointDetails', function (PointDetails) {
 			return function (input) {
 				switch (input) {
-					case PointDetails.reason.winningShot: return 'Winning Shot';
-					case PointDetails.reason.forcedErrorOnOpponent: return 'Forced Error';
-					case PointDetails.reason.unforcedErrorByOpponent: return 'Unforced Error';
+					case PointDetails.reason.winningShot: return 'Winner';
+					case PointDetails.reason.forcedErrorOnOpponent: return 'Forced Er.';
+					case PointDetails.reason.unforcedErrorByOpponent: return 'Unforced Er.';
 					default: return input;
 				}
 			};

@@ -1,11 +1,6 @@
 ﻿<div>
-	<h1 class="page-header">
-		Playing...
-		<small>
-			<strong><em>{{clash.parties[0].name}}</em></strong>
-			vs.
-			<strong><em>{{clash.parties[1].name}}</em></strong>
-		</small>
+	<h1 class="text-center text-success" ng-show="scoreProjection.isWon">
+		Set won by <strong>{{scoreProjection.winner.name}}</strong>
 	</h1>
 
 	<div class="row">
@@ -48,7 +43,7 @@
 							</span>
 						</div>
 						<div class="small-box-footer clickable">
-							<button class="btn btn-success btn-lg btn-block" ng-click="pointFor(party)">
+							<button class="btn btn-success btn-lg btn-block" ng-click="pointFor(party)" ng-disabled="scoreProjection.isWon">
 								<h4><i class="fa fa-plus"></i></h4>
 							</button>
 						</div>
@@ -65,49 +60,23 @@
 				<i class="fa fa-undo"></i>
 				Undo last point
 			</button>
+			<hr />
+			<div class="small-box bg-aqua">
+				<div class="inner text-center">
+					<h4><strong>Clash info</strong></h4>
+					<strong>{{scoreProjection.serving.fullName()}}</strong>
+					serves to
+					<em>{{scoreProjection.receiving.fullName()}}</em>
+				</div>
+				<a class="small-box-footer clickable">
+					More stats <i class="fa fa-plus-circle"></i>
+				</a>
+			</div>
+			<button class="btn bg-navy btn-lg btn-block">
+				<i class="fa fa-cloud-upload"></i>
+				Commit clash
+			</button>
 		</div>
 	</div>
-
-
-	<h1>Playing clash</h1>
-
-	<div style="width: 50%; float: left;" ng-repeat="party in clash.parties">
-		<h2>{{party.name}}</h2>
-		<div>
-			<h3>{{clash.pointsFor(party).length || 0}}</h3>
-		</div>
-		<fieldset>
-			<legend>Score point</legend>
-			<div ng-hide="party.individuals.length == 1">
-				Credit to:
-				<button ng-repeat="member in party.individuals" ng-disabled="pointDetails.current.creditTo == member" ng-click="pointDetails.current.creditTo = member">{{member.fullName()}}</button>
-			</div>
-			<div>
-				<button ng-repeat="reason in pointDetails.reasons" ng-disabled="pointDetails.current.reason == reason" ng-click="pointDetails.current.reason = reason">{{reason|pointLabel}}</button>
-			</div>
-			<div>
-				<button ng-repeat="handle in pointDetails.handles" ng-disabled="pointDetails.current.handle == handle" ng-click="pointDetails.current.handle = handle">{{handle|pointLabel}}</button>
-			</div>
-			<div>
-				<button ng-repeat="spin in pointDetails.spins" ng-disabled="pointDetails.current.spin == spin" ng-click="pointDetails.current.spin = spin">{{spin|pointLabel}}</button>
-			</div>
-		</fieldset>
-		<button style="width: 100%; height: 30px;" ng-click="pointFor(party)">+1</button>
-	</div>
-
-	<div>
-		<strong>{{scoreProjection.serving.fullName()}}</strong>
-		serves to
-		<em>{{scoreProjection.receiving.fullName()}}</em>
-	</div>
-
-	<div ng-show="scoreProjection.isWon">
-		<h1>Game won by <strong>{{scoreProjection.winner.name}}</strong></h1>
-	</div>
-
-	<button ng-click="undoPoint()">Undo last point</button>
-	<button>Commit clash</button>
-
-	{{scoreProjection|json}}
 
 </div>
