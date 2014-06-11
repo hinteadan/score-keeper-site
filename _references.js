@@ -7,3 +7,4 @@
 
 /// <reference path="app/bower_components/jasmine/lib/jasmine-core/jasmine.js" />
 /// <reference path="app/bower_components/jasmine/lib/jasmine-core/boot/boot.js" />
+/// <reference path="app/scripts/common/localStore.js" />

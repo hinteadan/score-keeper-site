@@ -41,35 +41,31 @@
             return dataSet;
         }
 
+        function purgeFromLocalStorage() {
+            delete localStorage[entityType];
+        }
+
         initialize();
 
         //Public API
         this.add = function (entity) {
-
             addEntity(entity);
-
-            return {
-                then: function (callback) {
-                    callback.call(undefined, entity);
-                }
-            };
+            return this;
         };
 
         this.query = function () {
-            return {
-                then: function (callback) {
-                    callback.call(undefined, fetchAllEntities());
-                }
-            };
+            return fetchAllEntities();
         };
 
         this.save = function () {
             saveToLocalStorage();
-            return {
-                then: function (callback) {
-                    callback.call(undefined);
-                }
-            };
+            return this;
+        };
+
+        this.purge = function () {
+            purgeFromLocalStorage();
+            dataSet = [];
+            return this;
         };
     }
 
