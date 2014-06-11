@@ -30,6 +30,9 @@
 					clash.theOtherParty(scoringParty).individuals :
 					scoringParty.individuals;
 			};
+			$scope.commit = function () {
+				clashStore.zap(clash);
+			};
 		}])
 
 		.filter('pointLabel', ['PointDetails', function (PointDetails) {

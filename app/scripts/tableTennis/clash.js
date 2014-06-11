@@ -11,12 +11,11 @@
 		};
 	}
 
-	angular.module('ScoreKeeper.TableTennis')
-	.service('Clash', ['ScoreProjector', function (ScoreProjector) {
+	function ClashService(ScoreProjector) {
 		var parties = [
 				new k.Party('Team Awesome').addMembers([new k.Individual('Hintea', 'Dan'), new k.Individual('Pascalau', 'Anca')]),
 				new k.Party('Team D&G').addMembers([new k.Individual('Pacurar', 'Georgiana'), new k.Individual('Mis', 'Diana Alina')])
-			],
+		],
 			clashDetails = new ClashDetails(11, parties[0].individuals[0], parties[1].individuals[0]),
 			clash = null,
 			projector = null;
@@ -42,8 +41,11 @@
 		};
 
 		this.restoreFromDto = function (dto) {
-
+			return this;
 		};
-	}]);
+	}
+
+	angular.module('ScoreKeeper.TableTennis')
+		.service('Clash', ['ScoreProjector', ClashService]);
 
 }).call(this, this.angular, this.H.ScoreKeeper);
