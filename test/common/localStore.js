@@ -14,6 +14,19 @@
             expect(store.query().length).toBe(0);
         });
 
+        it('stores basic types', function () {
+            store.add(null);
+            store.add(42);
+            store.add(true);
+            store.add(false);
+            store.add('some string');
+            expect(store.query()[0]).toBe(null);
+            expect(store.query()[1]).toBe(42);
+            expect(store.query()[2]).toBe(true);
+            expect(store.query()[3]).toBe(false);
+            expect(store.query()[4]).toBe('some string');
+        });
+
     });
 
 }).call(this, this.storage.LocalStore);
