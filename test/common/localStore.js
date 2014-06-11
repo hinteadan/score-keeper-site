@@ -37,6 +37,13 @@
             expect(store.query()[4]).toBe('some string');
         });
 
+        it('stores dates', function () {
+            var date = new Date();
+            store.add(date);
+            fullyRefreshLocalStore();
+            expect(store.query()[0]).toEqual(date);
+        });
+
         it('stores complex entities', function () {
             var entity = {
                 id: 'entity-1',

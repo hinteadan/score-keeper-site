@@ -1,6 +1,39 @@
 ﻿(function (JSON, localStorage, undefined) {
     'use strict';
 
+    var regexIsoDate = /^(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2}):(\d{2}(?:\.\d*))(?:Z|(\+|-)([\d|:]*))?$/;
+
+    function fixDateOrGiveBack(value) {
+
+        if (typeof value === 'string') {
+            var isIsoDate = regexIsoDate.test(value);
+            if (isIsoDate) {
+                return new Date(value);
+            }
+        }
+
+        return value;
+    };
+
+    function isObjectOrArray(obj){
+        return typeof obj === 'object';
+    }
+
+    function fixDates(obj) {
+        if (!isObjectOrArray(obj)) {
+            return obj;
+        }
+
+        for (var property in obj) {
+            if (isObjectOrArray(obj[property])) {
+                fixDates(obj[property]);
+            }
+            obj[property] = fixDateOrGiveBack(obj[property]);
+        }
+
+        return obj;
+    }
+
     function LocalStore(entityType, entityFactory) {
 
         var dataSet = [];
@@ -21,7 +54,7 @@
                 return;
             }
 
-            var storeEntries = JSON.parse(localStorage[entityType]);
+            var storeEntries = fixDates(JSON.parse(localStorage[entityType]));
 
             for (var key in storeEntries) {
                 dataSet.push(entityFactory(storeEntries[key]));
