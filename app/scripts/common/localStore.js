@@ -70,6 +70,16 @@
             saveToLocalStorage();
         }
 
+        function removeEntity(entity) {
+        	for (var i = 0; i < dataSet.length; i++) {
+        		if (dataSet[i] === entity) {
+        			dataSet.splice(i, 1);
+        			break;
+        		}
+        	}
+        	saveToLocalStorage();
+        }
+
         function fetchAllEntities() {
             return dataSet;
         }
@@ -86,8 +96,17 @@
             return this;
         };
 
+        this.zap = function (entity) {
+        	removeEntity(entity);
+        	return this;
+        };
+
         this.query = function () {
             return fetchAllEntities();
+        };
+
+        this.any = function () {
+        	return fetchAllEntities().length > 0;
         };
 
         this.save = function () {
