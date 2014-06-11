@@ -2,16 +2,12 @@
 	'use strict';
 
 	angular.module('ScoreKeeper.TableTennis')
+	.controller('restore', ['$scope', 'Clash', 'ClashLocalStore', function ($scope, clash, clashStore) {
+		/// <param name='clashStore' type='storage.LocalStore' />
 
-		.controller('restore', ['$scope', '$window', 'Clash', 'ClashLocalStore', function ($scope, $window, clash, clashStore) {
-			/// <param name='clashStore' type='storage.LocalStore' />
+		$scope.any = clashStore.any;
+		$scope.clashes = clashStore.query();
 
-			if (!clashStore.any()) {
-				$window.location.href = $window.location.href.substr(0, $window.location.href.indexOf('#'));
-			}
-
-
-
-		}]);
+	}]);
 
 }).call(this, this.angular);
