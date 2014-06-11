@@ -1,4 +1,4 @@
-﻿(function (angular, k) {
+﻿(function (angular) {
 	'use strict';
 
 	angular.module('ScoreKeeper.TableTennis')
@@ -22,7 +22,7 @@
 				$scope.scoreProjection = clash.projectScore().now();
 			};
 			$scope.pointCreditPossibleMembers = function (scoringParty) {
-				return $scope.pointDetails.current.reason == PointDetails.reason.unforcedErrorByOpponent ?
+				return $scope.pointDetails.current.reason === PointDetails.reason.unforcedErrorByOpponent ?
 					clash.theOtherParty(scoringParty).individuals :
 					scoringParty.individuals;
 			};
@@ -39,4 +39,4 @@
 			};
 		}]);
 
-}).call(this, this.angular, this.H.ScoreKeeper);
+}).call(this, this.angular);
