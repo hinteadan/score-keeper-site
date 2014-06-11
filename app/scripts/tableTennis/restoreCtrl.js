@@ -7,6 +7,14 @@
 
 		$scope.any = clashStore.any;
 		$scope.clashes = clashStore.query();
+		$scope.restore = function (dto) {
+			if (!confirm('Are you sure you want to restore the selected clash?')) {
+				return;
+			}
+			clash.restoreFromDto(dto);
+			clashStore.zap(dto);
+			clashStore.add(clash);
+		};
 
 	}]);
 

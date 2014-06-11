@@ -1,127 +1,133 @@
 ﻿(function (JSON, localStorage, undefined) {
-    'use strict';
+	'use strict';
 
-    var regexIsoDate = /^(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2}):(\d{2}(?:\.\d*))(?:Z|(\+|-)([\d|:]*))?$/;
+	var regexIsoDate = /^(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2}):(\d{2}(?:\.\d*))(?:Z|(\+|-)([\d|:]*))?$/;
 
-    function fixDateOrGiveBack(value) {
+	function fixDateOrGiveBack(value) {
 
-        if (typeof value === 'string') {
-            var isIsoDate = regexIsoDate.test(value);
-            if (isIsoDate) {
-                return new Date(value);
-            }
-        }
+		if (typeof value === 'string') {
+			var isIsoDate = regexIsoDate.test(value);
+			if (isIsoDate) {
+				return new Date(value);
+			}
+		}
 
-        return value;
-    }
+		return value;
+	}
 
-    function isObjectOrArray(obj){
-        return typeof obj === 'object';
-    }
+	function isObjectOrArray(obj) {
+		return typeof obj === 'object';
+	}
 
-    function fixDates(obj) {
-        if (!isObjectOrArray(obj)) {
-            return obj;
-        }
+	function fixDates(obj) {
+		if (!isObjectOrArray(obj)) {
+			return obj;
+		}
 
-        for (var property in obj) {
-            if (isObjectOrArray(obj[property])) {
-                fixDates(obj[property]);
-            }
-            obj[property] = fixDateOrGiveBack(obj[property]);
-        }
+		for (var property in obj) {
+			if (isObjectOrArray(obj[property])) {
+				fixDates(obj[property]);
+			}
+			obj[property] = fixDateOrGiveBack(obj[property]);
+		}
 
-        return obj;
-    }
+		return obj;
+	}
 
-    function LocalStore(entityType, entityFactory) {
+	function LocalStore(entityType, entityFactory) {
 
-        var dataSet = [];
+		var dataSet = [];
 
-        function ensureEntityFactory() {
-            if (typeof (entityFactory) === 'function') {
-                return;
-            }
-            entityFactory = function (storeEntry) {
-                return storeEntry;
-            };
-        }
+		function ensureEntityFactory() {
+			if (typeof (entityFactory) === 'function') {
+				return;
+			}
+			entityFactory = function (storeEntry) {
+				return storeEntry;
+			};
+		}
 
-        function initialize() {
-            ensureEntityFactory();
+		function initialize() {
+			ensureEntityFactory();
 
-            if (localStorage[entityType] === undefined) {
-                return;
-            }
+			if (localStorage[entityType] === undefined) {
+				return;
+			}
 
-            var storeEntries = fixDates(JSON.parse(localStorage[entityType]));
+			var storeEntries = fixDates(JSON.parse(localStorage[entityType]));
 
-            for (var key in storeEntries) {
-                dataSet.push(entityFactory(storeEntries[key]));
-            }
-        }
+			for (var key in storeEntries) {
+				dataSet.push(entityFactory(storeEntries[key]));
+			}
+		}
 
-        function saveToLocalStorage() {
-            localStorage[entityType] = JSON.stringify(dataSet);
-        }
+		function purgeFromLocalStorage() {
+			delete localStorage[entityType];
+		}
 
-        function addEntity(entity) {
-            dataSet.push(entity);
-            saveToLocalStorage();
-        }
+		function saveToLocalStorage() {
+			if (!dataSet.length) {
+				purgeFromLocalStorage();
+				return;
+			}
 
-        function removeEntity(entity) {
-        	for (var i = 0; i < dataSet.length; i++) {
-        		if (dataSet[i] === entity) {
-        			dataSet.splice(i, 1);
-        			break;
-        		}
-        	}
-        	saveToLocalStorage();
-        }
+			localStorage[entityType] = JSON.stringify(dataSet);
+		}
 
-        function fetchAllEntities() {
-            return dataSet;
-        }
+		function addEntity(entity) {
+			dataSet.push(entity);
+			saveToLocalStorage();
+		}
 
-        function purgeFromLocalStorage() {
-            delete localStorage[entityType];
-        }
+		function removeEntity(entity) {
+			for (var i = 0; i < dataSet.length; i++) {
+				if (dataSet[i] === entity) {
+					dataSet.splice(i, 1);
+					break;
+				}
+			}
+			saveToLocalStorage();
 
-        initialize();
+		}
 
-        //Public API
-        this.add = function (entity) {
-            addEntity(entity);
-            return this;
-        };
+		function fetchAllEntities() {
+			return dataSet;
+		}
 
-        this.zap = function (entity) {
-        	removeEntity(entity);
-        	return this;
-        };
+		initialize();
 
-        this.query = function () {
-            return fetchAllEntities();
-        };
+		//Public API
+		this.add = function (entity) {
+			addEntity(entity);
+			return this;
+		};
 
-        this.any = function () {
-        	return fetchAllEntities().length > 0;
-        };
+		this.zap = function (entity) {
+			removeEntity(entity);
+			return this;
+		};
 
-        this.save = function () {
-            saveToLocalStorage();
-            return this;
-        };
+		this.query = function () {
+			return fetchAllEntities();
+		};
 
-        this.purge = function () {
-            purgeFromLocalStorage();
-            dataSet = [];
-            return this;
-        };
-    }
+		this.any = function () {
+			return fetchAllEntities().length > 0;
+		};
 
-    this.storage = this.storage || {};
-    this.storage.LocalStore = LocalStore;
+		this.save = function () {
+			saveToLocalStorage();
+			return this;
+		};
+
+		this.purge = function () {
+			purgeFromLocalStorage();
+			dataSet = [];
+			return this;
+		};
+	}
+
+	this.storage = this.storage || {};
+	this.storage.LocalStore = LocalStore;
 
 }).call(this, this.JSON, this.localStorage);

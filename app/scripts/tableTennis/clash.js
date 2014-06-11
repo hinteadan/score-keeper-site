@@ -1,6 +1,13 @@
 ﻿(function (angular, k) {
 	'use strict';
 
+	function clearArray(a) {
+		/// <param name='a' type='Array' />
+		while (a.length) {
+			a.pop();
+		}
+	}
+
 	function ClashDetails(pointsToWin, firstToServe, firstToReceive) {
 		this.pointsToWin = pointsToWin || 21;
 		this.firstToServe = firstToServe;
@@ -42,7 +49,18 @@
 		};
 
 		this.restoreFromDto = function (dto) {
-			return self;
+			clearArray(parties);
+			angular.forEach(dto.parties, function (p) {
+				var party = new k.Party(p.name);
+				angular.forEach(p.individuals, function (m) {
+					party.addMember(new k.Individual(m.firstName, m.lastName));
+				});
+				parties.push(party);
+			});
+			for (var p in dto.details) {
+				clashDetails[p] = dto.details[p];
+			}
+			clash = null;
 		};
 	}
 
