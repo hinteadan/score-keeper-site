@@ -3,7 +3,9 @@
 
 	angular.module('ScoreKeeper.TableTennis')
 
-		.controller('play', ['$scope', 'Clash', 'PointDetails', function ($scope, clash, PointDetails) {
+		.controller('play', ['$scope', 'Clash', 'PointDetails', 'ClashLocalStore', function ($scope, clash, PointDetails, clashStore) {
+			/// <param name='clashStore' type='storage.LocalStore' />
+
 			$scope.clash = clash.clash();
 			$scope.scoreProjection = clash.projectScore().now();
 			$scope.pointDetails = {
@@ -16,10 +18,12 @@
 				$scope.clash.pointWith($scope.pointDetails.current).for(party);
 				$scope.pointDetails.current = new PointDetails();
 				$scope.scoreProjection = clash.projectScore().now();
+				clashStore.save();
 			};
 			$scope.undoPoint = function () {
 				$scope.clash.undoPoint();
 				$scope.scoreProjection = clash.projectScore().now();
+				clashStore.save();
 			};
 			$scope.pointCreditPossibleMembers = function (scoringParty) {
 				return $scope.pointDetails.current.reason === PointDetails.reason.unforcedErrorByOpponent ?

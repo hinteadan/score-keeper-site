@@ -31,6 +31,7 @@
 			if (!clash) {
 				clash = new k.Clash(parties, clashDetails);
 			}
+			this.skClash = clash;
 			return clash;
 		};
 		this.projectScore = function () {
@@ -38,6 +39,10 @@
 				projector = new ScoreProjector(this.clash());
 			}
 			return projector;
+		};
+
+		this.restoreFromDto = function (dto) {
+
 		};
 	}]);
 
