@@ -1,4 +1,4 @@
-﻿(function (angular) {
+﻿(function (angular, confirm) {
 	'use strict';
 
 	angular.module('ScoreKeeper.TableTennis')
@@ -18,4 +18,4 @@
 
 	}]);
 
-}).call(this, this.angular);
+}).call(this, this.angular, this.confirm);

@@ -22,11 +22,10 @@
 		var parties = [
 				new k.Party('Team Awesome').addMembers([new k.Individual('Hintea', 'Dan'), new k.Individual('Pascalau', 'Anca')]),
 				new k.Party('Team D&G').addMembers([new k.Individual('Pacurar', 'Georgiana'), new k.Individual('Mis', 'Diana Alina')])
-			],
+		],
 			clashDetails = new ClashDetails(11, parties[0].individuals[0], parties[1].individuals[0]),
 			clash = null,
-			projector = null,
-			self = this;
+			projector = null;
 
 		this.parties = parties;
 		this.theOtherParty = function (currentParty) {
