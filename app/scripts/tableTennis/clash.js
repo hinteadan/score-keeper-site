@@ -1,4 +1,4 @@
-﻿(function (angular, k) {
+﻿(function (angular, k, _) {
 	'use strict';
 
 	function clearArray(a) {
@@ -20,10 +20,10 @@
 
 	function ClashService(ScoreProjector) {
 		var parties = [
-				new k.Party('Team Awesome').addMembers([new k.Individual('Hintea', 'Dan'), new k.Individual('Pascalau', 'Anca')]),
-				new k.Party('Team D&G').addMembers([new k.Individual('Pacurar', 'Georgiana'), new k.Individual('Mis', 'Diana Alina')])
-		],
-			clashDetails = new ClashDetails(11, parties[0].individuals[0], parties[1].individuals[0]),
+				new k.Party(),
+				new k.Party()
+			],
+			clashDetails = new ClashDetails(),
 			clash = null,
 			projector = null;
 
@@ -59,11 +59,17 @@
 			for (var p in dto.details) {
 				clashDetails[p] = dto.details[p];
 			}
-			clash = null;
+			clash = new k.Clash(parties, clashDetails);
+			this.skClash = clash;
+			angular.forEach(dto.skClash.points, function (point) {
+				var party = _.find(parties, { name: point.party.name });
+				clash.pointWith(point.details).for(party);
+				_.last(clash.points).timestamp = point.timestamp;
+			});
 		};
 	}
 
 	angular.module('ScoreKeeper.TableTennis')
 		.service('Clash', ['ScoreProjector', ClashService]);
 
-}).call(this, this.angular, this.H.ScoreKeeper);
+}).call(this, this.angular, this.H.ScoreKeeper, this._);
