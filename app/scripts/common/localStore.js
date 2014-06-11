@@ -13,7 +13,7 @@
         }
 
         return value;
-    };
+    }
 
     function isObjectOrArray(obj){
         return typeof obj === 'object';
