@@ -75,7 +75,7 @@
 		    clashDetails.endedOn = new Date();
 		};
 
-		this.restoreFromDto = function (dto) {
+		this.revive = function (dto) {
 		    clearArray(parties);
 		    angular.forEach(dto.parties, function (p) { parties.push(k.Party.revive(p)); });
 		    clashDetails.revive(dto.details, _.flatten(_.pluck(parties, 'individuals')));

@@ -11,7 +11,7 @@
 			if (!confirm('Are you sure you want to restore the selected clash?')) {
 				return;
 			}
-			clash.restoreFromDto(dto);
+			clash.revive(dto);
 			clashStore.replace(dto).with(clash);
 		};
 
