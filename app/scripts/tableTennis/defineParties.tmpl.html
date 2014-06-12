@@ -48,9 +48,9 @@
 
 	<div class="box box-solid">
 		<div class="box-body text-center">
-			<button class="btn btn-primary btn-lg btn-block" ng-click="next()">
-				Next, define clash
-			</button>
+            <button class="btn btn-primary btn-lg btn-block" ng-disabled="!isDefinitionValid()" ng-click="next()">
+                Next, define clash
+            </button>
 		</div>
 	</div>
 </div>

@@ -1,4 +1,4 @@
-﻿(function (angular, k) {
+﻿(function (angular, k, _) {
 	'use strict';
 
 	angular.module('ScoreKeeper.TableTennis')
@@ -20,7 +20,12 @@
 				clashStore.add(clash);
 				$location.path('/clash');
 			};
+			$scope.isDefinitionValid = function () {
+			    return _.all(clash.parties, function (p) {
+                    return p.name && p.individuals.length > 0 && p.individuals.length === clash.parties[0].individuals.length;
+			    });
+			};
 
 		}]);
 
-}).call(this, this.angular, this.H.ScoreKeeper);
+}).call(this, this.angular, this.H.ScoreKeeper, this._);
