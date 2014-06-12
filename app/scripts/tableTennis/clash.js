@@ -62,8 +62,7 @@
 		    clearArray(parties);
 		    angular.forEach(dto.parties, function (p) { parties.push(k.Party.revive(p)); });
 		    clashDetails.revive(dto.details, _.flatten(_.pluck(parties, 'individuals')));
-		    clash = k.Clash.revive(dto.skClash, parties);
-		    clash.details = clashDetails;
+		    clash = k.Clash.revive(dto.skClash, parties, function () { return clashDetails; });
 			this.skClash = clash;
 		};
 	}
