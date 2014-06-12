@@ -12,8 +12,8 @@
 				return;
 			}
 			clash.restoreFromDto(dto);
-			clashStore.zap(dto);
-			clashStore.add(clash);
+
+			clashStore.replace(dto).with(clash);
 		};
 
 	}]);
