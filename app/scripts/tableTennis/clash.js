@@ -31,12 +31,18 @@
 		    for (var property in dto) {
 		        this[property] = dto[property];
 		    }
-		    this.firstToServe = _.find(memberPool, function (p) {
-		        return p.firstName === dto.firstToServe.firstName && p.lastName === dto.firstToServe.lastName;
-		    });
-		    this.firstToReceive = _.find(memberPool, function (p) {
-		        return p.firstName === dto.firstToReceive.firstName && p.lastName === dto.firstToReceive.lastName;
-		    });
+
+		    if (dto.firstToServe) {
+		        this.firstToServe = _.find(memberPool, function (p) {
+		            return p.firstName === dto.firstToServe.firstName && p.lastName === dto.firstToServe.lastName;
+		        });
+		    }
+
+		    if (dto.firstToReceive) {
+		        this.firstToReceive = _.find(memberPool, function (p) {
+		            return p.firstName === dto.firstToReceive.firstName && p.lastName === dto.firstToReceive.lastName;
+		        });
+		    }
 		};
 	}
 
@@ -79,8 +85,10 @@
 		    clearArray(parties);
 		    angular.forEach(dto.parties, function (p) { parties.push(k.Party.revive(p)); });
 		    clashDetails.revive(dto.details, _.flatten(_.pluck(parties, 'individuals')));
-		    clash = k.Clash.revive(dto.skClash, parties, function () { return clashDetails; });
-			this.skClash = clash;
+		    if (dto.skClash) {
+		        clash = k.Clash.revive(dto.skClash, parties, function () { return clashDetails; });
+		        this.skClash = clash;
+		    }
 		};
 	}
 
