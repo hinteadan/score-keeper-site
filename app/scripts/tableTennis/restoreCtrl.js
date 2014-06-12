@@ -12,7 +12,6 @@
 				return;
 			}
 			clash.restoreFromDto(dto);
-
 			clashStore.replace(dto).with(clash);
 		};
 
