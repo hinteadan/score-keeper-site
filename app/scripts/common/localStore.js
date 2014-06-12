@@ -79,15 +79,32 @@
 			saveToLocalStorage();
 		}
 
-		function removeEntity(entity) {
-			for (var i = 0; i < dataSet.length; i++) {
-				if (dataSet[i] === entity) {
-					dataSet.splice(i, 1);
-					break;
-				}
-			}
-			saveToLocalStorage();
+		function indexOf(entity) {
+		    for (var i = 0; i < dataSet.length; i++) {
+		        if (dataSet[i] === entity) {
+		            return i;
+		        }
+		    }
+		    return false;
+		}
 
+		function removeEntity(entity) {
+		    var index = indexOf(entity);
+		    if (!index) {
+		        return;
+		    }
+		    dataSet.splice(index, 1);
+		    saveToLocalStorage();
+		}
+
+		function replace(thisEntity, withThisEntity)
+		{
+		    var index = indexOf(thisEntity);
+		    if (!index) {
+		        return;
+		    }
+		    dataSet[index] = withThisEntity;
+		    saveToLocalStorage();
 		}
 
 		function fetchAllEntities() {
@@ -105,6 +122,15 @@
 		this.zap = function (entity) {
 			removeEntity(entity);
 			return this;
+		};
+
+		this.replace = function (thisEntity) {
+		    return {
+		        with: function (thatEntity) {
+		            replace(thisEntity, thatEntity);
+		            return this;
+		        }
+		    };
 		};
 
 		this.query = function () {
