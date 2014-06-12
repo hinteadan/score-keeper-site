@@ -16,6 +16,17 @@
 		this.isValid = function () {
 			return this.firstToServe && this.firstToReceive;
 		};
+		this.revive = function (dto, memberPool) {
+		    for (var property in dto) {
+		        this[property] = dto[property];
+		    }
+		    this.firstToServe = _.find(memberPool, function (p) {
+		        return p.firstName === dto.firstToServe.firstName && p.lastName === dto.firstToServe.lastName;
+		    });
+		    this.firstToReceive = _.find(memberPool, function (p) {
+		        return p.firstName === dto.firstToReceive.firstName && p.lastName === dto.firstToReceive.lastName;
+		    });
+		};
 	}
 
 	function ClashService(ScoreProjector) {
@@ -48,24 +59,12 @@
 		};
 
 		this.restoreFromDto = function (dto) {
-			clearArray(parties);
-			angular.forEach(dto.parties, function (p) {
-				var party = new k.Party(p.name);
-				angular.forEach(p.individuals, function (m) {
-					party.addMember(new k.Individual(m.firstName, m.lastName));
-				});
-				parties.push(party);
-			});
-			for (var p in dto.details) {
-				clashDetails[p] = dto.details[p];
-			}
-			clash = new k.Clash(parties, clashDetails);
+		    clearArray(parties);
+		    angular.forEach(dto.parties, function (p) { parties.push(k.Party.revive(p)); });
+		    clashDetails.revive(dto.details, _.flatten(_.pluck(parties, 'individuals')));
+		    clash = k.Clash.revive(dto.skClash, parties);
+		    clash.details = clashDetails;
 			this.skClash = clash;
-			angular.forEach(dto.skClash.points, function (point) {
-				var party = _.find(parties, { name: point.party.name });
-				clash.pointWith(point.details).for(party);
-				_.last(clash.points).timestamp = point.timestamp;
-			});
 		};
 	}
 
