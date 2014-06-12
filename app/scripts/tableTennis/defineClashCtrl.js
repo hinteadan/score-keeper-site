@@ -16,7 +16,8 @@
 				});
 			};
 			$scope.next = function () {
-				clashStore.save();
+			    clash.play();
+			    clashStore.save();
 				$location.path('/play');
 			};
 		}]);

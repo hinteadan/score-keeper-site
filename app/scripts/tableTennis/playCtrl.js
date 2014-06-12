@@ -31,7 +31,9 @@
 					scoringParty.individuals;
 			};
 			$scope.commit = function () {
-				clashStore.zap(clash);
+			    clash.stop();
+			    clashStore.zap(clash);
+                //TODO Commit to HTTP Store
 			};
 		}])
 

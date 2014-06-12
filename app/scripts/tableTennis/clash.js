@@ -13,8 +13,19 @@
 		this.firstToServe = firstToServe;
 		this.firstToReceive = firstToReceive;
 		this.serveChangeAfter = 5;
+
+		this.createdOn = new Date();
+		this.startedOn = null;
+		this.endedOn = null;
+
 		this.isValid = function () {
 			return this.firstToServe && this.firstToReceive;
+		};
+		this.hasBegun = function () {
+		    return this.startedOn !== null;
+		};
+		this.hasEnded = function () {
+		    return this.endedOn !== null;
 		};
 		this.revive = function (dto, memberPool) {
 		    for (var property in dto) {
@@ -56,6 +67,12 @@
 				projector = new ScoreProjector(this.clash());
 			}
 			return projector;
+		};
+		this.play = function () {
+		    clashDetails.startedOn = new Date();
+		};
+		this.stop = function () {
+		    clashDetails.endedOn = new Date();
 		};
 
 		this.restoreFromDto = function (dto) {
