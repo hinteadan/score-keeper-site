@@ -78,6 +78,15 @@
             expect(store.query()[0]).toBe(entity);
         });
 
+        it('replaces an entity with another', function () {
+            var entityA = { id: 'entity-1' },
+                entityB = { id: 'entity-2' };
+            store.add(entityA);
+            store.replace(entityA).with(entityB);
+            expect(store.query().length).toBe(1);
+            expect(store.query()[0]).toBe(entityB);
+        });
+
     });
 
 }).call(this, this.storage.LocalStore);

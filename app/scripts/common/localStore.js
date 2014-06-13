@@ -107,7 +107,7 @@
 		function replace(thisEntity, withThisEntity)
 		{
 		    var index = indexOf(thisEntity);
-		    if (!index) {
+		    if (index === false) {
 		        return;
 		    }
 		    dataSet[index] = withThisEntity;
