@@ -1,9 +1,11 @@
 ﻿(function (angular) {
 	'use strict';
 
+	var log = this.console.log;
+
 	angular.module('ScoreKeeper.TableTennis')
 
-		.controller('play', ['$scope', 'Clash', 'PointDetails', 'ClashLocalStore', 'ClashStateRouter', 'eventSessionRestore', function ($scope, clash, PointDetails, clashStore, clashStateRouter, restore) {
+		.controller('play', ['$scope', 'Clash', 'PointDetails', 'ClashLocalStore', 'ClashStateRouter', 'DataStore', 'eventSessionRestore', function ($scope, clash, PointDetails, clashStore, clashStateRouter, dataStore, restore) {
 			/// <param name='clashStore' type='storage.LocalStore' />
 
 		    clashStateRouter.goToCurrentClashState();
@@ -38,7 +40,12 @@
 			$scope.commit = function () {
 			    clash.stop();
 			    clashStore.zap(clash);
-                //TODO Commit to HTTP Store
+			    dataStore.commit().then(function (id) {
+			        log(id);
+			    }, function (error) {
+			        log(error);
+			    });
+                
 			};
 		}])
 
