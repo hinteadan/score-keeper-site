@@ -74,11 +74,6 @@
 			localStorage[entityType] = JSON.stringify(dataSet);
 		}
 
-		function addEntity(entity) {
-			dataSet.push(entity);
-			saveToLocalStorage();
-		}
-
 		function indexOf(entity) {
 		    for (var i = 0; i < dataSet.length; i++) {
 		        if (dataSet[i] === entity) {
@@ -86,6 +81,18 @@
 		        }
 		    }
 		    return false;
+		}
+
+		function exists(entity) {
+		    return indexOf(entity) !== false;
+		}
+
+		function addEntity(entity) {
+		    if (exists(entity)) {
+		        return;
+		    }
+			dataSet.push(entity);
+			saveToLocalStorage();
 		}
 
 		function removeEntity(entity) {

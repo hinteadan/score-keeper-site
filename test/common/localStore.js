@@ -69,6 +69,15 @@
             expect(store.query()[0]).toEqual(entity);
         });
 
+        it('does not add the same entity twice', function () {
+            var entity = {};
+            store.add(entity);
+            store.add(entity);
+            store.add(entity);
+            expect(store.query().length).toBe(1);
+            expect(store.query()[0]).toBe(entity);
+        });
+
     });
 
 }).call(this, this.storage.LocalStore);
