@@ -1,8 +1,9 @@
 ﻿(function (angular, confirm, _) {
 	'use strict';
 
-	angular.module('ScoreKeeper.TableTennis')
-	.controller('restore', ['$scope', '$location', 'Clash', 'ClashLocalStore', function ($scope, $location, clash, clashStore) {
+    angular.module('ScoreKeeper.TableTennis')
+    .value('eventSessionRestore', 'clashSessionRestored')
+	.controller('restore', ['$scope', '$location', '$rootScope', 'Clash', 'ClashLocalStore', 'eventSessionRestore', function ($scope, $location, $rootScope, clash, clashStore, restoreEvent) {
 		/// <param name='clashStore' type='storage.LocalStore' />
 
 	    function isPartyNameless(p) {
@@ -41,6 +42,7 @@
 			clash.revive(dto);
 			clashStore.replace(dto).with(clash);
 			goToCurrentClashState();
+			$rootScope.$broadcast(restoreEvent);
 		};
 		$scope.purgeAll = function () {
 		    if (!confirm('Are you sure you want to permanently delete all the saved sessions?')) {

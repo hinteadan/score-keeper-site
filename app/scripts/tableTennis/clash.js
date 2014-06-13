@@ -91,6 +91,7 @@
 		    if (dto.skClash) {
 		        clash = k.Clash.revive(dto.skClash, parties, function () { return clashDetails; });
 		        this.skClash = clash;
+		        projector = null;
 		    }
 		};
 	}

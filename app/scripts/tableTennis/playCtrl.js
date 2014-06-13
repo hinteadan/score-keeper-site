@@ -3,9 +3,12 @@
 
 	angular.module('ScoreKeeper.TableTennis')
 
-		.controller('play', ['$scope', 'Clash', 'PointDetails', 'ClashLocalStore', function ($scope, clash, PointDetails, clashStore) {
+		.controller('play', ['$scope', 'Clash', 'PointDetails', 'ClashLocalStore', 'eventSessionRestore', function ($scope, clash, PointDetails, clashStore, restore) {
 			/// <param name='clashStore' type='storage.LocalStore' />
 
+		    $scope.$on(restore, function () {
+		        $scope.scoreProjection = clash.projectScore().now();
+		    });
 			$scope.clash = clash.clash;
 			$scope.scoreProjection = clash.projectScore().now();
 			$scope.pointDetails = {
