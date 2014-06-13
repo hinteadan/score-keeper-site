@@ -46,7 +46,8 @@
 		};
 	}
 
-	function ClashService(ScoreProjector) {
+	function ClashService($location, ScoreProjector) {
+
 		var parties = [
 				new k.Party(),
 				new k.Party()
@@ -97,6 +98,6 @@
 	}
 
 	angular.module('ScoreKeeper.TableTennis')
-		.service('Clash', ['ScoreProjector', ClashService]);
+		.service('Clash', ['$location', 'ScoreProjector', ClashService]);
 
 }).call(this, this.angular, this.H.ScoreKeeper, this._);

@@ -2,8 +2,10 @@
 	'use strict';
 
 	angular.module('ScoreKeeper.TableTennis')
-		.controller('defineClash', ['$scope', '$location', 'Clash', 'ClashLocalStore', function ($scope, $location, clash, clashStore) {
+		.controller('defineClash', ['$scope', '$location', 'Clash', 'ClashLocalStore', 'ClashStateRouter', function ($scope, $location, clash, clashStore, clashStateRouter) {
 			/// <param name='clashStore' type='storage.LocalStore' />
+
+		    clashStateRouter.goToCurrentClashState();
 
 			$scope.clashDetails = clash.details;
 			$scope.parties = clash.parties;

@@ -1,37 +1,10 @@
-﻿(function (angular, confirm, _) {
+﻿(function (angular, confirm) {
 	'use strict';
 
     angular.module('ScoreKeeper.TableTennis')
     .value('eventSessionRestore', 'clashSessionRestored')
-	.controller('restore', ['$scope', '$location', '$rootScope', 'Clash', 'ClashLocalStore', 'eventSessionRestore', function ($scope, $location, $rootScope, clash, clashStore, restoreEvent) {
+	.controller('restore', ['$scope', '$location', '$rootScope', 'Clash', 'ClashLocalStore', 'ClashStateRouter', 'eventSessionRestore', function ($scope, $location, $rootScope, clash, clashStore, clashStateRouter, restoreEvent) {
 		/// <param name='clashStore' type='storage.LocalStore' />
-
-	    function isPartyNameless(p) {
-	        return p.name.replace(/\s/gi, '') === '' ? true : false;
-	    }
-
-	    function isPartyEmpty(p) {
-	        return p.individuals.length === 0;
-	    }
-
-	    function isPartyNamelessOrEmpty(p) {
-	        return isPartyNameless(p) || isPartyEmpty(p);
-	    }
-
-	    function goToCurrentClashState() {
-	        if (_.any(clash.parties, isPartyNamelessOrEmpty)) {
-	            $location.path('/parties');
-	            return;
-	        }
-	        if (!clash.details.isValid() || !clash.details.hasBegun()) {
-	            $location.path('/clash');
-	            return;
-	        }
-	        if (!clash.details.hasEnded()) {
-	            $location.path('/play');
-	            return;
-	        }
-	    }
 
 		$scope.any = clashStore.any;
 		$scope.clashes = clashStore.query();
@@ -41,7 +14,7 @@
 			}
 			clash.revive(dto);
 			clashStore.replace(dto).with(clash);
-			goToCurrentClashState();
+			clashStateRouter.goToCurrentClashState();
 			$rootScope.$broadcast(restoreEvent);
 		};
 		$scope.purgeAll = function () {
@@ -53,4 +26,4 @@
 
 	}]);
 
-}).call(this, this.angular, this.confirm, this._);
+}).call(this, this.angular, this.confirm);
