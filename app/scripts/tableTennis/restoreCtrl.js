@@ -14,6 +14,12 @@
 			clash.revive(dto);
 			clashStore.replace(dto).with(clash);
 		};
+		$scope.purgeAll = function () {
+		    if (!confirm('Are you sure you want to permanently delete all the saved sessions?')) {
+		        return;
+		    }
+		    clashStore.purge();
+		};
 
 	}]);
 
