@@ -82,6 +82,9 @@
 		};
 
 		this.revive = function (dto) {
+		    if (this === dto) {
+		        return;
+		    }
 		    clearArray(parties);
 		    angular.forEach(dto.parties, function (p) { parties.push(k.Party.revive(p)); });
 		    clashDetails.revive(dto.details, _.flatten(_.pluck(parties, 'individuals')));
