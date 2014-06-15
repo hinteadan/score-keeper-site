@@ -21,8 +21,8 @@
 
         function projectWinnerOn(projection) {
             ///<param name="projection" type="Projection" />
-            var partyOnePoints = clash.pointsFor(clash.parties[0]).length,
-				partyTwoPoints = clash.pointsFor(clash.parties[1]).length;
+            var partyOnePoints = clash.scoreFor(clash.parties[0]),
+				partyTwoPoints = clash.scoreFor(clash.parties[1]);
 
             projection.isWon = false;
             projection.winner = null;
@@ -44,14 +44,14 @@
             var projection = new Projection(),
 				firstServingPartyIndex = _.contains(clash.parties[0].individuals, clash.details.firstToServe) ? 0 : 1,
 				firstReceivingPartyIndex = firstServingPartyIndex === 0 ? 1 : 0,
-				isTie = clash.pointsFor(clash.parties[0]).length >= clash.details.pointsToWin - 1 &&
-					clash.pointsFor(clash.parties[1]).length >= clash.details.pointsToWin - 1,
+				isTie = clash.scoreFor(clash.parties[0]) >= clash.details.pointsToWin - 1 &&
+					clash.scoreFor(clash.parties[1]) >= clash.details.pointsToWin - 1,
 				serveChangeOn = !isTie ? clash.details.serveChangeAfter : 1,
 				currentServingPartyIndex = Math.floor(clash.points.length / serveChangeOn) % 2 === 0 ? firstServingPartyIndex : firstReceivingPartyIndex,
 				currentReceivingPartyIndex = currentServingPartyIndex === 0 ? 1 : 0;
 
-            projection.scorePerPartyName[clash.parties[0].name] = clash.pointsFor(clash.parties[0]).length;
-            projection.scorePerPartyName[clash.parties[1].name] = clash.pointsFor(clash.parties[1]).length;
+            projection.scorePerPartyName[clash.parties[0].name] = clash.scoreFor(clash.parties[0]);
+            projection.scorePerPartyName[clash.parties[1].name] = clash.scoreFor(clash.parties[1]);
 
             switch (Math.floor(clash.points.length / serveChangeOn) % (clash.parties.length * clash.parties[0].individuals.length)) {
                 case 0:
