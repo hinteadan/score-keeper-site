@@ -13,6 +13,7 @@
 		this.firstToServe = firstToServe;
 		this.firstToReceive = firstToReceive;
 		this.serveChangeAfter = 5;
+		this.setsToWin = 4;
 
 		this.createdOn = new Date();
 		this.startedOn = null;
