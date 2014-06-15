@@ -55,6 +55,7 @@
 			],
 			clashDetails = new ClashDetails(),
 			clash = null,
+			clashSet = null,
 			projector = null;
 
 		this.parties = parties;
@@ -63,6 +64,15 @@
 		};
 		this.details = clashDetails;
 		this.ClashDetails = ClashDetails;
+		this.clashSet = function () {
+			if (!clashSet) {
+				clashSet = new k.ClashSet(
+					_.map(_.range(0, clashDetails.setsToWin, 1), function () { return new k.Clash(parties, clashDetails); }),
+					parties, clashDetails);
+			}
+			this.skClashSet = clashSet;
+			return clashSet;
+		};
 		this.clash = function () {
 			if (!clash) {
 				clash = new k.Clash(parties, clashDetails);
