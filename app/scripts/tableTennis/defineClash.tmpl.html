@@ -12,7 +12,7 @@
 					<label>Winning system is best of:</label>
 					<div class="btn-group btn-group-justified">
 						<div class="btn-group" ng-repeat="sets in [1,2,3,4,5,6,7,8,9,10,11]">
-							<button class="btn" ng-disabled="clashDetails.setsToWin == sets" ng-click="clashDetails.setsToWin = sets">{{sets*2-1}}</button>
+							<button class="btn btn-default" ng-disabled="clashDetails.setsToWin == sets" ng-click="clashDetails.setsToWin = sets">{{sets*2-1}}</button>
 						</div>
 					</div>
 				</div>
