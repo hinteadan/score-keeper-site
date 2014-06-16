@@ -82,7 +82,7 @@
 		};
 		this.projectScore = function () {
 			if (!projector) {
-				projector = new ScoreProjector(this.clash());
+				projector = new ScoreProjector(this.clashSet());
 			}
 			return projector;
 		};

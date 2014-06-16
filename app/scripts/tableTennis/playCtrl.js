@@ -13,7 +13,8 @@
 		    $scope.$on(restore, function () {
 		        $scope.scoreProjection = clash.projectScore().now();
 		    });
-			$scope.clash = clash.clash;
+		    $scope.clash = clash.clash;
+		    $scope.sets = clash.clashSet;
 			$scope.scoreProjection = clash.projectScore().now();
 			$scope.pointDetails = {
 				current: new PointDetails(),
