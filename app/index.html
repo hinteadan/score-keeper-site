@@ -11,15 +11,18 @@
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width">
     <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
-    <!-- build:css styles/vendor.css -->
-    <!-- bower:css -->
-    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css" />
-    <!-- endbower -->
-    <!-- endbuild -->
-    <!-- build:css({.tmp,app}) styles/main.css -->
-    <link rel="stylesheet" href="styles/gracket.css">
-    <link rel="stylesheet" href="styles/main.css">
-    <!-- endbuild -->
+
+	<!-- build:css styles/styles.css -->
+	<link rel="stylesheet" href="styles/gfonts.css">
+
+	<link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css" />
+	<link href="bower_components/AdminLTE/css/font-awesome.css" rel="stylesheet" />
+	<link href="bower_components/AdminLTE/css/ionicons.css" rel="stylesheet" />
+	<link href="bower_components/AdminLTE/css/AdminLTE.css" rel="stylesheet" />
+
+	<link rel="stylesheet" href="styles/gracket.css">
+	<link href="styles/main.css" rel="stylesheet" />
+	<!-- endbuild -->
 </head>
 <body ng-app="scoreKeeperSiteApp">
     <!--[if lt IE 7]>
@@ -45,19 +48,22 @@
     <script src="bower_components/es5-shim/es5-shim.js"></script>
     <script src="bower_components/json3/lib/json3.min.js"></script>
     <![endif]-->
-    <!-- build:js scripts/vendor.js -->
-    <!-- bower:js -->
-    <script src="bower_components/jquery/dist/jquery.js"></script>
-    <script src="bower_components/angular/angular.js"></script>
-    <script src="bower_components/angular-route/angular-route.js"></script>
-    <script src="bower_components/h.scoreKeeper/h.scoreKeeper.js"></script>
-    <script src="bower_components/jquery.gracket/jquery.gracket.js"></script>
-    <script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
-    <script src="bower_components/lodash/dist/lodash.compat.js"></script>
-    <script src="bower_components/h.dataStore/h.dataStore.js"></script>
-    <!-- endbower -->
-    <!-- endbuild -->
-    <!-- build:js({.tmp,app}) scripts/scripts.js -->
+
+	<!-- build:js scripts/common.js -->
+	<script src="bower_components/jquery/dist/jquery.js"></script>
+	<script src="bower_components/angular/angular.js"></script>
+	<script src="bower_components/angular-route/angular-route.js"></script>
+	<script src="bower_components/h.scoreKeeper/h.scoreKeeper.js"></script>
+	<script src="bower_components/jquery.gracket/jquery.gracket.js"></script>
+	<script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
+	<script src="bower_components/lodash/dist/lodash.compat.js"></script>
+	<script src="bower_components/h.dataStore/h.dataStore.js"></script>
+
+	<script src="scripts/common/localStore.js"></script>
+	<script src="scripts/common/pace.js"></script>
+	<!-- endbuild -->
+
+    <!-- build:js scripts/scripts.js -->
     <script src="scripts/tournamentWizard.js"></script>
 
     <script src="scripts/defineTournament/module.js"></script>

@@ -5,12 +5,15 @@
 
 	<meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
 
-	<!-- build:css styles/tabletennis/styles.css -->
+	<!-- build:css styles/styles.css -->
+	<link rel="stylesheet" href="styles/gfonts.css">
+
 	<link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css" />
 	<link href="bower_components/AdminLTE/css/font-awesome.css" rel="stylesheet" />
 	<link href="bower_components/AdminLTE/css/ionicons.css" rel="stylesheet" />
 	<link href="bower_components/AdminLTE/css/AdminLTE.css" rel="stylesheet" />
 
+	<link rel="stylesheet" href="styles/gracket.css">
 	<link href="styles/main.css" rel="stylesheet" />
 	<!-- endbuild -->
 	<!--[if lt IE 9]>
@@ -75,8 +78,7 @@
 		</div>
 	</div>
 
-	<!-- build:js scripts/tabletennis/vendor.js -->
-	<!-- bower:js -->
+	<!-- build:js scripts/common.js -->
 	<script src="bower_components/jquery/dist/jquery.js"></script>
 	<script src="bower_components/angular/angular.js"></script>
 	<script src="bower_components/angular-route/angular-route.js"></script>
@@ -88,9 +90,9 @@
 
     <script src="scripts/common/localStore.js"></script>
 	<script src="scripts/common/pace.js"></script>
-	<!-- endbower -->
 	<!-- endbuild -->
-	<!-- build:js({.tmp,app}) scripts/tabletennis/scripts.js -->
+
+	<!-- build:js scripts/tabletennis/scripts.js -->
 	<script src="scripts/tableTennis/module.js"></script>
 	<script src="scripts/tableTennis/restoreCtrl.js"></script>
 	<script src="scripts/tableTennis/definePartiesCtrl.js"></script>

@@ -208,7 +208,8 @@ module.exports = function (grunt) {
         // The following *-min tasks produce minified files in the dist folder
         cssmin: {
             options: {
-                root: '<%= yeoman.app %>'
+                root: '<%= yeoman.app %>',
+                noRebase: true
             }
         },
 
@@ -287,13 +288,29 @@ module.exports = function (grunt) {
                       'views/{,*/}*.html',
                       'scripts/{,*/}*.tmpl.html',
                       'images/{,*/}*.{webp}',
-                      'fonts/*'
+                      'fonts/{,*/}*'
                     ]
                 }, {
                     expand: true,
                     cwd: '.tmp/images',
                     dest: '<%= yeoman.dist %>/images',
                     src: ['generated/*']
+                }, {
+                	expand: true,
+                	dot: true,
+                	cwd: '<%= yeoman.app %>/bower_components/AdminLTE/fonts',
+                	dest: '<%= yeoman.dist %>/fonts',
+                	src: [
+                      '{,*/}*'
+                	]
+                }, {
+                	expand: true,
+                	dot: true,
+                	cwd: '<%= yeoman.app %>/bower_components/bootstrap/fonts',
+                	dest: '<%= yeoman.dist %>/fonts',
+                	src: [
+                      '{,*/}*'
+                	]
                 }]
             },
             styles: {
@@ -302,6 +319,28 @@ module.exports = function (grunt) {
                 dest: '.tmp/styles/',
                 src: '{,*/}*.css'
             }
+        },
+
+        replace: {
+        	cssFontsPath: {
+        		options: {
+        			patterns: [
+                        {
+                        	match: /url\(\.\.\/fonts\//gi,
+                        	replacement: 'url(fonts/',
+                        	expression: true
+                        },
+                        {
+                        	match: /@import url\(\/\/fonts\.googleapis\.com\/(.+)\);/gi,
+                        	replacement: ' ',
+                        	expression: true
+                        }
+        			]
+        		},
+        		files: [
+                    { expand: true, flatten: true, src: ['<%= yeoman.dist %>\\*.css'], dest: '<%= yeoman.dist %>' }
+        		]
+        	}
         },
 
         // Run some tasks in parallel to speed up the build process
@@ -391,7 +430,7 @@ module.exports = function (grunt) {
       'concurrent:dist',
       'autoprefixer',
       'concat',
-      'ngmin',
+      //'ngmin',
       'copy:dist',
       //'cdnify',
       'cssmin',
