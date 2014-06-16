@@ -1,7 +1,7 @@
 ﻿(function (angular, _) {
     'use strict';
 
-    function Projection() {
+    function ClashProjection() {
         this.scorePerPartyName = {};
         this.serving = null;
         this.receiving = null;
@@ -9,7 +9,7 @@
         this.winner = null;
     }
 
-    function ScoreProjector(clash) {
+    function ClashScoreProjector(clash) {
         /// <param name="clash" type="H.ScoreKeeper.Clash" />
 
         function other(member, party) {
@@ -41,7 +41,7 @@
         }
 
         function projectCurrentClashState() {
-            var projection = new Projection(),
+        	var projection = new ClashProjection(),
 				firstServingPartyIndex = _.contains(clash.parties[0].individuals, clash.details.firstToServe) ? 0 : 1,
 				firstReceivingPartyIndex = firstServingPartyIndex === 0 ? 1 : 0,
 				isTie = clash.scoreFor(clash.parties[0]) >= clash.details.pointsToWin - 1 &&
@@ -78,7 +78,29 @@
         this.now = projectCurrentClashState;
 
     }
-    ScoreProjector.Projection = Projection;
+    ClashScoreProjector.ClashProjection = ClashProjection;
+
+    function ClashSetProjection() {
+    	this.scorePerPartyName = {};
+    	this.isWon = false;
+    	this.winner = null;
+		
+    	/// <param type='ClashProjection' />
+    	this.currentSet = null;
+    }
+
+    function ScoreProjector(clashSet) {
+    	/// <param name="clashSet" type="H.ScoreKeeper.ClashSet" />
+
+    	function projectCurrentState() {
+    		var projection = new ClashSetProjection();
+    		projection.currentSet = new ClashScoreProjector(clashSet.clashes[0]).now();
+    		return projection;
+    	}
+
+    	this.now = projectCurrentState;
+    }
+    ScoreProjector.ClashProjection = ClashProjection;
 
     angular.module('ScoreKeeper.TableTennis').value('ScoreProjector', ScoreProjector);
 
