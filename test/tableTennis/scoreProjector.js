@@ -22,6 +22,18 @@
 		expect(p.winner).toBe(party);
 	}
 
+	function projectionForSetsOk(scoreA, scoreB) {
+		var p = projector.now();
+		expect(p.scorePerPartyName[clash[0].parties[0].name]).toEqual(scoreA);
+		expect(p.scorePerPartyName[clash[0].parties[1].name]).toEqual(scoreB);
+	}
+
+	function projectionForSetsWonBy(party) {
+		var p = projector.now();
+		expect(p.isWon).toBe(true);
+		expect(p.winner).toBe(party);
+	}
+
 	function score(n) {
 		var n = n || 1;
 		return {
@@ -33,14 +45,14 @@
 		};
 	}
 
-	describe('Table Tennis game scoring', function () {
+	describe('Table Tennis scoring', function () {
 
 		it('uses inject-ables', function () {
 			expect(ScoreProjector).toBeDefined();
 			expect(clashService).toBeDefined();
 		});
 
-		describe('For Doubles', function () {
+		describe('For one set of Doubles', function () {
 
 			beforeEach(function () {
 				parties = [
@@ -103,16 +115,16 @@
 			it('projects correctly when winning on tie-break', function () {
 				score(10).for(clash.parties[0]);
 				score(11).for(clash.parties[1]);
-				expect(projector.now().isWon).toBe(false);
+				expect(projector.now().currentSet.isWon).toBe(false);
 				score().for(clash.parties[0]);
-				expect(projector.now().isWon).toBe(false);
+				expect(projector.now().currentSet.isWon).toBe(false);
 				score(2).for(clash.parties[1]);
 				projectionForOneSetWonBy(clash.parties[1]);
 			});
 
 		});
 
-		describe('For Singles', function () {
+		describe('For one set of Singles', function () {
 
 			beforeEach(function () {
 				parties = [
@@ -167,6 +179,53 @@
 				projectionForOneSetOk(11, 13, parties[0].individuals[0], parties[1].individuals[0]);
 			});
 
+		});
+
+		describe('For multiple sets', function () {
+			beforeEach(function () {
+				parties = [
+				    new k.Party('Team Awesome').addMembers([new k.Individual('Hintea', 'Dan'), new k.Individual('Pascalau', 'Anca')]),
+				    new k.Party('Team D&G').addMembers([new k.Individual('Pacurar', 'Georgiana'), new k.Individual('Mis', 'Diana Alina')])
+				];
+				var clashDetails = new clashService.ClashDetails(11, parties[0].individuals[0], parties[1].individuals[0]);
+				clashDetails.setsToWin = 2;
+				clash = [
+					new k.Clash(parties, clashDetails),
+					new k.Clash(parties, clashDetails),
+					new k.Clash(parties, clashDetails)
+				];
+
+				projector = new ScoreProjector(new k.ClashSet(clash, parties, clashDetails));
+			});
+
+			it('initially projects to 0-0', function () {
+				projectionForSetsOk(0, 0);
+			});
+
+			it('initially projects no winner', function () {
+				expect(projector.now().isWon).toBe(false);
+				expect(projector.now().winner).toBeNull();
+			});
+
+			it('increments score for party when it wins a set', function () {
+				clash[0].close(parties[0]);
+				projectionForSetsOk(1, 0);
+				clash[1].close(parties[1]);
+				projectionForSetsOk(1, 1);
+			});
+
+			it('ends and projects the winner as the party who first reached the setsToWin goal', function () {
+				clash[0].close(parties[0]);
+				clash[1].close(parties[1]);
+				clash[2].close(parties[0]);
+				projectionForSetsWonBy(parties[0]);
+			});
+
+			it('ends and projects the winner if less than maximum number of sets are played (bagel win)', function () {
+				clash[0].close(parties[1]);
+				clash[1].close(parties[1]);
+				projectionForSetsWonBy(parties[1]);
+			});
 		});
 
 	});

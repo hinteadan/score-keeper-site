@@ -92,9 +92,24 @@
     function ScoreProjector(clashSet) {
     	/// <param name="clashSet" type="H.ScoreKeeper.ClashSet" />
 
+    	function projectWinner(projection) {
+    		/// <param name="projection" type="ClashSetProjection" />
+
+    		projection.winner = _.find(clashSet.parties, function (p) { return projection.scorePerPartyName[p.name] === clashSet.details.setsToWin; }) || null;
+    		projection.isWon = projection.winner !== null;
+    	}
+
     	function projectCurrentState() {
     		var projection = new ClashSetProjection();
+
+    		_.each(clashSet.parties, function (p) {
+    			projection.scorePerPartyName[p.name] = clashSet.scoreFor(p);
+    		});
+
+    		projectWinner(projection);
+
     		projection.currentSet = new ClashScoreProjector(clashSet.clashes[0]).now();
+
     		return projection;
     	}
 
