@@ -1,4 +1,4 @@
-﻿(function (angular) {
+﻿(function (angular, _) {
 	'use strict';
 
 	var log = this.console.log;
@@ -10,27 +10,35 @@
 
 		    clashStateRouter.goToCurrentClashState();
 
-		    $scope.$on(restore, function () {
-		        $scope.scoreProjection = clash.projectScore().now();
-		    });
-		    $scope.clash = clash.clash;
+		    function refreshScoreProjection() {
+		    	$scope.scoreProjection = clash.projectScore().now();
+		    }
+
+		    $scope.$on(restore, refreshScoreProjection);
+
+		    $scope.clash = function () {
+		    	return clash.clashSet().activeClash() || _.last(clash.clashSet().clashes);
+		    };
 		    $scope.sets = clash.clashSet;
-			$scope.scoreProjection = clash.projectScore().now();
+		    $scope.scoreProjection = null;
+		    refreshScoreProjection();
+
 			$scope.pointDetails = {
 				current: new PointDetails(),
 				reasons: PointDetails.reason,
 				spins: PointDetails.spin,
 				handles: PointDetails.handle
 			};
+
 			$scope.pointFor = function (party) {
 				$scope.clash().pointWith($scope.pointDetails.current).for(party);
 				$scope.pointDetails.current = new PointDetails();
-				$scope.scoreProjection = clash.projectScore().now();
+				refreshScoreProjection();
 				clashStore.save();
 			};
 			$scope.undoPoint = function () {
 				$scope.clash().undoPoint();
-				$scope.scoreProjection = clash.projectScore().now();
+				refreshScoreProjection();
 				clashStore.save();
 			};
 			$scope.pointCreditPossibleMembers = function (scoringParty) {
@@ -38,8 +46,15 @@
 					clash.theOtherParty(scoringParty).individuals :
 					scoringParty.individuals;
 			};
+			$scope.closeSet = function () {
+				$scope.clash().close($scope.scoreProjection.currentSet.winner);
+				refreshScoreProjection();
+				if ($scope.scoreProjection.isWon) {
+					clash.stop();
+				}
+				clashStore.save();
+			};
 			$scope.commit = function () {
-			    clash.stop();
 			    clashStore.zap(clash);
 			    dataStore.commit().then(function (id) {
 			        log(id);
@@ -61,4 +76,4 @@
 			};
 		}]);
 
-}).call(this, this.angular);
+}).call(this, this.angular, this._);

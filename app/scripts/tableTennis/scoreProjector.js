@@ -84,6 +84,7 @@
     	this.scorePerPartyName = {};
     	this.isWon = false;
     	this.winner = null;
+    	this.finalScore = [null,null];
 		
     	/// <param type='ClashProjection' />
     	this.currentSet = null;
@@ -97,6 +98,10 @@
 
     		projection.winner = _.find(clashSet.parties, function (p) { return projection.scorePerPartyName[p.name] === clashSet.details.setsToWin; }) || null;
     		projection.isWon = projection.winner !== null;
+    		if (projection.isWon) {
+    			projection.finalScore[0] = projection.scorePerPartyName[projection.winner.name];
+    			projection.finalScore[1] = projection.scorePerPartyName[projection.winner === clashSet.parties[0] ? clashSet.parties[1].name : clashSet.parties[0].name];
+    		}
     	}
 
     	function projectCurrentState() {
@@ -108,7 +113,7 @@
 
     		projectWinner(projection);
 
-    		projection.currentSet = new ClashScoreProjector(clashSet.clashes[0]).now();
+    		projection.currentSet = new ClashScoreProjector(clashSet.activeClash() || _.last(clashSet.clashes)).now();
 
     		return projection;
     	}

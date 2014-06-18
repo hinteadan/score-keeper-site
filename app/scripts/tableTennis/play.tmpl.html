@@ -1,87 +1,118 @@
 ﻿<div>
-	<h1 class="text-center text-success" ng-show="scoreProjection.currentSet.isWon">
-		Set won by <strong>{{scoreProjection.currentSet.winner.name}}</strong>
-	</h1>
 
-	<div class="row">
-		<div class="col-sm-6" ng-repeat="party in clash().parties">
-			<div class="box" ng-class="{ 'box-success': $index == 0, 'box-warning': $index == 1 }">
-				<div class="box-header">
-					<h2 class="box-title text-center" style="width: 100%;"><strong>{{party.name}}</strong></h2>
-				</div>
-				<div class="box-body">
-					<h1 class="text-center"><strong>{{clash().scoreFor(party)}}</strong></h1>
+	<div ng-hide="scoreProjection.isWon">
 
-					<h3 class="text-center">{{sets().scoreFor(party)}}</h3>
+		<div class="row" ng-show="scoreProjection.currentSet.isWon">
+			<div class="col-sm-12">
+				<div class="box box-primary">
+					<div class="box-body">
+						<h1 class="text-center text-success">
+							Set won by <strong>{{scoreProjection.currentSet.winner.name}}</strong>
+						</h1>
 
-					<div class="small-box bg-aqua">
-						<div class="inner">
-
-							<div class="btn-group btn-group-justified">
-								<div class="btn-group btn-group-lg" ng-repeat="reason in pointDetails.reasons">
-									<button class="btn bg-olive btn-block" ng-disabled="pointDetails.current.reason == reason" ng-click="pointDetails.current.reason = reason">{{reason|pointLabel}}</button>
-								</div>
-							</div>
-							<div class="btn-group btn-group-justified">
-								<div class="btn-group btn-group-lg" ng-repeat="handle in pointDetails.handles">
-									<button class="btn btn-warning btn-block" ng-disabled="pointDetails.current.handle == handle" ng-click="pointDetails.current.handle = handle">{{handle|pointLabel}}</button>
-								</div>
-							</div>
-							<div class="btn-group btn-group-justified">
-								<div class="btn-group btn-group-lg" ng-repeat="spin in pointDetails.spins">
-									<button class="btn btn-info btn-block" ng-disabled="pointDetails.current.spin == spin" ng-click="pointDetails.current.spin = spin">{{spin|pointLabel}}</button>
-								</div>
-							</div>
-							<div class="text-center" ng-hide="party.individuals.length == 1">
-								Credit for point goes to:
-								<div class="btn-group btn-group-justified">
-									<div class="btn-group btn-group-lg" ng-repeat="member in pointCreditPossibleMembers(party)">
-										<button class="btn btn-info btn-block" ng-disabled="pointDetails.current.creditTo == member" ng-click="pointDetails.current.creditTo = member">{{member.fullName()}}</button>
-									</div>
-								</div>
-							</div>
-							<span class="text-center" ng-show="party.individuals.length == 1">
-								{{pointCreditPossibleMembers(party)[0].fullName()}}
-							</span>
-						</div>
-						<div class="small-box-footer clickable">
-							<button class="btn btn-success btn-lg btn-block" ng-click="pointFor(party)" ng-disabled="scoreProjection.currentSet.isWon">
-								<h4><i class="fa fa-plus"></i></h4>
-							</button>
-						</div>
+						<button class="btn bg-primary btn-lg btn-block" ng-click="closeSet()">
+							Close it and move to next set
+							<i class="fa fa-play"></i>
+						</button>
 					</div>
-
 				</div>
 			</div>
 		</div>
+
+		<div class="row">
+			<div class="col-sm-6" ng-repeat="party in clash().parties">
+				<div class="box" ng-class="{ 'box-success': $index == 0, 'box-warning': $index == 1 }">
+					<div class="box-header">
+						<h2 class="box-title text-center" style="width: 100%;"><strong>{{party.name}}</strong></h2>
+					</div>
+					<div class="box-body">
+						<h1 class="text-center"><strong>{{clash().scoreFor(party)}}</strong></h1>
+
+						<h3 class="text-center">{{sets().scoreFor(party)}}</h3>
+
+						<div class="small-box bg-aqua">
+							<div class="inner">
+
+								<div class="btn-group btn-group-justified">
+									<div class="btn-group btn-group-lg" ng-repeat="reason in pointDetails.reasons">
+										<button class="btn bg-olive btn-block" ng-disabled="pointDetails.current.reason == reason" ng-click="pointDetails.current.reason = reason">{{reason|pointLabel}}</button>
+									</div>
+								</div>
+								<div class="btn-group btn-group-justified">
+									<div class="btn-group btn-group-lg" ng-repeat="handle in pointDetails.handles">
+										<button class="btn btn-warning btn-block" ng-disabled="pointDetails.current.handle == handle" ng-click="pointDetails.current.handle = handle">{{handle|pointLabel}}</button>
+									</div>
+								</div>
+								<div class="btn-group btn-group-justified">
+									<div class="btn-group btn-group-lg" ng-repeat="spin in pointDetails.spins">
+										<button class="btn btn-info btn-block" ng-disabled="pointDetails.current.spin == spin" ng-click="pointDetails.current.spin = spin">{{spin|pointLabel}}</button>
+									</div>
+								</div>
+								<div class="text-center" ng-hide="party.individuals.length == 1">
+									Credit for point goes to:
+									<div class="btn-group btn-group-justified">
+										<div class="btn-group btn-group-lg" ng-repeat="member in pointCreditPossibleMembers(party)">
+											<button class="btn btn-info btn-block" ng-disabled="pointDetails.current.creditTo == member" ng-click="pointDetails.current.creditTo = member">{{member.fullName()}}</button>
+										</div>
+									</div>
+								</div>
+								<span class="text-center" ng-show="party.individuals.length == 1">
+									{{pointCreditPossibleMembers(party)[0].fullName()}}
+								</span>
+							</div>
+							<div class="small-box-footer clickable">
+								<button class="btn btn-success btn-lg btn-block" ng-click="pointFor(party)" ng-disabled="scoreProjection.currentSet.isWon">
+									<h4><i class="fa fa-plus"></i></h4>
+								</button>
+							</div>
+						</div>
+
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="box box-primary">
+			<div class="box-body">
+				<button class="btn bg-orange btn-lg btn-block" ng-click="undoPoint()">
+					<i class="fa fa-undo"></i>
+					Undo last point
+				</button>
+				<hr />
+				<div class="small-box bg-aqua">
+					<div class="inner text-center">
+						<h4><strong>Clash info</strong></h4>
+						<strong>{{scoreProjection.currentSet.serving.fullName()}}</strong>
+						serves to
+						<em>{{scoreProjection.currentSet.receiving.fullName()}}</em>
+					</div>
+					<a class="small-box-footer clickable">
+						More stats <i class="fa fa-plus-circle"></i>
+					</a>
+				</div>
+			</div>
+		</div>
+
 	</div>
 
-	<div class="box box-primary">
-		<div class="box-body">
-			<button class="btn bg-primary btn-lg btn-block" ng-show="scoreProjection.currentSet.isWon" ng-click="undoPoint()">
-				<i class="fa fa-share"></i>
-				Next set
-			</button>
-			<button class="btn bg-orange btn-lg btn-block" ng-click="undoPoint()">
-				<i class="fa fa-undo"></i>
-				Undo last point
-			</button>
-			<hr />
-			<div class="small-box bg-aqua">
-				<div class="inner text-center">
-					<h4><strong>Clash info</strong></h4>
-					<strong>{{scoreProjection.currentSet.serving.fullName()}}</strong>
-					serves to
-					<em>{{scoreProjection.currentSet.receiving.fullName()}}</em>
+	<div ng-show="scoreProjection.isWon">
+		<div class="row">
+			<div class="col-sm-12">
+				<div class="box box-primary">
+					<div class="box-body">
+						<h1 class="text-center text-success">
+							<strong><em>Victory</em></strong>  for <strong>{{scoreProjection.winner.name}}</strong> !
+						</h1>
+
+						<h3 class="text-center">Final Score: <strong>{{scoreProjection.finalScore[0]}}</strong> - {{scoreProjection.finalScore[1]}}</h3>
+
+						<button class="btn bg-navy btn-lg btn-block" ng-click="commit()">
+							<i class="fa fa-cloud-upload"></i>
+							Commit clash
+						</button>
+					</div>
 				</div>
-				<a class="small-box-footer clickable">
-					More stats <i class="fa fa-plus-circle"></i>
-				</a>
 			</div>
-			<button class="btn bg-navy btn-lg btn-block" ng-click="commit()">
-				<i class="fa fa-cloud-upload"></i>
-				Commit clash
-			</button>
 		</div>
 	</div>
 
