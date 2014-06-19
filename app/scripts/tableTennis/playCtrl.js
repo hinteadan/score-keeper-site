@@ -47,12 +47,7 @@
 					scoringParty.individuals;
 			};
 			$scope.closeSet = function () {
-			    var oldSet = $scope.clash(),
-			        newSet = null;
-			    oldSet.close($scope.scoreProjection.currentSet.winner);
-			    newSet = $scope.clash();
-			    newSet.details.firstToServe = $scope.scoreProjection.currentSet.receiving;
-			    newSet.details.firstToReceive = $scope.scoreProjection.currentSet.serving;
+			    $scope.clash().close($scope.scoreProjection.currentSet.winner);
 				refreshScoreProjection();
 				if ($scope.scoreProjection.isWon) {
 					clash.stop();

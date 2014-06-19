@@ -28,6 +28,12 @@
 		this.hasEnded = function () {
 			return this.endedOn !== null;
 		};
+		this.switchServe = function () {
+		    var server = this.firstToServe;
+		    this.firstToServe = this.firstToReceive;
+		    this.firstToReceive = server;
+		    return this;
+		};
 		this.revive = function (dto, memberPool) {
 			for (var property in dto) {
 				this[property] = dto[property];
