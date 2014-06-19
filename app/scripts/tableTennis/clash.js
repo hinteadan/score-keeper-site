@@ -97,7 +97,6 @@
 		};
 		this.stop = function () {
 			clashDetails.endedOn = new Date();
-			clashSet.close();
 		};
 
 		this.revive = function (dto) {

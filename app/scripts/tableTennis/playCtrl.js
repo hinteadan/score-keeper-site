@@ -47,7 +47,12 @@
 					scoringParty.individuals;
 			};
 			$scope.closeSet = function () {
-				$scope.clash().close($scope.scoreProjection.currentSet.winner);
+			    var oldSet = $scope.clash(),
+			        newSet = null;
+			    oldSet.close($scope.scoreProjection.currentSet.winner);
+			    newSet = $scope.clash();
+			    newSet.details.firstToServe = $scope.scoreProjection.currentSet.serving;
+			    newSet.details.firstToReceive = $scope.scoreProjection.currentSet.receiving;
 				refreshScoreProjection();
 				if ($scope.scoreProjection.isWon) {
 					clash.stop();
@@ -56,6 +61,7 @@
 			};
 			$scope.commit = function () {
 			    clashStore.zap(clash);
+			    clash.clashSet().close();
 			    dataStore.commit().then(function (id) {
 			        log(id);
 			    }, function (error) {
