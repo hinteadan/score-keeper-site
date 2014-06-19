@@ -53,21 +53,43 @@
         var parties = [
 				new k.Party(),
 				new k.Party()
-        ],
+            ],
 			clashDetails = new ClashSetDetails(),
 			clashSet = null,
 			projector = null;
+
+        function detailsForClashIndex(index) {
+
+            function other(party, member){
+                if(!member){
+                    return parties[0] === party ? parties[1] : parties[0];
+                }
+                return party.individuals[0] === member ? party.individuals[1] : party.individuals[0];
+            }
+
+            var firstServeParty = _.find(parties, function (p) { return _.contains(p.individuals, clashDetails.firstToServe); }),
+                firstReceivingParty = other(firstServeParty),
+                singles = [
+                    new ClashDetails(clashDetails.firstToServe, clashDetails.firstToReceive),
+                    new ClashDetails(clashDetails.firstToReceive, clashDetails.firstToServe)
+                ],
+                doubles = [
+                    new ClashDetails(clashDetails.firstToServe, clashDetails.firstToReceive),
+                    new ClashDetails(clashDetails.firstToReceive, other(firstServeParty, clashDetails.firstToServe)),
+                    new ClashDetails(other(firstServeParty, clashDetails.firstToServe), other(firstReceivingParty, clashDetails.firstToReceive)),
+                    new ClashDetails(other(firstReceivingParty, clashDetails.firstToReceive), clashDetails.firstToServe),
+                ],
+                isSinglesClash = firstServeParty.individuals.length === 1;
+
+            return isSinglesClash ? singles[index % 2] : doubles[index % 4];
+        }
 
         function ensureClashSet() {
             if (clashSet) {
                 return;
             }
-            var evenClashDetails = new ClashDetails(clashDetails.firstToServe, clashDetails.firstToReceive),
-		        oddClashDetails = new ClashDetails(clashDetails.firstToReceive, clashDetails.firstToServe),
-		        details = [evenClashDetails, oddClashDetails];
-
             clashSet = new k.ClashSet(
-					_.map(_.range(0, clashDetails.setsToWin * 2 - 1, 1), function (i) { return new k.Clash(parties, details[i % 2]); }),
+					_.map(_.range(0, clashDetails.setsToWin * 2 - 1, 1), function (i) { return new k.Clash(parties, detailsForClashIndex(i)); }),
 					parties,
 					clashDetails
 				);
