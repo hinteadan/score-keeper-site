@@ -51,8 +51,8 @@
 			        newSet = null;
 			    oldSet.close($scope.scoreProjection.currentSet.winner);
 			    newSet = $scope.clash();
-			    newSet.details.firstToServe = $scope.scoreProjection.currentSet.serving;
-			    newSet.details.firstToReceive = $scope.scoreProjection.currentSet.receiving;
+			    newSet.details.firstToServe = $scope.scoreProjection.currentSet.receiving;
+			    newSet.details.firstToReceive = $scope.scoreProjection.currentSet.serving;
 				refreshScoreProjection();
 				if ($scope.scoreProjection.isWon) {
 					clash.stop();
