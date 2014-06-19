@@ -9,7 +9,8 @@
         this.winner = null;
     }
 
-    function ClashScoreProjector(clash) {
+    function ClashScoreProjector(clashSet, clash) {
+        /// <param name="clashSet" type="H.ScoreKeeper.ClashSet" />
         /// <param name="clash" type="H.ScoreKeeper.Clash" />
 
         function other(member, party) {
@@ -27,12 +28,12 @@
             projection.isWon = false;
             projection.winner = null;
 
-            if (partyOnePoints >= clash.details.pointsToWin && partyOnePoints - partyTwoPoints >= 2) {
+            if (partyOnePoints >= clashSet.details.pointsToWin && partyOnePoints - partyTwoPoints >= 2) {
                 projection.isWon = true;
                 projection.winner = clash.parties[0];
                 return projection;
             }
-            if (partyTwoPoints >= clash.details.pointsToWin && partyTwoPoints - partyOnePoints >= 2) {
+            if (partyTwoPoints >= clashSet.details.pointsToWin && partyTwoPoints - partyOnePoints >= 2) {
                 projection.isWon = true;
                 projection.winner = clash.parties[1];
                 return projection;
@@ -44,9 +45,9 @@
         	var projection = new ClashProjection(),
 				firstServingPartyIndex = _.contains(clash.parties[0].individuals, clash.details.firstToServe) ? 0 : 1,
 				firstReceivingPartyIndex = firstServingPartyIndex === 0 ? 1 : 0,
-				isTie = clash.scoreFor(clash.parties[0]) >= clash.details.pointsToWin - 1 &&
-					clash.scoreFor(clash.parties[1]) >= clash.details.pointsToWin - 1,
-				serveChangeOn = !isTie ? clash.details.serveChangeAfter : 1,
+				isTie = clash.scoreFor(clash.parties[0]) >= clashSet.details.pointsToWin - 1 &&
+					clash.scoreFor(clash.parties[1]) >= clashSet.details.pointsToWin - 1,
+				serveChangeOn = !isTie ? clashSet.details.serveChangeAfter : 1,
 				currentServingPartyIndex = Math.floor(clash.points.length / serveChangeOn) % 2 === 0 ? firstServingPartyIndex : firstReceivingPartyIndex,
 				currentReceivingPartyIndex = currentServingPartyIndex === 0 ? 1 : 0;
 
@@ -113,7 +114,7 @@
 
     		projectWinner(projection);
 
-    		projection.currentSet = new ClashScoreProjector(clashSet.activeClash() || _.last(clashSet.clashes)).now();
+    		projection.currentSet = new ClashScoreProjector(clashSet, clashSet.activeClash() || _.last(clashSet.clashes)).now();
 
     		return projection;
     	}
