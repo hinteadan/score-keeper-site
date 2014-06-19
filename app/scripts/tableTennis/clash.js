@@ -39,15 +39,11 @@
             }
 
             if (dto.firstToServe) {
-                this.firstToServe = _.find(memberPool, function (p) {
-                    return p.firstName === dto.firstToServe.firstName && p.lastName === dto.firstToServe.lastName;
-                });
+                this.firstToServe = _.find(memberPool, function (p) { return p.isMatching(dto.firstToServe); });
             }
 
             if (dto.firstToReceive) {
-                this.firstToReceive = _.find(memberPool, function (p) {
-                    return p.firstName === dto.firstToReceive.firstName && p.lastName === dto.firstToReceive.lastName;
-                });
+                this.firstToReceive = _.find(memberPool, function (p) { return p.isMatching(dto.firstToReceive); });
             }
         };
     }
@@ -109,20 +105,22 @@
         };
 
         this.revive = function (dto) {
+            var memberPool = [];
             if (this === dto) {
                 return;
             }
             clearArray(parties);
             _.each(dto.parties, function (p) { parties.push(k.Party.revive(p)); });
-            clashDetails.revive(dto.details, _.flatten(_.pluck(parties, 'individuals')));
+            memberPool = _.flatten(_.pluck(parties, 'individuals'));
+            clashDetails.revive(dto.details, memberPool);
 
             if (dto.skClashSet) {
                 clashSet = k.ClashSet.revive(dto.skClashSet, parties,
                     function () { return clashDetails; },
                     function (dto) {
                         return new ClashDetails(
-                            _.find(parties, { name: dto.firstToServe.name }),
-                            _.find(parties, { name: dto.firstToReceive.name })
+                            _.find(memberPool, function (m) { return m.isMatching(dto.firstToServe); }),
+                            _.find(memberPool, function (m) { return m.isMatching(dto.firstToReceive); })
                             );
                     });
                 this.skClashSet = clashSet;
