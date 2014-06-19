@@ -105,13 +105,14 @@
 				return;
 			}
 			clearArray(parties);
-			//angular.forEach(dto.parties, function (p) { parties.push(k.Party.revive(p)); });
-			//clashDetails.revive(dto.details, _.flatten(_.pluck(parties, 'individuals')));
-			//if (dto.skClash) {
-			//	clash = k.Clash.revive(dto.skClash, parties, function () { return clashDetails; });
-			//	this.skClash = clash;
-			//	projector = null;
-			//}
+			_.each(dto.parties, function (p) { parties.push(k.Party.revive(p)); });
+			clashDetails.revive(dto.details, _.flatten(_.pluck(parties, 'individuals')));
+
+		    if (dto.skClashSet) {
+		        clashSet = k.ClashSet.revive(dto.skClashSet, parties, function () { return clashDetails; });
+		        this.skClashSet = clashSet;
+		        projector = new ScoreProjector(clashSet);
+			}
 		};
 	}
 
