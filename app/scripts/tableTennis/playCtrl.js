@@ -5,7 +5,7 @@
 
 	angular.module('ScoreKeeper.TableTennis')
 
-		.controller('play', ['$scope', 'Clash', 'PointDetails', 'ClashLocalStore', 'ClashStateRouter', 'DataStore', 'eventSessionRestore', function ($scope, clash, PointDetails, clashStore, clashStateRouter, dataStore, restore) {
+		.controller('play', ['$scope', '$timeout', 'Clash', 'PointDetails', 'ClashLocalStore', 'ClashStateRouter', 'DataStore', 'eventSessionRestore', function ($scope, $timeout, clash, PointDetails, clashStore, clashStateRouter, dataStore, restore) {
 			/// <param name='clashStore' type='storage.LocalStore' />
 
 		    clashStateRouter.goToCurrentClashState();
@@ -55,6 +55,17 @@
 				clashStore.save();
 			};
 			$scope.commit = function () {
+
+			    if (!$scope.commit.confirm) {
+			        $scope.commit.confirm = true;
+			        $timeout(function () {
+			            delete $scope.commit.confirm;
+			        }, 5000);
+			        return;
+			    }
+
+			    delete $scope.commit.confirm;
+
 			    clashStore.zap(clash);
 			    clash.clashSet().close();
 			    dataStore.commit().then(function (id) {

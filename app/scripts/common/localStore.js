@@ -97,7 +97,7 @@
 
 		function removeEntity(entity) {
 		    var index = indexOf(entity);
-		    if (!index) {
+		    if (index === false) {
 		        return;
 		    }
 		    dataSet.splice(index, 1);

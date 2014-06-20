@@ -8,7 +8,7 @@
         this.commit = function () {
             var deferred = $q.defer();
 
-            store.Save(new ds.Entity(clash.clash())).then(function (result) {
+            store.Save(new ds.Entity(clash.clashSet())).then(function (result) {
                 /// <param name='result' type='ds.OperationResult' />
                 if (!result.isSuccess) {
                     deferred.reject(result.reason);

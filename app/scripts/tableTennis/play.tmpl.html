@@ -109,7 +109,8 @@
 
 						<button class="btn bg-navy btn-lg btn-block" ng-click="commit()">
 							<i class="fa fa-cloud-upload"></i>
-							Commit clash
+                            <span ng-hide="commit.confirm">Commit clash</span>
+                            <span ng-show="commit.confirm">Press again to confirm clash submission</span>
 						</button>
 					</div>
 				</div>
