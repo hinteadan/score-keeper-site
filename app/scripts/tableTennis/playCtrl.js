@@ -70,7 +70,7 @@
 
 			    clashStore.zap(clash);
 			    clash.clashSet().close();
-			    dataStore.commit().then(function (id) {
+			    dataStore.commit().then(function () {
 			        $scope.commit.committed = true;
 			    }, function (error) {
 			        log(error);
