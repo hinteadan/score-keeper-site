@@ -25,7 +25,7 @@
 	            $location.path('/clash');
 	            return;
 	        }
-	        if (!clash.details.hasEnded()) {
+	        if (clash.details.hasBegun()) {
 	            $location.path('/play');
 	            return;
 	        }
