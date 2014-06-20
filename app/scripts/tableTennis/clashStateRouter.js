@@ -17,18 +17,20 @@
 	    }
 
 	    function goToCurrentClashState() {
+	        var isRedirect = false;
 	        if (_.any(clash.parties, isPartyNamelessOrEmpty)) {
+	            isRedirect = $location.path() !== '/parties';
 	            $location.path('/parties');
-	            return;
 	        }
-	        if (!clash.details.isValid() || !clash.details.hasBegun()) {
+	        else if (!clash.details.isValid() || !clash.details.hasBegun()) {
+	            isRedirect = $location.path() !== '/clash';
 	            $location.path('/clash');
-	            return;
 	        }
-	        if (clash.details.hasBegun()) {
+	        else if (clash.details.hasBegun()) {
+	            isRedirect = $location.path() !== '/play';
 	            $location.path('/play');
-	            return;
 	        }
+	        return isRedirect;
 	    }
 
 	    this.goToCurrentClashState = goToCurrentClashState;

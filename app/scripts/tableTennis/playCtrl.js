@@ -8,7 +8,9 @@
 		.controller('play', ['$scope', '$timeout', '$window', 'Clash', 'PointDetails', 'ClashLocalStore', 'ClashStateRouter', 'DataStore', 'eventSessionRestore', function ($scope, $t, $w, clash, PointDetails, clashStore, clashStateRouter, dataStore, restore) {
 			/// <param name='clashStore' type='storage.LocalStore' />
 
-		    clashStateRouter.goToCurrentClashState();
+		    if (clashStateRouter.goToCurrentClashState()) {
+		        return;
+		    }
 
 		    function refreshScoreProjection() {
 		    	$scope.scoreProjection = clash.projectScore().now();
