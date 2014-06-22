@@ -107,10 +107,11 @@
 
 						<h3 class="text-center">Final Score: <strong>{{scoreProjection.finalScore[0]}}</strong> - {{scoreProjection.finalScore[1]}}</h3>
 
-						<button class="btn bg-navy btn-lg btn-block" ng-click="commit()">
+						<button class="btn bg-navy btn-lg btn-block" ng-click="commit()" ng-disabled="commit.committing">
 							<i class="fa fa-cloud-upload"></i>
-							<span ng-hide="commit.confirm">Commit clash</span>
+							<span ng-hide="commit.confirm || commit.committing">Commit clash</span>
 							<span ng-show="commit.confirm">Press again to confirm clash submission</span>
+							<span ng-show="commit.committing">Committing clash...</span>
 						</button>
 					</div>
 				</div>

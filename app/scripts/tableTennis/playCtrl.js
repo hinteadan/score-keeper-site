@@ -70,9 +70,12 @@
 
 			    clashStore.zap(clash);
 			    clash.clashSet().close();
+			    $scope.commit.committing = true;
 			    dataStore.commit().then(function () {
+			    	delete $scope.commit.committing;
 			        $scope.commit.committed = true;
 			    }, function (error) {
+			    	delete $scope.commit.committing;
 			        log(error);
 			    });
                 
