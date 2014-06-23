@@ -13,3 +13,8 @@
 .engaged {
   opacity: 0.35;
 }
+
+.navbar-default .navbar-brand{
+	background: none;
+	line-height: 40px;
+}
