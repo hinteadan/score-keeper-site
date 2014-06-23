@@ -18,3 +18,11 @@
 	background: none;
 	line-height: 40px;
 }
+
+ul.portfolio-filter li{
+	margin-right: 4px;
+}
+
+ul.portfolio-filter li:last-child{
+	margin-right: 0px;
+}
