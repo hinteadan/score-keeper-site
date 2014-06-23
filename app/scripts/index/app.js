@@ -24,22 +24,22 @@
 			var $spy = $(this).scrollspy('refresh')
 		})
 
-		//Isotope
-		$(window).load(function () {
-			var $portfolio = $('.portfolio-items'),
-				$portfolio_selectors = $('.portfolio-filter >li>a');
-			$portfolio.isotope({
-				itemSelector: 'li',
-				layoutMode: 'fitRows'
-			});
-			$portfolio_selectors.on('click', function () {
-				$portfolio_selectors.removeClass('active');
-				$(this).addClass('active');
-				var selector = $(this).attr('data-filter');
-				$portfolio.isotope({ filter: selector });
-				return false;
-			});
-		});
+		////Isotope
+		//$(window).load(function () {
+		//	var $portfolio = $('.portfolio-items'),
+		//		$portfolio_selectors = $('.portfolio-filter >li>a');
+		//	$portfolio.isotope({
+		//		itemSelector: 'li',
+		//		layoutMode: 'fitRows'
+		//	});
+		//	$portfolio_selectors.on('click', function () {
+		//		$portfolio_selectors.removeClass('active');
+		//		$(this).addClass('active');
+		//		var selector = $(this).attr('data-filter');
+		//		$portfolio.isotope({ filter: selector });
+		//		return false;
+		//	});
+		//});
 	});
 
 }).call(this, this.jQuery);

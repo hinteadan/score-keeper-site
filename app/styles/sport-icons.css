@@ -1,0 +1,27 @@
+﻿@font-face {
+  font-family: 'Sports';
+  src: url('../fonts/Balls-Balls-and-More-Balls.ttf');
+  src: url('../fonts/Balls-Balls-and-More-Balls.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+.fa.sports {
+  font-family: Sports;
+}
+
+.fa-sp-ping-pong:before {
+  content: "V";
+}
+
+.fa-sp-tennis:before {
+  content: "F";
+}
+
+.fa-sp-snooker:before {
+  content: "Z";
+}
+
+.fa-sp-pool:before {
+  content: "K";
+}
