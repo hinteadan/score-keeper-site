@@ -4,7 +4,8 @@
 	var pointReason = {
 			winningShot: 'WinningShot',
 			forcedErrorOnOpponent: 'ForcedErrorOnOpponent',
-			unforcedErrorByOpponent: 'UnforcedErrorByOpponent'
+			unforcedErrorByOpponent: 'UnforcedErrorByOpponent',
+            fault: 'Fault'
 		},
 		shotSpin = {
 			topspin: 'Topspin',
