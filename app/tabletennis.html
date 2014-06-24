@@ -67,6 +67,12 @@
 							</li>
 						</ul>
 					</li>
+                    <li ng-controller="navigation">
+                        <a class="clickable" ng-click="goHome()">
+                            <i class="fa fa-home fa-lg" ng-class="{ 'fa-home': !goHome.confirm, 'fa-question': goHome.confirm }"></i>
+                            <span ng-show="goHome.confirm">Yeah, I'm sure!</span>
+                        </a>
+                    </li>
 				</ul>
 			</div>
 		</nav>
@@ -95,6 +101,7 @@
 	<!-- build:js scripts/tabletennis/scripts.js -->
 	<script src="scripts/tableTennis/module.js"></script>
 	<script src="scripts/tableTennis/restoreCtrl.js"></script>
+    <script src="scripts/tableTennis/navigationCtrl.js"></script>
 	<script src="scripts/tableTennis/definePartiesCtrl.js"></script>
 	<script src="scripts/tableTennis/defineClashCtrl.js"></script>
 	<script src="scripts/tableTennis/playCtrl.js"></script>
