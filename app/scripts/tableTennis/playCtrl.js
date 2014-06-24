@@ -44,9 +44,15 @@
 				clashStore.save();
 			};
 			$scope.pointCreditPossibleMembers = function (scoringParty) {
-				return $scope.pointDetails.current.reason === PointDetails.reason.unforcedErrorByOpponent ?
+			    var candidates = $scope.pointDetails.current.reason === PointDetails.reason.unforcedErrorByOpponent ?
 					clash.theOtherParty(scoringParty).individuals :
 					scoringParty.individuals;
+
+			    if (candidates.length === 1) {
+			        $scope.pointDetails.current.creditTo = candidates[0];
+			    }
+
+			    return candidates;
 			};
 			$scope.closeSet = function () {
 			    $scope.clash().close($scope.scoreProjection.currentSet.winner);
