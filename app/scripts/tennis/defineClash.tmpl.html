@@ -12,7 +12,7 @@
 					<label>Best of:</label>
 					<div class="btn-group btn-group-justified">
 						<div class="btn-group" ng-repeat="sets in [1,2,3]">
-							<button class="btn btn-default" ng-disabled="details.setsToWin == sets" ng-click="details.setsToWin = sets"><strong>{{sets*2-1}}</strong> set(s)</button>
+							<button class="btn btn-default" ng-disabled="details.setsToWin == sets" ng-click="details.setsToWin = sets"><strong>{{sets*2-1}}</strong>&nbsp;<ng-pluralize count="sets" when="{'1': 'set', 'other':'sets'}"  /> </button>
 						</div>
 					</div>
 				</div>
