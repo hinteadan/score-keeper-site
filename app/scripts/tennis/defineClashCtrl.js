@@ -2,8 +2,10 @@
 	'use strict';
 
 	angular.module('ScoreKeeper.Tennis')
-		.controller('defineClash', ['$scope', '$location', 'Fray', function ($s, $l, fray) {
+		.controller('defineClash', ['$scope', '$location', 'Fray', 'GameTieModes', 'SetTieModes', function ($s, $l, fray, gameTieMode, setTieMode) {
 			$s.details = fray.details;
+			$s.gameTieModes = gameTieMode;
+			$s.setTieModes = setTieMode;
 			$s.parties = fray.parties;
 			$s.receivingParty = function () {
 				if (!fray.details.firstToServe) {
@@ -15,6 +17,19 @@
 			};
 			$s.next = function () {
 				$l.path('/play');
+			};
+		}])
+		.filter('label', ['GameTieModes', 'SetTieModes', function (gameTieMode, setTieMode) {
+
+			var labels = {};
+			labels[gameTieMode.advantageWin] = 'Ad. Win';
+			labels[gameTieMode.noAdvantageWin] = 'No-Ad. Win';
+			labels[setTieMode.tieBreak] = 'Tie-Break (7)';
+			labels[setTieMode.superTieBreak] = 'Super Tie-Break (10)';
+			labels[setTieMode.gameDifference] = '2-Game Diff.';
+
+			return function (input) {
+				return labels[input] || input;
 			};
 		}]);
 

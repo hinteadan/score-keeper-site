@@ -1,3 +1,111 @@
 ﻿<div>
-	Define Clash
+	<h1 class="page-header">
+		Define clash
+		<small>Enter clash details: first to serve, set type, etc.</small>
+	</h1>
+
+	<div class="box box-primary">
+		<div class="box-body">
+			<form role="form">
+
+				<div class="form-group">
+					<label>Best of:</label>
+					<div class="btn-group btn-group-justified">
+						<div class="btn-group" ng-repeat="sets in [1,2,3]">
+							<button class="btn btn-default" ng-disabled="details.setsToWin == sets" ng-click="details.setsToWin = sets"><strong>{{sets*2-1}}</strong> set(s)</button>
+						</div>
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="col-sm-6">
+						<div class="form-group">
+							<label>Games per set:</label>
+							<div class="btn-group btn-group-justified">
+								<div class="btn-group" ng-repeat="games in [3,6]">
+									<button class="btn btn-default" ng-disabled="details.gamesPerSet == games" ng-click="details.gamesPerSet = games">{{games}}</button>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<label>Game tie is decided via:</label>
+							<div class="btn-group btn-group-justified">
+								<div class="btn-group" ng-repeat="mode in gameTieModes">
+									<button class="btn btn-default" ng-disabled="details.gameTieMode == mode" ng-click="details.gameTieMode = mode">{{mode|label}}</button>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-sm-6">
+						<div class="form-group">
+							<label>Set tie is decided via:</label>
+							<div class="btn-group btn-group-justified">
+								<div class="btn-group" ng-repeat="mode in setTieModes">
+									<button class="btn btn-default" ng-disabled="details.setTieMode == mode" ng-click="details.setTieMode = mode">{{mode|label}}</button>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<label><em>Deciding-Set</em> tie is solved via:</label>
+							<div class="btn-group btn-group-justified">
+								<div class="btn-group" ng-repeat="mode in setTieModes">
+									<button class="btn btn-default" ng-disabled="details.decidingSetTieMode == mode" ng-click="details.decidingSetTieMode = mode">{{mode|label}}</button>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label>First to serve:</label>
+					<div class="row">
+						<div class="col-md-6" ng-repeat="party in parties">
+							<div class="box" ng-class="{ 'box-success': $index == 0, 'box-warning': $index == 1 }">
+								<div class="box-header">
+									<h3 class="box-title">
+										{{party.name}}
+									</h3>
+								</div>
+								<div class="box-body">
+									<ul class="nav nav-pills nav-stacked">
+										<li ng-repeat="member in party.individuals" ng-class="{ active: details.firstToServe == member }">
+											<a class="clickable" ng-click="details.firstToServe = member; details.firstToReceive = null;">
+												{{member.fullName()}}
+											</a>
+										</li>
+									</ul>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label>First to receive:</label>
+					<span ng-hide="receivingParty()">will enable after selecting first server.</span>
+					<div class="row" ng-show="receivingParty()">
+						<div class="col-md-6" ng-repeat="member in receivingParty().individuals">
+							<ul class="nav nav-pills nav-stacked">
+								<li ng-class="{ active: details.firstToReceive == member }">
+									<a class="clickable" ng-click="details.firstToReceive = member">
+										{{member.fullName()}}
+									</a>
+								</li>
+							</ul>
+						</div>
+					</div>
+				</div>
+
+			</form>
+		</div>
+	</div>
+
+	<div class="box box-solid">
+		<div class="box-body text-center">
+			<button class="btn btn-primary btn-lg btn-block" ng-disabled="!details.isValid()" ng-click="next()">
+				Next, Play!
+			</button>
+		</div>
+	</div>
+
 </div>
