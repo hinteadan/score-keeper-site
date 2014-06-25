@@ -1,3 +1,56 @@
 ﻿<div>
-    Define parties
+	<h1 class="page-header">
+		Define teams
+		<small>Enter details for each team: name, members, etc.</small>
+	</h1>
+
+	<div class="row">
+		<div class="col-md-6" ng-repeat="party in parties">
+			<div class="box" ng-class="{ 'box-success': $index == 0, 'box-warning': $index == 1 }">
+				<div class="box-header">
+					<input class="form-control input-lg" type="text" placeholder="Team {{$index + 1}}'s name" ng-model="party.name">
+				</div>
+				<div class="box-body">
+					<ul class="nav nav-pills nav-stacked">
+						<li class="header">Members</li>
+						<li ng-repeat="member in party.individuals">
+							<a href="javascript:void(0)">
+								{{member.fullName()}}
+								<span class="badge bg-red clickable hoverable" ng-click="party.zapMember(member)">
+									<i class="fa fa-times"></i>
+								</span>
+							</a>
+						</li>
+						<li class="active" ng-show="party.individuals.length < 2" ng-init="isAdding = false; firstName = null; lastName = null;">
+							<button class="btn btn-default btn-flat btn-block" ng-click="isAdding = true; firstName = null; lastName = null;" ng-hide="isAdding">
+								Add member
+							</button>
+							<div ng-show="isAdding" class="row">
+								<div class="col-xs-4">
+									<input type="text" class="form-control input-sm" ng-model="firstName" placeholder="First name" />
+								</div>
+								<div class="col-xs-4">
+									<input type="text" class="form-control input-sm" ng-model="lastName" placeholder="Last name" />
+								</div>
+								<div class="col-xs-4">
+									<div class="btn-group btn-group-sm pull-right">
+										<button class="btn btn-success" type="submit" ng-click="add.member(firstName, lastName).to(party); isAdding = false;">Add</button>
+										<button class="btn btn-warning" type="button" ng-click="isAdding = false;">Cancel</button>
+									</div>
+								</div>
+							</div>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="box box-solid">
+		<div class="box-body text-center">
+			<button class="btn btn-primary btn-lg btn-block" ng-disabled="!isDefinitionValid()" ng-click="next()">
+				Next, define clash
+			</button>
+		</div>
+	</div>
 </div>

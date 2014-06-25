@@ -1,4 +1,4 @@
-﻿(function (angular) {
+﻿(function (angular, k) {
     'use strict';
 
     var gameTieMode = {
@@ -44,9 +44,12 @@
 
     angular.module('ScoreKeeper.Tennis')
 	.service('Fray', [function () {
+		var parties = [
+				new k.Party(),
+				new k.Party()
+		];
 
-
-
+		this.parties = parties;
 	}]);
 
-}).call(this, this.angular);
+}).call(this, this.angular, this.H.ScoreKeeper);
