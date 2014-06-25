@@ -1,7 +1,7 @@
 ﻿(function (angular) {
     'use strict';
 
-    angular.module('ScoreKeeper.TableTennis')
+    angular.module('ScoreKeeper.Common', [])
     .controller('navigation', ['$scope', '$window', '$timeout', function ($s, $w, $t) {
 
         $s.goHome = function () {
@@ -19,5 +19,6 @@
         };
 
     }]);
+
 
 }).call(this, this.angular);
