@@ -13,9 +13,15 @@
 .fa-sp-ping-pong:before {
   content: "V";
 }
+.fa-sp-ping-pong-hollow:before {
+  content: "M";
+}
 
 .fa-sp-tennis:before {
   content: "F";
+}
+.fa-sp-tennis-hollow:before {
+  content: "P";
 }
 
 .fa-sp-snooker:before {
