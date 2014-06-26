@@ -26,6 +26,7 @@ module.exports = function(config) {
       'app/scripts/tennis/module.js',
       'app/scripts/tennis/fray.js',
       'app/scripts/tennis/frayDetails.js',
+      'app/scripts/tennis/projector.js',
 
       'test/common/**/*.js',
       'test/tableTennis/**/*.js',
