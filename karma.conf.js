@@ -17,13 +17,19 @@ module.exports = function(config) {
 	  'app/bower_components/lodash/dist/lodash.js',
 
       'app/scripts/common/localStore.js',
+      'app/scripts/common/module.js',
 
-	  'app/scripts/tableTennis/module.js',
+      'app/scripts/tableTennis/module.js',
 	  'app/scripts/tableTennis/clash.js',
       'app/scripts/tableTennis/scoreProjector.js',
 
+      'app/scripts/tennis/module.js',
+      'app/scripts/tennis/fray.js',
+      'app/scripts/tennis/frayDetails.js',
+
       'test/common/**/*.js',
-      'test/tableTennis/**/*.js'
+      'test/tableTennis/**/*.js',
+      'test/tennis/**/*.js'
     ],
 
     // list of files / patterns to exclude
