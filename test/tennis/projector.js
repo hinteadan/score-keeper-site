@@ -49,6 +49,12 @@
     	expect(proj.scorePerPartyName.Rafa).toEqual(forRafa);
     }
 
+    function setWinProjectionOk(shouldBeWonBy) {
+    	proj = p.now();
+    	expect(proj.isWon).toBe(shouldBeWonBy ? true : false);
+    	expect(proj.winner).toBe(shouldBeWonBy ? shouldBeWonBy : null);
+    }
+
     describe('Tennis scoring', function () {
         it('uses inject-ables', function () {
             expect(MatchDetails).toBeDefined();
@@ -184,6 +190,16 @@
         		clash.clashes[2].close(parties[0]);
         		clash.clashes[3].close(parties[1]);
         		setScoreProjectionOk(3, 1);
+        	});
+
+        	it('wins on straight <<games per set point>>', function () {
+        		setOf(6);
+        		_.each(clash.clashes, function (c) { c.close(parties[0]); });
+        		setWinProjectionOk(parties[0]);
+        		details.gamesCount = 3;
+        		setOf(3);
+        		_.each(clash.clashes, function (c) { c.close(parties[1]); });
+        		setWinProjectionOk(parties[1]);
         	});
         });
 

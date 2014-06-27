@@ -78,6 +78,16 @@
 
     function SetProjector(clash) {
     	/// <param name='clash' type='H.ScoreKeeper.ClashSet' />
+
+    	function projectWinner(projection) {
+    		var fed = clash.parties[0],
+                rafa = clash.parties[1],
+    			minToWin = clash.details.gamesCount;
+    		projection.winner = clash.scoreFor(fed) === minToWin ? fed : clash.scoreFor(rafa) === minToWin ? rafa : null;
+    		projection.isWon = projection.winner !== null;
+    		return projection;
+    	}
+
     	function projectCurrentState() {
     		var projection = new SetProjector.Projection(),
                 fed = clash.parties[0],
@@ -85,7 +95,7 @@
     		projection.scorePerPartyName[fed.name] = clash.scoreFor(fed);
     		projection.scorePerPartyName[rafa.name] = clash.scoreFor(rafa);
 
-    		return projection;
+    		return projectWinner(projection);
     	}
 
     	this.now = projectCurrentState;
