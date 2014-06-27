@@ -1,8 +1,20 @@
 ﻿(function (angular) {
     'use strict';
 
-    function Projector() {
+    
 
+    function GameProjector(clash) {
+        /// <param name='clash' type='H.ScoreKeeper.Clash' />
+
+        function projectCurrentState() {
+
+        }
+
+        this.now = projectCurrentState;
+    }
+
+    function Projector() {
+        
     }
 
     angular.module('ScoreKeeper.Tennis')

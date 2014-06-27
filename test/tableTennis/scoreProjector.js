@@ -1,4 +1,4 @@
-﻿(function (angular, k, _) {
+﻿(function (angular, k) {
 	'use strict';
 
 	var inject = angular.injector(['ScoreKeeper.TableTennis', 'ngRoute']),
@@ -34,8 +34,8 @@
 		expect(p.winner).toBe(party);
 	}
 
-	function score(n) {
-		var n = n || 1;
+	function score(count) {
+	    var n = count || 1;
 		return {
 			for: function (party) {
 				for (var i = 0; i < n; i++) {
@@ -230,4 +230,4 @@
 
 	});
 
-}).call(this, this.angular, this.H.ScoreKeeper, this._);
+}).call(this, this.angular, this.H.ScoreKeeper);
