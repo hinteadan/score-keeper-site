@@ -106,10 +106,32 @@
                 expect(p.now().deuceCount).toBe(4);
             });
 
+            it('is not won when less than 4 points are scored', function () {
+            	score(2).for(parties[1]);
+            	score(2).for(parties[0]);
+            	gameWinProjectionOk();
+            });
+
             it('is won on 4th point if not tied', function () {
                 score().for(parties[1]);
                 score(4).for(parties[0]);
                 gameWinProjectionOk(parties[0]);
+            });
+
+            it('is not won on tie', function () {
+            	score(4).for(parties[1]);
+            	score(4).for(parties[0]);
+            	gameWinProjectionOk();
+            });
+
+            it('is won on tie after 2 point advantage', function () {
+            	score(3).for(parties[1]);
+            	score(3).for(parties[0]);
+            	score().for(parties[1]);
+            	score().for(parties[0]);
+            	score().for(parties[1]);
+            	score().for(parties[1]);
+            	gameWinProjectionOk(parties[1]);
             });
 
         });

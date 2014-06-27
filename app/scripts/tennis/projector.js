@@ -18,6 +18,26 @@
             return diff < 0 ? '-' : gameScoreOnDifference[diff];
         }
 
+        function projectWinner(projection) {
+        	/// <param name='projection' type='GameProjector.Projection' />
+        	var fed = clash.parties[0],
+                rafa = clash.parties[1],
+        		diff = clash.scoreFor(fed) - clash.scoreFor(rafa);
+
+        	if (clash.scoreFor(fed) < 4 && clash.scoreFor(rafa) < 4) {
+        		return projection;
+        	}
+
+        	if (Math.abs(diff) > 2 && clash.scoreFor(fed) >= 4 && clash.scoreFor(rafa) >= 4) {
+        		throw new Error('The point advantage must not be greater than two!');
+        	}
+
+        	projection.winner = diff >= 2 ? fed : diff <= -2 ? rafa : null;
+        	projection.isWon = projection.winner !== null;
+
+        	return projection;
+        }
+
         function projectCurrentState() {
             var projection = new GameProjector.Projection(),
                 fed = clash.parties[0],
@@ -28,10 +48,7 @@
             if (projection.deuceCount < 0) { projection.deuceCount = 0; }
             projection.isTied = projection.deuceCount > 0;
 
-            projection.winner = clash.scoreFor(fed) === 4 ? fed : clash.scoreFor(rafa) === 4 ? rafa : null;
-            projection.isWon = projection.winner !== null;
-
-            return projection;
+            return projectWinner(projection);
         }
 
         this.now = projectCurrentState;
