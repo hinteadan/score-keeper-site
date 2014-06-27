@@ -106,6 +106,12 @@
                 expect(p.now().deuceCount).toBe(4);
             });
 
+            it('is won on 4th point if not tied', function () {
+                score().for(parties[1]);
+                score(4).for(parties[0]);
+                gameWinProjectionOk(parties[0]);
+            });
+
         });
 
     });
