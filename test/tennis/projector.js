@@ -37,7 +37,7 @@
     }
 
     function setOf(nGames) {
-    	clash = new k.ClashSet(_.map(_.range(0, nGames), function (i) {
+    	clash = new k.ClashSet(_.map(_.range(0, nGames), function () {
     		return new k.Clash(parties);
     	}), parties, details);
     	p = new Projector.Set(clash);
