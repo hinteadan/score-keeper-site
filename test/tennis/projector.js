@@ -176,6 +176,15 @@
         		setOf(6);
         		setScoreProjectionOk(0, 0);
         	});
+
+        	it('scores correctly after winning some games', function () {
+        		setOf(4);
+        		clash.clashes[0].close(parties[0]);
+        		clash.clashes[1].close(parties[0]);
+        		clash.clashes[2].close(parties[0]);
+        		clash.clashes[3].close(parties[1]);
+        		setScoreProjectionOk(3, 1);
+        	});
         });
 
     });
