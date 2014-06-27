@@ -18,11 +18,29 @@
             return diff < 0 ? '-' : gameScoreOnDifference[diff];
         }
 
+        function projectWinnerOnAdvanatage(projection, fed, rafa, diff) {
+        	/// <param name='projection' type='GameProjector.Projection' />
+        	projection.winner = diff >= 2 ? fed : diff <= -2 ? rafa : null;
+        	projection.isWon = projection.winner !== null;
+        	return projection;
+        }
+
+        function projectWinnerOnNoAdvantage(projection, fed, rafa, diff) {
+        	/// <param name='projection' type='GameProjector.Projection' />
+        	projection.winner = diff >= 1 ? fed : diff <= -1 ? rafa : null;
+        	projection.isWon = projection.winner !== null;
+        	return projection;
+        }
+
         function projectWinner(projection) {
         	/// <param name='projection' type='GameProjector.Projection' />
         	var fed = clash.parties[0],
                 rafa = clash.parties[1],
-        		diff = clash.scoreFor(fed) - clash.scoreFor(rafa);
+        		diff = clash.scoreFor(fed) - clash.scoreFor(rafa),
+                winnerProjector = {
+                	AdvantageWin: projectWinnerOnAdvanatage,
+                	NoAdvantageWin: projectWinnerOnNoAdvantage
+                };
 
         	if (clash.scoreFor(fed) < 4 && clash.scoreFor(rafa) < 4) {
         		return projection;
@@ -32,10 +50,7 @@
         		throw new Error('The point advantage must not be greater than two!');
         	}
 
-        	projection.winner = diff >= 2 ? fed : diff <= -2 ? rafa : null;
-        	projection.isWon = projection.winner !== null;
-
-        	return projection;
+        	return winnerProjector[clash.details.tieMode](projection, fed, rafa, diff);
         }
 
         function projectCurrentState() {

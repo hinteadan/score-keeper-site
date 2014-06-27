@@ -3,6 +3,7 @@
 
     var inject = angular.injector(['ScoreKeeper.Tennis']),
         GameDetails = inject.get('GameDetails'),
+		gameTieMode = inject.get('GameTieModes'),
 		MatchDetails = inject.get('FrayDetails'),
         Projector = inject.get('Projector'),
         parties = null,
@@ -38,6 +39,7 @@
         it('uses inject-ables', function () {
             expect(MatchDetails).toBeDefined();
             expect(GameDetails).toBeDefined();
+            expect(gameTieMode).toBeDefined();
             expect(Projector).toBeDefined();
         });
 
@@ -132,6 +134,14 @@
             	score().for(parties[1]);
             	score().for(parties[1]);
             	gameWinProjectionOk(parties[1]);
+            });
+
+            it('is won on tie point if mode is no-advantage win', function () {
+            	clash.details.tieMode = gameTieMode.noAdvantageWin;
+            	score(3).for(parties[1]);
+            	score(3).for(parties[0]);
+            	score().for(parties[0]);
+            	gameWinProjectionOk(parties[0]);
             });
 
         });
