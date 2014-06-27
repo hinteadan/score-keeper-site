@@ -1,4 +1,4 @@
-﻿(function (angular, _) {
+﻿(function (angular) {
     'use strict';
 
     var gameScore = ['0', '15', '30', '40'],
@@ -50,4 +50,4 @@
     angular.module('ScoreKeeper.Tennis')
     .value('Projector', Projector);
 
-}).call(this, this.angular, this._);
+}).call(this, this.angular);
