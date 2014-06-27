@@ -21,6 +21,7 @@
 		this.firstToServe = null;
 		this.firstToReceive = null;
 		this.tieMode = setTieMode.tieBreak;
+		this.gamesCount = 6;
 	}
 
 	function FrayDetails() {

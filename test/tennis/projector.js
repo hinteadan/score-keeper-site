@@ -1,8 +1,9 @@
-﻿(function (angular, k) {
+﻿(function (angular, k, _) {
     'use strict';
 
     var inject = angular.injector(['ScoreKeeper.Tennis']),
         GameDetails = inject.get('GameDetails'),
+		SetDetails = inject.get('SetDetails'),
 		gameTieMode = inject.get('GameTieModes'),
 		MatchDetails = inject.get('FrayDetails'),
         Projector = inject.get('Projector'),
@@ -35,10 +36,24 @@
         expect(proj.winner).toBe(shouldBeWonBy ? shouldBeWonBy : null);
     }
 
+    function setOf(nGames) {
+    	clash = new k.ClashSet(_.map(_.range(0, nGames), function (i) {
+    		return new k.Clash(parties);
+    	}), parties, details);
+    	p = new Projector.Set(clash);
+    }
+
+    function setScoreProjectionOk(forFed, forRafa) {
+    	proj = p.now();
+    	expect(proj.scorePerPartyName.Fed).toEqual(forFed);
+    	expect(proj.scorePerPartyName.Rafa).toEqual(forRafa);
+    }
+
     describe('Tennis scoring', function () {
         it('uses inject-ables', function () {
             expect(MatchDetails).toBeDefined();
             expect(GameDetails).toBeDefined();
+            expect(SetDetails).toBeDefined();
             expect(gameTieMode).toBeDefined();
             expect(Projector).toBeDefined();
         });
@@ -146,6 +161,23 @@
 
         });
 
+        describe('Set scoring', function () {
+        	beforeEach(function () {
+        		parties = [
+				    new k.Party('Fed').addMembers([new k.Individual('Roger', 'Federer')]),
+				    new k.Party('Rafa').addMembers([new k.Individual('Rafael', 'Nadal')])
+        		];
+        		details = new SetDetails();
+        		details.firstToServe = parties[0].individuals[0];
+        		details.firstToReceive = parties[1].individuals[0];
+        	});
+
+        	it('starts at 0 - 0', function () {
+        		setOf(6);
+        		setScoreProjectionOk(0, 0);
+        	});
+        });
+
     });
 
-}).call(this, this.angular, this.H.ScoreKeeper);
+}).call(this, this.angular, this.H.ScoreKeeper, this._);

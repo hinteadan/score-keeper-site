@@ -76,11 +76,32 @@
         this.winner = null;
     };
 
+    function SetProjector(clash) {
+    	/// <param name='clash' type='H.ScoreKeeper.ClashSet' />
+    	function projectCurrentState() {
+    		var projection = new SetProjector.Projection(),
+                fed = clash.parties[0],
+                rafa = clash.parties[1];
+    		projection.scorePerPartyName[fed.name] = clash.scoreFor(fed);
+    		projection.scorePerPartyName[rafa.name] = clash.scoreFor(rafa);
+
+    		return projection;
+    	}
+
+    	this.now = projectCurrentState;
+    }
+    SetProjector.Projection = function () {
+    	this.scorePerPartyName = {};
+    	this.isWon = false;
+    	this.winner = null;
+    };
+
 
     function Projector() {
 
     }
     Projector.Game = GameProjector;
+    Projector.Set = SetProjector;
 
     angular.module('ScoreKeeper.Tennis')
     .value('Projector', Projector);
