@@ -24,7 +24,9 @@
                 rafa = clash.parties[1];
             projection.scorePerPartyName[fed.name] = gameScoreFor(clash.scoreFor(fed), clash.scoreFor(rafa));
             projection.scorePerPartyName[rafa.name] = gameScoreFor(clash.scoreFor(rafa), clash.scoreFor(fed));
-            
+            projection.deuceCount = Math.min(clash.scoreFor(fed), clash.scoreFor(rafa)) - 2;
+            if (projection.deuceCount < 0) { projection.deuceCount = 0; }
+
             return projection;
         }
 
@@ -39,7 +41,7 @@
 
 
     function Projector() {
-        
+
     }
     Projector.Game = GameProjector;
 

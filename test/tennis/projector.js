@@ -89,6 +89,7 @@
             });
 
             it('counts deuces', function () {
+                expect(p.now().deuceCount).toBe(0);
                 score(3).for(parties[0]);
                 score(3).for(parties[1]);
                 expect(p.now().deuceCount).toBe(1);
