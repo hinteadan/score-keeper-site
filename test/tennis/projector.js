@@ -36,6 +36,12 @@
                 expect(proj.scorePerPartyName.Rafa).toEqual('0');
             });
 
+            it('is not won at first', function () {
+                var proj = p.now();
+                expect(proj.isWon).toBe(false);
+                expect(proj.winner).toBe(null);
+            });
+
         });
 
     });

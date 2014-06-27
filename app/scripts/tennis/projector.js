@@ -18,8 +18,6 @@
     }
     GameProjector.Projection = function () {
         this.scorePerPartyName = {};
-        this.serving = null;
-        this.receiving = null;
         this.isWon = false;
         this.winner = null;
     };
