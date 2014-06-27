@@ -26,8 +26,8 @@
 
             it('begins at love all', function () {
                 var proj = p.now();
-                expect(proj.scorePerPartyName['Fed']).toEqual('0');
-                expect(proj.scorePerPartyName['Rafa']).toEqual('0');
+                expect(proj.scorePerPartyName.Fed).toEqual('0');
+                expect(proj.scorePerPartyName.Rafa).toEqual('0');
             });
 
         });
