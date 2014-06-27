@@ -32,6 +32,7 @@
     }
     GameProjector.Projection = function () {
         this.scorePerPartyName = {};
+        this.deuceCount = 0;
         this.isWon = false;
         this.winner = null;
     };

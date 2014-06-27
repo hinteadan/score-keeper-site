@@ -88,6 +88,23 @@
                 gameScoreProjectionOk('Wn', '-');
             });
 
+            it('counts deuces', function () {
+                score(3).for(parties[0]);
+                score(3).for(parties[1]);
+                expect(p.now().deuceCount).toBe(1);
+                score().for(parties[0]);
+                score().for(parties[1]);
+                expect(p.now().deuceCount).toBe(2);
+                score().for(parties[0]);
+                score().for(parties[1]);
+                expect(p.now().deuceCount).toBe(3);
+                score().for(parties[0]);
+                score().for(parties[1]);
+                expect(p.now().deuceCount).toBe(4);
+                score(2).for(parties[0]);
+                expect(p.now().deuceCount).toBe(4);
+            });
+
         });
 
     });
