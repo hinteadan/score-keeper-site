@@ -8,7 +8,31 @@
         parties = null,
         clash = null,
         details = null,
-		p = null;
+		p = null,
+        proj = null;
+
+    function score(count) {
+        var n = count || 1;
+        return {
+            for: function (party) {
+                for (var i = 0; i < n; i++) {
+                    clash.pointFor(party);
+                }
+            }
+        };
+    }
+
+    function gameScoreProjectionOk(forFed, forRafa) {
+        proj = p.now();
+        expect(proj.scorePerPartyName.Fed).toEqual(forFed);
+        expect(proj.scorePerPartyName.Rafa).toEqual(forRafa);
+    }
+
+    function gameWinProjectionOk(shouldBeWonBy) {
+        proj = p.now();
+        expect(proj.isWon).toBe(shouldBeWonBy ? true : false);
+        expect(proj.winner).toBe(shouldBeWonBy ? shouldBeWonBy : null);
+    }
 
     describe('Tennis scoring', function () {
         it('uses inject-ables', function () {
@@ -28,18 +52,40 @@
                 details.receiving = parties[1].individuals[0];
                 clash = new k.Clash(parties, details);
                 p = new Projector.Game(clash);
+                proj = null;
             });
 
             it('begins at love all', function () {
-                var proj = p.now();
-                expect(proj.scorePerPartyName.Fed).toEqual('0');
-                expect(proj.scorePerPartyName.Rafa).toEqual('0');
+                gameScoreProjectionOk('0', '0');
             });
 
             it('is not won at first', function () {
-                var proj = p.now();
-                expect(proj.isWon).toBe(false);
-                expect(proj.winner).toBe(null);
+                gameWinProjectionOk();
+            });
+
+            it('scores correctly when points are won', function () {
+                score().for(parties[0]);
+                gameScoreProjectionOk('15', '0');
+                score().for(parties[1]);
+                gameScoreProjectionOk('15', '15');
+                score().for(parties[0]);
+                gameScoreProjectionOk('30', '15');
+                score().for(parties[1]);
+                gameScoreProjectionOk('30', '30');
+                score().for(parties[1]);
+                gameScoreProjectionOk('30', '40');
+                score().for(parties[0]);
+                gameScoreProjectionOk('40', '40');
+                score().for(parties[0]);
+                gameScoreProjectionOk('Ad', '-');
+                score().for(parties[1]);
+                gameScoreProjectionOk('40', '40');
+                score().for(parties[1]);
+                gameScoreProjectionOk('-', 'Ad');
+                score().for(parties[0]);
+                gameScoreProjectionOk('40', '40');
+                score(2).for(parties[0]);
+                gameScoreProjectionOk('Wn', '-');
             });
 
         });
