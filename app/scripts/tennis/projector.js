@@ -28,6 +28,9 @@
             if (projection.deuceCount < 0) { projection.deuceCount = 0; }
             projection.isTied = projection.deuceCount > 0;
 
+            projection.winner = clash.scoreFor(fed) === 4 ? fed : clash.scoreFor(rafa) === 4 ? rafa : null;
+            projection.isWon = projection.winner !== null;
+
             return projection;
         }
 
