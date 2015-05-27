@@ -7,7 +7,7 @@
     "json3": "~3.3.2",
     "es5-shim": "~3.0.2",
     "jquery": "~2.1.0",
-    "h.scoreKeeper": "https://github.com/hinteadan/h.scoreKeeper.git",
+    "h.scoreKeeper": "https://github.com/hinteadan/h.scoreKeeper.git#v1.0.0",
     "jquery.gracket": "https://github.com/erik5388/jquery.gracket.js.git",
     "bootstrap": "~3.2.0",
     "lodash": "~2.4.1",
