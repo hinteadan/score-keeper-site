@@ -14,7 +14,7 @@
     "h.dataStore": "https://github.com/hinteadan/h.dataStore.client.js.git",
     "flatUI": "https://github.com/designmodo/Flat-UI.git",
     "flatbyUI": "https://github.com/dennisschipper/Flatby.git",
-    "AdminLTE": "https://github.com/almasaeed2010/AdminLTE.git",
+    "AdminLTE": "https://github.com/almasaeed2010/AdminLTE.git#1.1",
     "jasmine": "~2.0.4",
     "isotope": "~2.0.0",
     "json": "*"
@@ -22,5 +22,8 @@
   "devDependencies": {
     "angular-mocks": "1.2.15",
     "angular-scenario": "1.2.15"
+  },
+  "resolutions": {
+    "angular": "~1.2.23"
   }
 }
