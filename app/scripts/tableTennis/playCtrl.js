@@ -44,7 +44,9 @@
 				clashStore.save();
 			};
 			$scope.pointCreditPossibleMembers = function (scoringParty) {
-			    var candidates = $scope.pointDetails.current.reason === PointDetails.reason.unforcedErrorByOpponent ?
+			    var candidates =
+                    $scope.pointDetails.current.reason === PointDetails.reason.unforcedErrorByOpponent ||
+                    $scope.pointDetails.current.reason === PointDetails.reason.fault ?
 					clash.theOtherParty(scoringParty).individuals :
 					scoringParty.individuals;
 
