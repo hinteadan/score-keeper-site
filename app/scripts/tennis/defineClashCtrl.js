@@ -23,7 +23,7 @@
 
 			var labels = {};
 			labels[gameTieMode.advantageWin] = 'Ad. Win';
-			labels[gameTieMode.noAdvantageWin] = 'No-Ad. Win';
+			labels[gameTieMode.noAdvantageWin] = 'Dec. Point';
 			labels[setTieMode.tieBreak] = 'Tie-Break (7)';
 			labels[setTieMode.superTieBreak] = 'Super Tie-Break (10)';
 			labels[setTieMode.gameDifference] = '2-Game Diff.';
