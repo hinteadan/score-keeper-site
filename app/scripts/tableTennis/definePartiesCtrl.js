@@ -3,7 +3,6 @@
 
 	angular.module('ScoreKeeper.TableTennis')
 		.controller('defineParties', ['$scope', '$location', 'Clash', 'ClashLocalStore', function ($scope, $location, clash, clashStore) {
-			/// <param name='clashStore' type='storage.LocalStore' />
 
 			$scope.parties = clash.parties;
 			$scope.add = {

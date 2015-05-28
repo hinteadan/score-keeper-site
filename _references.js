@@ -8,10 +8,10 @@
 /// <reference path="~/app/bower_components/h.scoreKeeper/h.scoreKeeper.js" />
 /// <reference path="~/app/bower_components/h.dataStore/h.dataStore.js" />
 
-/// <reference path="~/app/scripts/common/localStore.js" />
 /// <reference path="~/app/scripts/common/module.js" />
+/// <reference path="~/app/scripts/common/localStore.js" />
 
-
+/// <reference path="~/app/scripts/tableTennis/module.js" />
 /// <reference path="~/app/scripts/tableTennis/clash.js" />
 /// <reference path="~/app/scripts/tableTennis/clashLocalStore.js" />
 /// <reference path="~/app/scripts/tableTennis/clashStateRouter.js" />
@@ -19,15 +19,10 @@
 /// <reference path="~/app/scripts/tableTennis/pointDetails.js" />
 /// <reference path="~/app/scripts/tableTennis/scoreProjector.js" />
 
-/// <reference path="~/app/scripts/tableTennis/module.js" />
-
-
+/// <reference path="~/app/scripts/tennis/module.js" />
 /// <reference path="~/app/scripts/tennis/frayDetails.js" />
 /// <reference path="~/app/scripts/tennis/fray.js" />
 /// <reference path="~/app/scripts/tennis/projector.js" />
-/// <reference path="~/app/scripts/tennis/module.js" />
-
-
 
 /// <reference path="~/app/scripts/tournamentWizard.js" />
 /// <reference path="~/app/scripts/app.js" />
