@@ -24,7 +24,9 @@
 		        current: new PointDetails(),
 		        reasons: PointDetails.reason,
 		        spins: PointDetails.spin,
-		        handles: PointDetails.handle
+		        handles: PointDetails.handle,
+		        styles: PointDetails.style,
+		        grabs: PointDetails.grab
 		    };
 
 		    $scope.pointFor = function (party) {
@@ -94,6 +96,10 @@
 		            case PointDetails.reason.winningShot: return 'Winner';
 		            case PointDetails.reason.forcedErrorOnOpponent: return 'Forced Er.';
 		            case PointDetails.reason.unforcedErrorByOpponent: return 'Unforced Er.';
+
+		            case PointDetails.style.downTheLine: return 'Dn.Th.Ln.';
+		            case PointDetails.style.insideOut: return 'InOut';
+
 		            default: return input;
 		        }
 		    };
