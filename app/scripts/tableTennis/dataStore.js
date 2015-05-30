@@ -19,8 +19,8 @@
     }
 
     angular.module('ScoreKeeper.TableTennis')
-    .service('DataStore', ['$q', 'Clash', function ($q, clash) {
-        var store = new ds.Store('ScoreKeeperTableTennisClashes', 'http://h-httpstore.azurewebsites.net/');
+    .service('DataStore', ['$q', 'appConfig', 'Clash', function ($q, cfg, clash) {
+        var store = new ds.Store('ScoreKeeperTableTennisClashes', cfg.storeUrl);
 
         function playersCsv(){
             return _.pluck(_.flatten(_.pluck(clash.parties, 'individuals')), function(m){

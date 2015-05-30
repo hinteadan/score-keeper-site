@@ -8,6 +8,8 @@
 /// <reference path="~/app/bower_components/h.scoreKeeper/h.scoreKeeper.js" />
 /// <reference path="~/app/bower_components/h.dataStore/h.dataStore.js" />
 
+/// <reference path="~/app/scripts/config.js" />
+
 /// <reference path="~/app/scripts/common/module.js" />
 /// <reference path="~/app/scripts/common/localStore.js" />
 

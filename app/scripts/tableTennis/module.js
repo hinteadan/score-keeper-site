@@ -1,7 +1,7 @@
 (function (angular) {
     'use strict';
 
-    angular.module('ScoreKeeper.TableTennis', ['ngRoute', 'ScoreKeeper.Common'])
+    angular.module('ScoreKeeper.TableTennis', ['ngRoute', 'appConfig', 'ScoreKeeper.Common'])
 	.config(['$routeProvider', function ($routeProvider) {
 	    $routeProvider
 			.when('/parties', { templateUrl: 'scripts/tableTennis/defineParties.tmpl.html', controller: 'defineParties' })
