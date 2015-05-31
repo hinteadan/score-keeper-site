@@ -7,6 +7,7 @@
 /// <reference path="~/app/bower_components/jasmine/lib/jasmine-core/boot/boot.js" />
 /// <reference path="~/app/bower_components/h.scoreKeeper/h.scoreKeeper.js" />
 /// <reference path="~/app/bower_components/h.dataStore/h.dataStore.js" />
+/// <reference path="~/app/bower_components/h.dataStore/h.dataStore.realtime.js" />
 
 /// <reference path="~/app/scripts/config.js" />
 
