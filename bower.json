@@ -11,7 +11,7 @@
     "jquery.gracket": "https://github.com/erik5388/jquery.gracket.js.git",
     "bootstrap": "~3.2.0",
     "lodash": "~2.4.1",
-    "h.dataStore": "https://github.com/hinteadan/h.dataStore.client.js.git#v1.2.0",
+    "h.dataStore": "https://github.com/hinteadan/h.dataStore.client.js.git#v1.2.1",
     "flatUI": "https://github.com/designmodo/Flat-UI.git",
     "flatbyUI": "https://github.com/dennisschipper/Flatby.git",
     "AdminLTE": "https://github.com/almasaeed2010/AdminLTE.git#1.1",
