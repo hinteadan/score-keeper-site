@@ -245,6 +245,28 @@ module.exports = function (grunt) {
 			}
 		},
 
+		ngtemplates: {
+		    app: {
+		        src: ['scripts/**/*.tmpl.html'],
+		        cwd: '<%= yeoman.app %>',
+		        dest: '.tmp/templates.js',
+		        options: {
+		            module: 'ScoreKeeper.Common',
+		            htmlmin: {
+		                collapseWhitespace: true,
+		                collapseBooleanAttributes: true
+		            }
+		        }
+		    }
+		},
+
+		concat: {
+		    ngtemplate: {
+		        src: ['.tmp/concat/scripts/common.js', '.tmp/templates.js'],
+		        dest: '.tmp/concat/scripts/common.js'
+		    }
+		},
+
 		// Copies remaining files to places other tasks can use
 		copy: {
 			dist: {
@@ -258,7 +280,6 @@ module.exports = function (grunt) {
                       '.htaccess',
                       '*.html',
                       'views/{,*/}*.html',
-                      'scripts/{,*/}*.tmpl.html',
                       'images/{,*/}*.{webp}',
                       'fonts/{,*/}*',
 					  'web.config'
@@ -401,6 +422,8 @@ module.exports = function (grunt) {
       'concurrent:dist',
       'autoprefixer',
       'concat',
+      'ngtemplates',
+      'concat:ngtemplate',
       'copy:dist',
       'cssmin',
       'uglify',
