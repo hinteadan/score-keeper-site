@@ -334,6 +334,20 @@ module.exports = function (grunt) {
 				files: [
                     { expand: true, flatten: true, src: ['<%= yeoman.dist %>\\*.css'], dest: '<%= yeoman.dist %>' }
 				]
+			},
+			dist: {
+			    options: {
+			        patterns: [
+                        {
+                            match: /storeUrl:['"].*?['"]/,
+                            replacement: 'storeUrl:\"http://h-httpstore.azurewebsites.net/\"',
+                            expression: true
+                        }
+			        ]
+			    },
+			    files: [
+                    { expand: true, flatten: true, src: ['<%= yeoman.dist %>\\scripts\\*.js'], dest: '<%= yeoman.dist %>\\scripts\\' }
+			    ]
 			}
 		},
 
@@ -429,7 +443,8 @@ module.exports = function (grunt) {
       'uglify',
       'rev',
       'usemin',
-      'htmlmin'
+      'htmlmin',
+      'replace:dist'
 	]);
 
 	grunt.registerTask('default', [
