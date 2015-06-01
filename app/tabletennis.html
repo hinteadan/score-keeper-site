@@ -1,127 +1,126 @@
 ﻿<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" ng-app="ScoreKeeper.TableTennis">
 <head>
-	<title>Table Tennis Clash</title>
+    <title>Table Tennis Clash</title>
 
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="user-scalable=no, width=device-width" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 
-	<!-- build:css styles/styles.css -->
-	<link rel="stylesheet" href="styles/gfonts.css">
+    <!-- build:css styles/styles.css -->
+    <link rel="stylesheet" href="styles/gfonts.css">
 
-	<link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css" />
-	<link href="bower_components/AdminLTE/css/font-awesome.css" rel="stylesheet" />
-	<link href="bower_components/AdminLTE/css/ionicons.css" rel="stylesheet" />
-	<link href="bower_components/AdminLTE/css/AdminLTE.css" rel="stylesheet" />
+    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css" />
+    <link href="bower_components/AdminLTE/css/font-awesome.css" rel="stylesheet" />
+    <link href="bower_components/AdminLTE/css/ionicons.css" rel="stylesheet" />
+    <link href="bower_components/AdminLTE/css/AdminLTE.css" rel="stylesheet" />
 
     <link href="styles/gracket.css" rel="stylesheet">
     <link href="styles/sport-icons.css" rel="stylesheet" />
-	<link href="styles/main.css" rel="stylesheet" />
-	<!-- endbuild -->
-	<!--[if lt IE 9]>
-		<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-		<script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
-	<![endif]-->
+    <link href="styles/main.css" rel="stylesheet" />
+    <!-- endbuild -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
 </head>
 <body class="skin-blue pace-done unselectable">
 
-	<div class="pace  pace-inactive">
-		<div class="pace-progress" style="width: 100%;" data-progress-text="100%" data-progress="99">
-			<div class="pace-progress-inner"></div>
-		</div>
-		<div class="pace-activity"></div>
-	</div>
+    <div class="pace pace-inactive">
+        <div class="pace-progress" style="width: 100%;" data-progress-text="100%" data-progress="99">
+            <div class="pace-progress-inner"></div>
+        </div>
+        <div class="pace-activity"></div>
+    </div>
 
-	<header class="header">
-		<a class="logo">
+    <header class="header">
+        <a class="logo">
             <i class="fa sports fa-sp-ping-pong-hollow"></i>
-			Table Tennis Match
-		</a>
-		<nav role="navigation" class="navbar navbar-static-top">
-			<div class="navbar-right">
-				<ul class="nav navbar-nav">
-					<li class="dropdown tasks-menu" ng-controller="restore">
-						<a data-toggle="dropdown" class="dropdown-toggle clickable" ng-show="any()">
-							<i class="fa fa-tasks"></i>
-							<span class="label label-danger">{{clashes.length}}</span>
-						</a>
-						<ul class="dropdown-menu">
-							<li class="header">Restore one of these unfinished clashes:</li>
-							<li>
-								<div class="slimScrollDiv" style="position: relative; overflow: hidden; width: auto; height: 200px;">
-									<ul class="menu" style="overflow: hidden; width: 100%; height: 200px;">
-										<li ng-repeat="clash in clashes track by $index">
-											<a class="clickable" ng-click="restore(clash)">
-												<h3>
-													<strong>{{clash.parties[0].name}}</strong>
-													vs
-													<strong>{{clash.parties[1].name}}</strong>
-													<small class="pull-right">{{clash.details.startedOn || clash.details.createdOn}}</small>
-												</h3>
-											</a>
-										</li>
-									</ul>
-									<div class="slimScrollBar" style="background: none repeat scroll 0% 0% rgb(0, 0, 0); width: 3px; position: absolute; top: 0px; opacity: 0.4; display: none; border-radius: 0px; z-index: 99; right: 1px; height: 186.916px;"></div>
-									<div class="slimScrollRail" style="width: 3px; height: 100%; position: absolute; top: 0px; display: none; border-radius: 0px; background: none repeat scroll 0% 0% rgb(51, 51, 51); opacity: 0.2; z-index: 90; right: 1px;"></div>
-								</div>
-							</li>
-							<li class="footer">
+            Table Tennis Match
+        </a>
+        <nav role="navigation" class="navbar navbar-static-top">
+            <div class="navbar-right">
+                <ul class="nav navbar-nav">
+                    <li class="dropdown tasks-menu" ng-hide="isDecoupled" ng-controller="restore">
+                        <a data-toggle="dropdown" class="dropdown-toggle clickable" ng-show="any()">
+                            <i class="fa fa-tasks"></i>
+                            <span class="label label-danger">{{clashes.length}}</span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li class="header">Restore one of these unfinished clashes:</li>
+                            <li>
+                                <div class="slimScrollDiv" style="position: relative; overflow: hidden; width: auto; height: 200px;">
+                                    <ul class="menu" style="overflow: hidden; width: 100%; height: 200px;">
+                                        <li ng-repeat="clash in clashes track by $index">
+                                            <a class="clickable" ng-click="restore(clash)">
+                                                <h3>
+                                                    <strong>{{clash.parties[0].name}}</strong>
+                                                    vs
+                                                    <strong>{{clash.parties[1].name}}</strong>
+                                                    <small class="pull-right">{{clash.details.startedOn || clash.details.createdOn}}</small>
+                                                </h3>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                    <div class="slimScrollBar" style="background: none repeat scroll 0% 0% rgb(0, 0, 0); width: 3px; position: absolute; top: 0px; opacity: 0.4; display: none; border-radius: 0px; z-index: 99; right: 1px; height: 186.916px;"></div>
+                                    <div class="slimScrollRail" style="width: 3px; height: 100%; position: absolute; top: 0px; display: none; border-radius: 0px; background: none repeat scroll 0% 0% rgb(51, 51, 51); opacity: 0.2; z-index: 90; right: 1px;"></div>
+                                </div>
+                            </li>
+                            <li class="footer">
                                 <a class="clickable" ng-click="purgeAll()">Purge All</a>
-							</li>
-						</ul>
-					</li>
+                            </li>
+                        </ul>
+                    </li>
                     <li ng-controller="navigation">
                         <a class="clickable" ng-click="goHome()">
                             <i class="fa fa-home fa-lg" ng-class="{ 'fa-home': !goHome.confirm, 'fa-question': goHome.confirm }"></i>
                             <span ng-show="goHome.confirm">Yeah, I'm sure!</span>
                         </a>
                     </li>
-				</ul>
-			</div>
-		</nav>
-	</header>
+                </ul>
+            </div>
+        </nav>
+    </header>
 
-	<div class="wrapper row-offcanvas row-offcanvas-left">
-		<div class="right-side strech">
-			<div class="content" ng-view></div>
-		</div>
-	</div>
+    <div class="wrapper row-offcanvas row-offcanvas-left">
+        <div class="right-side strech">
+            <div class="content" ng-view></div>
+        </div>
+    </div>
 
-	<!-- build:js scripts/common.js -->
-	<script src="bower_components/jquery/dist/jquery.js"></script>
-	<script src="bower_components/angular/angular.js"></script>
-	<script src="bower_components/angular-route/angular-route.js"></script>
-	<script src="bower_components/h.scoreKeeper/h.scoreKeeper.js"></script>
-	<script src="bower_components/jquery.gracket/jquery.gracket.js"></script>
-	<script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
-	<script src="bower_components/lodash/dist/lodash.compat.js"></script>
-	<script src="bower_components/h.dataStore/h.dataStore.js"></script>
+    <!-- build:js scripts/common.js -->
+    <script src="bower_components/jquery/dist/jquery.js"></script>
+    <script src="bower_components/angular/angular.js"></script>
+    <script src="bower_components/angular-route/angular-route.js"></script>
+    <script src="bower_components/h.scoreKeeper/h.scoreKeeper.js"></script>
+    <script src="bower_components/jquery.gracket/jquery.gracket.js"></script>
+    <script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
+    <script src="bower_components/lodash/dist/lodash.compat.js"></script>
+    <script src="bower_components/h.dataStore/h.dataStore.js"></script>
     <script src="bower_components/h.dataStore/h.dataStore.realtime.js"></script>
 
     <script src="scripts/config.js"></script>
 
     <script src="scripts/common/localStore.js"></script>
-	<script src="scripts/common/pace.js"></script>
+    <script src="scripts/common/pace.js"></script>
 
     <script src="scripts/common/module.js"></script>
-	<!-- endbuild -->
-
-	<!-- build:js scripts/tabletennis/scripts.js -->
-	<script src="scripts/tableTennis/module.js"></script>
-	<script src="scripts/tableTennis/restoreCtrl.js"></script>
-	<script src="scripts/tableTennis/definePartiesCtrl.js"></script>
-	<script src="scripts/tableTennis/defineClashCtrl.js"></script>
-	<script src="scripts/tableTennis/playCtrl.js"></script>
+    <!-- endbuild -->
+    <!-- build:js scripts/tabletennis/scripts.js -->
+    <script src="scripts/tableTennis/module.js"></script>
+    <script src="scripts/tableTennis/restoreCtrl.js"></script>
+    <script src="scripts/tableTennis/definePartiesCtrl.js"></script>
+    <script src="scripts/tableTennis/defineClashCtrl.js"></script>
+    <script src="scripts/tableTennis/playCtrl.js"></script>
     <script src="scripts/tableTennis/viewCtrl.js"></script>
-	<script src="scripts/tableTennis/pointDetails.js"></script>
-	<script src="scripts/tableTennis/scoreProjector.js"></script>
-	<script src="scripts/tableTennis/clash.js"></script>
-	<script src="scripts/tableTennis/clashLocalStore.js"></script>
+    <script src="scripts/tableTennis/pointDetails.js"></script>
+    <script src="scripts/tableTennis/scoreProjector.js"></script>
+    <script src="scripts/tableTennis/clash.js"></script>
+    <script src="scripts/tableTennis/clashLocalStore.js"></script>
     <script src="scripts/tableTennis/clashStateRouter.js"></script>
-	<script src="scripts/tableTennis/dataStore.js"></script>
+    <script src="scripts/tableTennis/dataStore.js"></script>
     <script src="scripts/tableTennis/realtime.js"></script>
-	<!-- endbuild -->
+    <!-- endbuild -->
 
 </body>
 </html>

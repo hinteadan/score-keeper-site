@@ -15,7 +15,11 @@
     .run(['$rootScope', 'ClashStateRouter', function ($root, clashStateRouter) {
         $root.$on('$routeChangeStart', function ($ev, currentRoute) {
             if (currentRoute.isDecoupled) {
+                $root.isDecoupled = true;
                 return;
+            }
+            if ($root.isDecoupled) {
+                delete $root.isDecoupled;
             }
             if (clashStateRouter.goToCurrentClashState()) {
                 $ev.preventDefault();

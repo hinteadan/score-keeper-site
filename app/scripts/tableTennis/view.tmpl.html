@@ -1,3 +1,25 @@
-﻿<pre>
-    {{data|json}}
-</pre>
+﻿<div>
+
+    <div class="row">
+        <div class="text-center" ng-class="columnsCss" ng-repeat="party in parties">
+
+            <div class="box box-info">
+                <div class="box-header" style="height: 10vh;">
+                    <h3 class="box-title text-center"><strong style="font-size: 5vh;">{{party}}</strong></h3>
+                    <div class="box-tools pull-right" ng-show="serving == party">
+                        <div class="label bg-aqua">Serving</div>
+                    </div>
+                </div>
+                <div class="box-body" style="height: 50vh; font-size: 30vh;">
+                    <p>
+                        <strong>{{score[party]}}</strong>
+                    </p>
+                </div>
+                <div class="box-footer" style="height: 15vh; font-size: 6vh;">
+                    {{setScore[party]}}
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

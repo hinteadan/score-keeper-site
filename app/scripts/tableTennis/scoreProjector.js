@@ -122,6 +122,7 @@
     	this.now = projectCurrentState;
     }
     ScoreProjector.ClashProjection = ClashProjection;
+    ScoreProjector.ClashSetProjection = ClashSetProjection;
 
     angular.module('ScoreKeeper.TableTennis').value('ScoreProjector', ScoreProjector);
 
