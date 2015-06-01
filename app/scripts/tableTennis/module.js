@@ -8,10 +8,15 @@
 			.when('/clash', { templateUrl: 'scripts/tableTennis/defineClash.tmpl.html', controller: 'defineClash' })
 			.when('/play', { templateUrl: 'scripts/tableTennis/play.tmpl.html', controller: 'play' })
 			.when('/restore', { templateUrl: 'scripts/tableTennis/restore.tmpl.html', controller: 'restore' })
+            .when('/view', { templateUrl: 'scripts/tableTennis/view.tmpl.html', controller: 'view', isDecoupled: true })
+            .when('/view/:id', { templateUrl: 'scripts/tableTennis/view.tmpl.html', controller: 'view', isDecoupled: true })
 			.otherwise({ redirectTo: '/parties' });
 	}])
     .run(['$rootScope', 'ClashStateRouter', function ($root, clashStateRouter) {
-        $root.$on('$routeChangeStart', function ($ev) {
+        $root.$on('$routeChangeStart', function ($ev, currentRoute) {
+            if (currentRoute.isDecoupled) {
+                return;
+            }
             if (clashStateRouter.goToCurrentClashState()) {
                 $ev.preventDefault();
                 return;

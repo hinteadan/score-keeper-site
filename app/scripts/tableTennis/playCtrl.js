@@ -5,10 +5,21 @@
 
     angular.module('ScoreKeeper.TableTennis')
 
-		.controller('play', ['$scope', '$timeout', '$window', 'Clash', 'PointDetails', 'ClashLocalStore', 'DataStore', 'eventSessionRestore', function ($scope, $t, $w, clash, PointDetails, clashStore, dataStore, restore) {
+		.controller('play', ['$scope', '$timeout', '$window', 'Clash', 'PointDetails', 'ClashLocalStore', 'DataStore', 'eventSessionRestore', 'realtime', function ($scope, $t, $w, clash, PointDetails, clashStore, dataStore, restore, realtime) {
+
+		    /// <var type="H.DataStore.Realtime.Api" />
+		    var realtimeApi = null;
+
+		    realtime.bind().then(function (api) {
+		        /// <param name="api" type="H.DataStore.Realtime.Api" />
+		        realtimeApi = api;
+		    });
 
 		    function refreshScoreProjection() {
 		        $scope.scoreProjection = clash.projectScore().now();
+		        if (realtimeApi) {
+		            realtimeApi.announceEntityChange({ Data: $scope.scoreProjection });
+		        }
 		    }
 
 		    $scope.$on(restore, refreshScoreProjection);

@@ -1,29 +1,29 @@
 {
-  "name": "score-keeper-site",
-  "version": "0.0.0",
-  "dependencies": {
-    "angular": "~1.2.23",
-    "angular-route": "~1.2.16",
-    "json3": "~3.3.2",
-    "es5-shim": "~3.0.2",
-    "jquery": "~2.1.0",
-    "h.scoreKeeper": "https://github.com/hinteadan/h.scoreKeeper.git#v1.0.0",
-    "jquery.gracket": "https://github.com/erik5388/jquery.gracket.js.git",
-    "bootstrap": "~3.2.0",
-    "lodash": "~2.4.1",
-    "h.dataStore": "https://github.com/hinteadan/h.dataStore.client.js.git#v1.2.1",
-    "flatUI": "https://github.com/designmodo/Flat-UI.git",
-    "flatbyUI": "https://github.com/dennisschipper/Flatby.git",
-    "AdminLTE": "https://github.com/almasaeed2010/AdminLTE.git#1.1",
-    "jasmine": "~2.0.4",
-    "isotope": "~2.0.0",
-    "json": "*"
-  },
-  "devDependencies": {
-    "angular-mocks": "1.2.15",
-    "angular-scenario": "1.2.15"
-  },
-  "resolutions": {
-    "angular": "~1.2.23"
-  }
+    "name": "score-keeper-site",
+    "version": "0.0.1",
+    "dependencies": {
+        "angular": "~1.2.23",
+        "angular-route": "~1.2.16",
+        "json3": "~3.3.2",
+        "es5-shim": "~3.0.2",
+        "jquery": "~2.1.0",
+        "h.scoreKeeper": "https://github.com/hinteadan/h.scoreKeeper.git#v1.0.0",
+        "jquery.gracket": "https://github.com/erik5388/jquery.gracket.js.git",
+        "bootstrap": "~3.2.0",
+        "lodash": "~2.4.1",
+        "h.dataStore": "https://github.com/hinteadan/h.dataStore.client.js.git#v1.2.3",
+        "flatUI": "https://github.com/designmodo/Flat-UI.git",
+        "flatbyUI": "https://github.com/dennisschipper/Flatby.git",
+        "AdminLTE": "https://github.com/almasaeed2010/AdminLTE.git#1.1",
+        "jasmine": "~2.0.4",
+        "isotope": "~2.0.0",
+        "json": "*"
+    },
+    "devDependencies": {
+        "angular-mocks": "1.2.15",
+        "angular-scenario": "1.2.15"
+    },
+    "resolutions": {
+        "angular": "~1.2.23"
+    }
 }
