@@ -1,7 +1,7 @@
 ﻿(function (angular, k, _) {
     'use strict';
 
-    var inject = angular.injector(['ScoreKeeper.Tennis']),
+    var inject = angular.injector(['ng', 'appConfig', 'ngRoute', 'ScoreKeeper.Tennis', 'ngMock']),
         GameDetails = inject.get('GameDetails'),
 		SetDetails = inject.get('SetDetails'),
 		gameTieMode = inject.get('GameTieModes'),

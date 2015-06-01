@@ -13,15 +13,18 @@ module.exports = function(config) {
     files: [
       'app/bower_components/angular/angular.js',
 	  'app/bower_components/angular-route/angular-route.js',
+      'app/bower_components/angular-mocks/angular-mocks.js',
 	  'app/bower_components/h.scoreKeeper/h.scoreKeeper.js',
 	  'app/bower_components/lodash/dist/lodash.js',
 
       'app/scripts/common/localStore.js',
       'app/scripts/common/module.js',
+      'app/scripts/config.js',
 
       'app/scripts/tableTennis/module.js',
 	  'app/scripts/tableTennis/clash.js',
       'app/scripts/tableTennis/scoreProjector.js',
+      'app/scripts/tableTennis/clashStateRouter.js',
 
       'app/scripts/tennis/module.js',
       'app/scripts/tennis/fray.js',

@@ -1,7 +1,7 @@
 ﻿(function (angular, k) {
 	'use strict';
 
-	var inject = angular.injector(['ScoreKeeper.TableTennis', 'ngRoute']),
+    var inject = angular.injector(['ng', 'appConfig', 'ScoreKeeper.TableTennis', 'ngRoute', 'ngMock']),
 		ScoreProjector = inject.get('ScoreProjector'),
 		clashService = inject.get('Clash'),
 		parties = null,
