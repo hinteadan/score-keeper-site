@@ -49,7 +49,7 @@
     }
 
     angular.module('ScoreKeeper.TableTennis')
-		.service('Clash', ['ScoreProjector', 'PersistanceToken', function ClashService(ScoreProjector, PersistanceToken) {
+		.service('Clash', ['ScoreProjector', 'PersistenceToken', function ClashService(ScoreProjector, PersistenceToken) {
 
 		    var parties = [
                     new k.Party(),
@@ -115,7 +115,7 @@
 		        this.skClashSet = clashSet;
 		        return clashSet;
 		    };
-		    this.persistance = new PersistanceToken();
+		    this.persistence = new PersistenceToken();
 
 		    this.projectScore = function () {
 		        ensureScoreProjector();
@@ -150,8 +150,8 @@
 		            this.skClashSet = clashSet;
 		            projector = new ScoreProjector(clashSet);
 		        }
-		        if (dto.persistance.id) {
-		            this.persistance = new PersistanceToken(dto.persistance.id, dto.persistance.check);
+		        if (dto.persistence.id) {
+		            this.persistence = new PersistenceToken(dto.persistence.id, dto.persistence.check);
 		        }
 		    };
 		}]);

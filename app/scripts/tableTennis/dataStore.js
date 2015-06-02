@@ -18,7 +18,7 @@
         this.endedOn = null;
     }
 
-    function PersistanceToken(id, check) {
+    function PersistenceToken(id, check) {
         var self = this;
         this.id = id || null;
         this.check = check || null;
@@ -34,7 +34,7 @@
     }
 
     angular.module('ScoreKeeper.TableTennis')
-    .value('PersistanceToken', PersistanceToken)
+    .value('PersistenceToken', PersistenceToken)
     .service('DataStore', ['$q', 'appConfig', 'Clash', function ($q, cfg, clash) {
         var store = new ds.Store('ScoreKeeperTableTennisClashes', cfg.storeUrl);
 
@@ -74,9 +74,9 @@
             var deferred = $q.defer(),
                 entity = new ds.Entity(clash.clashSet(), extractMetaData());
 
-            if (clash.persistance.id) {
-                entity.Id = clash.persistance.id;
-                entity.CheckTag = clash.persistance.check;
+            if (clash.persistence.id) {
+                entity.Id = clash.persistence.id;
+                entity.CheckTag = clash.persistence.check;
             }
 
             store.Save(entity).then(function (result) {
@@ -85,7 +85,7 @@
                     deferred.reject(result.reason);
                     return;
                 }
-                clash.persistance.update(result.data.Id, result.data.CheckTag);
+                clash.persistence.update(result.data.Id, result.data.CheckTag);
                 deferred.resolve(entity);
             });
 
