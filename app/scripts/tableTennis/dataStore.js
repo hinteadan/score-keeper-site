@@ -26,7 +26,7 @@
         this.update = function (id, check) {
             self.id = id;
             self.check = check;
-        }
+        };
 
         this.isPersisted = function () {
             return self.id && self.check;
