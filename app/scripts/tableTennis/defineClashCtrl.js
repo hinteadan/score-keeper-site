@@ -2,7 +2,7 @@
     'use strict';
 
     angular.module('ScoreKeeper.TableTennis')
-		.controller('defineClash', ['$scope', '$location', 'Clash', 'ClashLocalStore', function ($scope, $location, clash, clashStore) {
+		.controller('defineClash', ['$scope', '$location', 'Clash', 'ClashLocalStore', 'DataStore', function ($scope, $location, clash, clashStore, store) {
 
 		    $scope.clashDetails = clash.details;
 		    $scope.parties = clash.parties;
@@ -16,7 +16,7 @@
 		    };
 		    $scope.next = function () {
 		        clash.play();
-		        clashStore.save();
+		        store.persist().then(clashStore.save);
 		        $location.path('/play');
 		    };
 		}]);
