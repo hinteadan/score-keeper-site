@@ -37,3 +37,7 @@ ul.portfolio-filter li:last-child{
 
     cursor: default;
 }
+
+[ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
+  display: none !important;
+}
