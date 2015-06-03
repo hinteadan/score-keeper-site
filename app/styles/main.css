@@ -1,31 +1,31 @@
 .clickable {
-  cursor: pointer;
+    cursor: pointer;
 }
 
 .hoverable {
-	opacity: 0.3;
+    opacity: 0.3;
 }
 
-.hoverable:hover {
-	opacity: 1;
-}
+    .hoverable:hover {
+        opacity: 1;
+    }
 
 .engaged {
-  opacity: 0.35;
+    opacity: 0.35;
 }
 
-.navbar-default .navbar-brand{
-	background: none;
-	line-height: 40px;
+.navbar-default .navbar-brand {
+    background: none;
+    line-height: 40px;
 }
 
-ul.portfolio-filter li{
-	margin-right: 4px;
+ul.portfolio-filter li {
+    margin-right: 4px;
 }
 
-ul.portfolio-filter li:last-child{
-	margin-right: 0px;
-}
+    ul.portfolio-filter li:last-child {
+        margin-right: 0px;
+    }
 
 .unselectable {
     -webkit-touch-callout: none;
@@ -34,10 +34,33 @@ ul.portfolio-filter li:last-child{
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
-
     cursor: default;
 }
 
 [ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
-  display: none !important;
+    display: none !important;
 }
+
+.connection-status {
+    position: absolute;
+    z-index: 1001;
+    top: 0;
+    right: 0;
+    width: 6px;
+    height: 6px;
+    -webkit-border-bottom-left-radius: 5px;
+    -moz-border-radius-bottomleft: 5px;
+    border-bottom-left-radius: 5px;
+}
+
+    .connection-status.disconnected {
+        background-color: lightgray;
+    }
+
+    .connection-status.connecting {
+        background-color: orange;
+    }
+
+    .connection-status.connected {
+        background-color:lawngreen;
+    }

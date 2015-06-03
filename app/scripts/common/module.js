@@ -1,7 +1,7 @@
 ﻿(function (angular) {
     'use strict';
 
-    angular.module('ScoreKeeper.Common', ['ng'])
+    angular.module('ScoreKeeper.Common', ['ng', 'appConfig'])
     .controller('navigation', ['$scope', '$window', '$timeout', function ($s, $w, $t) {
 
         $s.goHome = function () {
