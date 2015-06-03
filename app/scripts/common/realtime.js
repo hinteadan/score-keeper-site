@@ -1,7 +1,7 @@
 ﻿(function (angular, ds, Realtime) {
     'use strict';
 
-    angular.module('ScoreKeeper.TableTennis')
+    angular.module('ScoreKeeper.Common')
     .service('realtime', ['$q', 'appConfig', function ($q, cfg) {
 
         var realtimeService = new Realtime.Service(cfg.storeUrl),

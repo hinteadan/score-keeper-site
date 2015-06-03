@@ -13,6 +13,7 @@
 
 /// <reference path="~/app/scripts/common/module.js" />
 /// <reference path="~/app/scripts/common/localStore.js" />
+/// <reference path="~/app/scripts/common/realtime.js" />
 
 /// <reference path="~/app/scripts/tableTennis/module.js" />
 /// <reference path="~/app/scripts/tableTennis/clash.js" />
@@ -21,7 +22,6 @@
 /// <reference path="~/app/scripts/tableTennis/dataStore.js" />
 /// <reference path="~/app/scripts/tableTennis/pointDetails.js" />
 /// <reference path="~/app/scripts/tableTennis/scoreProjector.js" />
-/// <reference path="~/app/scripts/tableTennis/realtime.js" />
 
 /// <reference path="~/app/scripts/tennis/module.js" />
 /// <reference path="~/app/scripts/tennis/frayDetails.js" />
