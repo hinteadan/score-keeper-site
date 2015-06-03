@@ -18,7 +18,7 @@
 		    function refreshScoreProjection() {
 		        $scope.scoreProjection = clash.projectScore().now();
 		        if (realtimeApi) {
-		            realtimeApi.announceEntityChange({ Data: $scope.scoreProjection });
+		            realtimeApi.announceEntityChange({ Id: clash.persistence.id, Data: $scope.scoreProjection });
 		            dataStore.persist().then(clashStore.save);
 		        }
 		    }

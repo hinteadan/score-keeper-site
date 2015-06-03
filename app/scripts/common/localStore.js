@@ -162,5 +162,6 @@
 
 	this.storage = this.storage || {};
 	this.storage.LocalStore = LocalStore;
+	this.storage.deserializeDates = fixDates;
 
 }).call(this, this.JSON, this.localStorage);

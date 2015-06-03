@@ -7,22 +7,6 @@
         var ProjectionType = ScoreProjector.ClashSetProjection,// jshint ignore:line
             clashId = $p.id;
 
-        if (!clashId) {
-            repo.liveNow().then(function (entities) {
-                $s.liveClashes = entities;
-            });
-        }
-
-        realtime.bind().then(function (api) {
-            /// <param name="api" type="H.DataStore.Realtime.Api" />
-            api.setOnChangeHandler(function (payload) {
-                /// <param name="payload" type="H.DataStore.Entity" />
-                refreshView(payload.Data);
-                $s.$apply();
-            });
-
-        });
-
         function refreshView(score) {
             /// <param name="score" type="ProjectionType" />
             $s.parties = _.map(score.scorePerPartyName, function (s, k) { return k; });
@@ -45,11 +29,38 @@
             return 'col-xs-' + (Math.floor(12 / numberOfParties));
         }
 
+        function initialize() {
+            if (!clashId) {
+                repo.liveNow().then(function (entities) {
+                    $s.liveClashes = entities;
+                });
+                return;
+            }
+
+            repo.load(clashId).then(function (persistentClashSet) {
+                refreshView(new ScoreProjector(persistentClashSet.clashSet).now());
+            });
+
+            realtime.bind().then(function (api) {
+                /// <param name="api" type="H.DataStore.Realtime.Api" />
+                api.setOnChangeHandler(function (payload) {
+                    /// <param name="payload" type="H.DataStore.Entity" />
+                    if (payload.Id !== clashId) {
+                        return;
+                    }
+                    refreshView(payload.Data);
+                    $s.$apply();
+                });
+            });
+        }
+
         $s.clashId = clashId;
         $s.liveClashes = [];
         $s.view = function (id) {
             $l.path('/view/' + id);
         };
+
+        initialize();
 
     }]);
 

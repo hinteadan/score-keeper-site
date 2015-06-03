@@ -1,4 +1,4 @@
-﻿(function (angular, ds, _) {
+﻿(function (angular, ds, _, sk, deserializeDates) {
     'use strict';
 
     function Metadata() {
@@ -33,6 +33,11 @@
         };
     }
 
+    function PersistentClashSet(persistenceToken, clashSet) {
+        this.persistence = persistenceToken;
+        this.clashSet = clashSet;
+    }
+
     angular.module('ScoreKeeper.TableTennis')
     .value('PersistenceToken', PersistenceToken)
     .service('DataStore', ['$q', 'appConfig', 'Clash', function ($q, cfg, clash) {
@@ -62,13 +67,18 @@
             m.winner = winner ? winner.name : m.winner;
             m.winningNotes = (clash.clashSet().activeClash() || _.last(clash.clashSet().clashes)).winnerNotes;
             m.setsToWin = clash.details.setsToWin;
-            m.setsPlayed = _.where(clash.clashSet().clashes, function(c){ return c.hasEnded(); }).length;
+            m.setsPlayed = _.where(clash.clashSet().clashes, function (c) { return c.hasEnded(); }).length;
             m.pointsPlayed = pointsPlayed();
             m.createdOn = clash.details.createdOn;
             m.startedOn = clash.details.startedOn;
             m.endedOn = clash.details.endedOn;
             m.hasEnded = Boolean(clash.details.endedOn);
             return m;
+        }
+
+        function mapEntity(entity) {
+            /// <param name='entity' type='ds.Entity' />
+            return new PersistentClashSet(new PersistenceToken(entity.Id, entity.CheckTag), sk.ClashSet.revive(deserializeDates(entity.Data)));
         }
 
         this.persist = function () {
@@ -108,6 +118,20 @@
             return deff.promise;
         };
 
+        this.load = function (id) {
+            var deff = $q.defer();
+
+            store.Load(id).then(function (result) {
+                /// <param name='result' type='ds.OperationResult' />
+                if (!result.isSuccess) {
+                    deff.reject(result.reason);
+                }
+                deff.resolve(mapEntity(result.data));
+            });
+
+            return deff.promise;
+        };
+
     }]);
 
-}).call(this, this.angular, this.H.DataStore, this._);
+}).call(this, this.angular, this.H.DataStore, this._, this.H.ScoreKeeper, this.storage.deserializeDates);
