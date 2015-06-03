@@ -1,6 +1,9 @@
 ﻿<div>
 
     <div class="row">
+
+        <div ng-include="'scripts/tableTennis/browse.tmpl.html'" ng-hide="clashId"></div>
+
         <div class="text-center" ng-class="columnsCss" ng-repeat="party in parties">
 
             <div class="box box-info">

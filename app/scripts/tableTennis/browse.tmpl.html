@@ -1,0 +1,39 @@
+﻿<div class="col-xs-12">
+
+    <div class="box box-primary">
+
+        <div class="box-header">
+            <h3 class="box-title">Live now</h3>
+            <div class="box-tools">
+                <div class="input-group">
+                    <input type="text" placeholder="Search" style="width: 150px;" class="form-control input-sm pull-right" name="table_search">
+                    <div class="input-group-btn">
+                        <button class="btn btn-sm btn-default"><i class="fa fa-search"></i></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="box-body table-responsive no-padding">
+            <table class="table table-hover">
+                <tbody>
+                    <tr>
+                        <th>#</th>
+                        <th>Clash</th>
+                        <th>Points Played</th>
+                        <th>Started</th>
+                    </tr>
+                    <tr ng-repeat="entity in liveClashes | orderBy : Meta.startedOn : true" class="clickable" ng-click="view(entity.Id)">
+                        <td>{{$index + 1}}</td>
+                        <td><strong>{{entity.Data.parties[0].name}} <small>vs</small> {{entity.Data.parties[1].name}}</strong></td>
+                        <td>{{entity.Meta.pointsPlayed}}</td>
+                        <td>{{entity.Meta.startedOn}}</td>
+                    </tr>
+                    
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+
+</div>

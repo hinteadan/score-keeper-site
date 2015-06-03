@@ -2,11 +2,16 @@
     'use strict';
 
     angular.module('ScoreKeeper.TableTennis')
-    .controller('view', ['$scope', '$routeParams', 'realtime', 'ScoreProjector', 'DataStore', function ($s, $p, realtime, ScoreProjector, repo) {
+    .controller('view', ['$scope', '$routeParams', '$location', 'realtime', 'ScoreProjector', 'DataStore', function ($s, $p, $l, realtime, ScoreProjector, repo) {
 
-        var ProjectionType = ScoreProjector.ClashSetProjection;// jshint ignore:line
+        var ProjectionType = ScoreProjector.ClashSetProjection,// jshint ignore:line
+            clashId = $p.id;
 
-        repo.liveNow();
+        if (!clashId) {
+            repo.liveNow().then(function (entities) {
+                $s.liveClashes = entities;
+            });
+        }
 
         realtime.bind().then(function (api) {
             /// <param name="api" type="H.DataStore.Realtime.Api" />
@@ -39,6 +44,12 @@
             }
             return 'col-xs-' + (Math.floor(12 / numberOfParties));
         }
+
+        $s.clashId = clashId;
+        $s.liveClashes = [];
+        $s.view = function (id) {
+            $l.path('/view/' + id);
+        };
 
     }]);
 

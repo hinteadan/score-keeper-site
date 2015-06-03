@@ -94,11 +94,18 @@
         };
 
         this.liveNow = function () {
-            var query = ds.queryWithAnd().where('hasEnded')(ds.is.EqualTo)(false);
+            var query = ds.queryWithAnd().where('hasEnded')(ds.is.EqualTo)(false),
+                deff = $q.defer();
+
             store.Query(query).then(function (result) {
                 /// <param name='result' type='ds.OperationResult' />
-                console.log(result);
+                if (!result.isSuccess) {
+                    deff.reject(result.reason);
+                }
+                deff.resolve(result.data);
             });
+
+            return deff.promise;
         };
 
     }]);
