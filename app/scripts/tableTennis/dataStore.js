@@ -67,6 +67,7 @@
             m.createdOn = clash.details.createdOn;
             m.startedOn = clash.details.startedOn;
             m.endedOn = clash.details.endedOn;
+            m.hasEnded = Boolean(clash.details.endedOn);
             return m;
         }
 
@@ -90,6 +91,14 @@
             });
 
             return deferred.promise;
+        };
+
+        this.liveNow = function () {
+            var query = ds.queryWithAnd().where('hasEnded')(ds.is.EqualTo)(false);
+            store.Query(query).then(function (result) {
+                /// <param name='result' type='ds.OperationResult' />
+                console.log(result);
+            });
         };
 
     }]);
