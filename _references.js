@@ -11,6 +11,8 @@
 
 /// <reference path="~/app/scripts/config.js" />
 
+/// <reference path="app/scripts/common/foolproof.js" />
+
 /// <reference path="~/app/scripts/common/module.js" />
 /// <reference path="~/app/scripts/common/localStore.js" />
 /// <reference path="~/app/scripts/common/realtime.js" />
