@@ -17,9 +17,12 @@
 
 		    function refreshScoreProjection() {
 		        $scope.scoreProjection = clash.projectScore().now();
+		    }
+
+		    function persist() {
+		        dataStore.persist().then(clashStore.save);
 		        if (realtimeApi) {
-		            realtimeApi.announceEntityChange({ Id: clash.persistence.id, Data: $scope.scoreProjection });
-		            dataStore.persist().then(clashStore.save);
+		            realtimeApi.announceEntityChange({ Id: clash.persistence.id, Data: clash.projectScore().now() });
 		        }
 		    }
 
@@ -45,12 +48,12 @@
 		        $scope.clash().pointWith($scope.pointDetails.current).for(party);
 		        $scope.pointDetails.current = new PointDetails();
 		        refreshScoreProjection();
-		        clashStore.save();
+		        persist();
 		    };
 		    $scope.undoPoint = function () {
 		        $scope.clash().undoPoint();
 		        refreshScoreProjection();
-		        clashStore.save();
+		        persist();
 		    };
 		    $scope.pointCreditPossibleMembers = function (scoringParty) {
 		        var candidates =
@@ -71,7 +74,7 @@
 		        if ($scope.scoreProjection.isWon) {
 		            clash.stop();
 		        }
-		        clashStore.save();
+		        persist();
 		    };
 		    $scope.commit = function () {
 

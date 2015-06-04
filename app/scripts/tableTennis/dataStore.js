@@ -1,4 +1,4 @@
-﻿(function (angular, ds, _, sk, deserializeDates) {
+﻿(function (angular, ds, _, sk, deserializeDates, foolproof) {
     'use strict';
 
     function Metadata() {
@@ -81,8 +81,9 @@
             return new PersistentClashSet(new PersistenceToken(entity.Id, entity.CheckTag), sk.ClashSet.revive(deserializeDates(entity.Data)));
         }
 
-        this.persist = function () {
-            var deferred = $q.defer(),
+        this.persist = foolproof(function () {
+            var self = this,
+                deferred = $q.defer(),
                 entity = new ds.Entity(clash.clashSet(), extractMetaData());
 
             if (clash.persistence.id) {
@@ -92,6 +93,7 @@
 
             store.Save(entity).then(function (result) {
                 /// <param name='result' type='ds.OperationResult' />
+                self.unlock();
                 if (!result.isSuccess) {
                     deferred.reject(result.reason);
                     return;
@@ -101,7 +103,7 @@
             });
 
             return deferred.promise;
-        };
+        });
 
         this.liveNow = function () {
             var query = ds.queryWithAnd().where('hasEnded')(ds.is.EqualTo)(false),
@@ -134,4 +136,4 @@
 
     }]);
 
-}).call(this, this.angular, this.H.DataStore, this._, this.H.ScoreKeeper, this.storage.deserializeDates);
+}).call(this, this.angular, this.H.DataStore, this._, this.H.ScoreKeeper, this.storage.deserializeDates, this.H.foolproof);

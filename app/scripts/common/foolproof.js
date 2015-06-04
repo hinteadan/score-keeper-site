@@ -1,7 +1,8 @@
-﻿(function () {
+﻿(function (undef) {
     'use strict';
 
     function foolproof(func) {
+        var lastReturnValue = undef;
         func.locked = false;
         func.requested = false;
         func.lock = function () {
@@ -18,11 +19,18 @@
         function foolproofWrap() {
             if (func.locked) {
                 func.requested = true;
-                return;
+                return lastReturnValue;
             }
             func.lock();
-            func.apply(func, arguments);
+            lastReturnValue = func.apply(func, arguments);
+            return lastReturnValue;
         }
+        foolproofWrap.status = function () {
+            return {
+                locked: func.locked,
+                requested: func.requested
+            };
+        };
 
         return foolproofWrap;
     }
