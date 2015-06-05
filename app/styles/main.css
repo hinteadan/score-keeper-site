@@ -46,8 +46,8 @@ ul.portfolio-filter li {
     z-index: 1001;
     top: 0;
     right: 0;
-    width: 6px;
-    height: 6px;
+    width: 8px;
+    height: 8px;
     -webkit-border-bottom-left-radius: 5px;
     -moz-border-radius-bottomleft: 5px;
     border-bottom-left-radius: 5px;
@@ -61,6 +61,24 @@ ul.portfolio-filter li {
         background-color: orange;
     }
 
-    .connection-status.connected {
-        background-color:lawngreen;
+    .connection-status.connected, .connection-status.idle {
+        background-color: lawngreen;
+    }
+
+    .connection-status.active {
+        background-color: #00d9ff;
+    }
+
+    .connection-status.hot {
+        background-color: #d9703b;
+    }
+
+
+    .connection-status.inner {
+        width: 5px;
+        height: 4px;
+        z-index: 1030;
+        -webkit-border-bottom-left-radius: 2px;
+        -moz-border-radius-bottomleft: 2px;
+        border-bottom-left-radius: 2px;
     }
