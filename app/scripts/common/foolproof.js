@@ -12,8 +12,9 @@
             func.locked = false;
             if (func.requested) {
                 func.requested = false;
-                foolproofWrap();
+                return foolproofWrap();
             }
+            return lastReturnValue;
         };
 
         function foolproofWrap() {
