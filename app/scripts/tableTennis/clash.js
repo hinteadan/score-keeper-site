@@ -80,7 +80,7 @@
                         new ClashDetails(other(firstServeParty, clashDetails.firstToServe), other(firstReceivingParty, clashDetails.firstToReceive)),
                         new ClashDetails(other(firstReceivingParty, clashDetails.firstToReceive), clashDetails.firstToServe),
                     ],
-                    isSinglesClash = firstServeParty.individuals.length === 1;
+                    isSinglesClash = firstServeParty && firstServeParty.individuals.length === 1;
 
 		        return isSinglesClash ? singles[index % 2] : doubles[index % 4];
 		    }
