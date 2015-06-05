@@ -94,13 +94,13 @@
             store.Save(entity).then(function (result) {
                 /// <param name='result' type='ds.OperationResult' />
                 if (!result.isSuccess) {
-                    deferred.reject(result.reason);
                     self.unlock();
+                    deferred.reject(result.reason);
                     return;
                 }
                 clash.persistence.update(result.data.Id, result.data.CheckTag);
-                deferred.resolve(entity);
                 self.unlock();
+                deferred.resolve(entity);
             });
 
             return deferred.promise;
