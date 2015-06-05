@@ -2,36 +2,50 @@
     'use strict';
 
     function foolproof(func) {
-        var lastReturnValue = undef;
+        var lastReturnValue = undef,
+            onStatusChange = null;
         func.locked = false;
         func.requested = false;
-        func.lock = function () {
-            func.locked = true;
-        };
         func.unlock = function () {
             func.locked = false;
+            raiseOnStatusChange();
             if (func.requested) {
                 func.requested = false;
+                raiseOnStatusChange();
                 return foolproofWrap();
             }
             return lastReturnValue;
         };
 
-        function foolproofWrap() {
-            if (func.locked) {
-                func.requested = true;
-                return lastReturnValue;
-            }
-            func.lock();
-            lastReturnValue = func.apply(func, arguments);
-            return lastReturnValue;
-        }
-        foolproofWrap.status = function () {
+        function status() {
             return {
                 locked: func.locked,
                 requested: func.requested
             };
+        }
+
+        function raiseOnStatusChange() {
+            if (typeof (onStatusChange) !== 'function') {
+                return;
+            }
+            onStatusChange.call(foolproofWrap, status());
+        }
+
+        function foolproofWrap() {
+            if (func.locked) {
+                func.requested = true;
+                raiseOnStatusChange();
+                return lastReturnValue;
+            }
+            func.locked = true;
+            raiseOnStatusChange();
+            lastReturnValue = func.apply(func, arguments);
+            return lastReturnValue;
+        }
+        foolproofWrap.onStatusChange = function (doThis) {
+            onStatusChange = doThis;
         };
+        foolproofWrap.status = status;
 
         return foolproofWrap;
     }

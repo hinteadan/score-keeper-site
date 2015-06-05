@@ -27,7 +27,12 @@
 		    }
 
 		    $scope.$on(restore, refreshScoreProjection);
-		    $scope.netStat = dataStore.persist.status;
+		    dataStore.persist.onStatusChange(function (status) {
+		        $t(function () {
+		            $scope.netStat = status;
+		        });
+		    });
+		    $scope.netStat = dataStore.persist.status();
 
 		    $scope.clash = function () {
 		        return clash.clashSet().activeClash() || _.last(clash.clashSet().clashes);
