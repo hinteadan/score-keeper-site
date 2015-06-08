@@ -3,7 +3,7 @@
 
     angular.module('ScoreKeeper.TableTennis')
     .value('eventSessionRestore', 'clashSessionRestored')
-	.controller('restore', ['$scope', '$location', '$rootScope', 'Clash', 'ClashLocalStore', 'ClashStateRouter', 'eventSessionRestore', function ($scope, $location, $rootScope, clash, clashStore, clashStateRouter, restoreEvent) {
+	.controller('restore', ['$scope', '$location', '$rootScope', '$q', 'Clash', 'ClashLocalStore', 'ClashStateRouter', 'eventSessionRestore', 'DataStore', function ($scope, $location, $rootScope, $q, clash, clashStore, clashStateRouter, restoreEvent, dataStore) {
 		/// <param name='clashStore' type='storage.LocalStore' />
 
 		$scope.any = clashStore.any;
@@ -21,7 +21,14 @@
 		    if (!confirm('Are you sure you want to permanently delete all the saved sessions?')) {
 		        return;
 		    }
-		    clashStore.purge();
+		    var zapPromises = [];
+		    angular.forEach(clashStore.query(), function (clash) {
+		        if (!clash.persistence || !clash.persistence.id) {
+		            return;
+		        }
+		        zapPromises.push(dataStore.zap(clash.persistence.id));
+		    });
+		    $q.all(zapPromises).finally(clashStore.purge);
 		};
 
 	}]);

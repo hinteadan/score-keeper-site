@@ -105,6 +105,20 @@
             return deferred.promise;
         });
 
+        this.zap = function (id) {
+            var deferred = $q.defer();
+
+            store.Delete(id).then(function (result) {
+                /// <param name='result' type='ds.OperationResult' />
+                if (!result.isSuccess) {
+                    deferred.reject(result.reason);
+                }
+                deferred.resolve(id);
+            });
+
+            return deferred.promise;
+        };
+
         this.liveNow = function () {
             var query = ds.queryWithAnd().where('hasEnded')(ds.is.EqualTo)(false),
                 deff = $q.defer();
