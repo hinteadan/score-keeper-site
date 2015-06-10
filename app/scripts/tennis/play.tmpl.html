@@ -1,0 +1,154 @@
+﻿<div>
+
+    <div class="connection-status inner idle"
+         ng-class="{ idle: !netStat.locked, active: netStat.locked, hot: netStat.requested }"></div>
+
+    <div ng-hide="scoreProjection.isWon">
+
+        <div class="row" ng-show="scoreProjection.currentSet.isWon">
+            <div class="col-sm-12">
+                <div class="box box-primary">
+                    <div class="box-body">
+                        <h1 class="text-center text-success">
+                            Set won by <strong>{{scoreProjection.currentSet.winner.name}}</strong>
+                        </h1>
+
+                        <button class="btn bg-primary btn-lg btn-block" ng-click="closeSet()">
+                            Close it and move to next set
+                            <i class="fa fa-play"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-6" ng-repeat="party in clash().parties">
+                <div class="box" ng-class="{ 'box-success': $index == 0, 'box-warning': $index == 1 }">
+                    <div class="box-header">
+                        <h2 class="box-title text-center" style="width: 100%;"><strong>{{party.name}}</strong></h2>
+                    </div>
+                    <div class="box-body">
+                        <h1 class="text-center"><strong>{{clash().scoreFor(party)}}</strong></h1>
+
+                        <h3 class="text-center">{{sets().scoreFor(party)}}</h3>
+
+                        <div class="small-box bg-aqua">
+                            <div class="inner">
+
+                                <div class="btn-group btn-group-justified">
+                                    <div class="btn-group btn-group-lg" ng-repeat="reason in pointDetails.reasons">
+                                        <button class="btn bg-olive btn-block" ng-disabled="pointDetails.current.reason == reason" ng-click="pointDetails.current.reason = reason">{{reason|pointLabel}}</button>
+                                    </div>
+                                </div>
+                                <div class="btn-group btn-group-justified">
+                                    <div class="btn-group btn-group-lg" ng-repeat="handle in pointDetails.handles">
+                                        <button class="btn btn-warning btn-block" ng-disabled="pointDetails.current.handle == handle" ng-click="pointDetails.current.handle = handle">{{handle|pointLabel}}</button>
+                                    </div>
+                                </div>
+                                <div class="btn-group btn-group-justified">
+                                    <div class="btn-group btn-group-lg" ng-repeat="spin in pointDetails.spins">
+                                        <button class="btn btn-info btn-block" ng-disabled="pointDetails.current.spin == spin" ng-click="pointDetails.current.spin = spin">{{spin|pointLabel}}</button>
+                                    </div>
+                                </div>
+                                <div class="btn-group btn-group-justified">
+                                    <div class="btn-group btn-group-lg" ng-repeat="style in pointDetails.styles">
+                                        <button class="btn btn-info btn-block" ng-disabled="pointDetails.current.style == style" ng-click="pointDetails.current.style = style">{{style|pointLabel}}</button>
+                                    </div>
+                                </div>
+                                <div class="btn-group btn-group-justified">
+                                    <div class="btn-group btn-group-lg" ng-repeat="grab in pointDetails.grabs">
+                                        <button class="btn btn-info btn-block" ng-disabled="pointDetails.current.grab == grab" ng-click="pointDetails.current.grab = grab">{{grab|pointLabel}}</button>
+                                    </div>
+                                </div>
+                                <div class="text-center" ng-hide="party.individuals.length == 1">
+                                    Credit for point goes to:
+                                    <div class="btn-group btn-group-justified">
+                                        <div class="btn-group btn-group-lg" ng-repeat="member in pointCreditPossibleMembers(party)">
+                                            <button class="btn btn-info btn-block" ng-disabled="pointDetails.current.creditTo == member" ng-click="pointDetails.current.creditTo = member">{{member.fullName()}}</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <span class="text-center" ng-show="party.individuals.length == 1">
+                                    Credit for point goes to:
+                                    <strong><em>{{pointCreditPossibleMembers(party)[0].fullName()}}</em></strong>
+                                </span>
+                            </div>
+                            <div class="small-box-footer clickable">
+                                <button class="btn btn-success btn-lg btn-block" ng-click="pointFor(party)" ng-disabled="scoreProjection.currentSet.isWon">
+                                    <h4><i class="fa fa-plus"></i></h4>
+                                </button>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="box box-primary">
+            <div class="box-body">
+                <button class="btn bg-orange btn-lg btn-block" ng-click="undoPoint()">
+                    <i class="fa fa-undo"></i>
+                    Undo last point
+                </button>
+                <hr />
+                <div class="small-box bg-aqua">
+                    <div class="inner text-center">
+                        <h4><strong>Clash info</strong></h4>
+                        <strong>{{scoreProjection.currentSet.serving.fullName()}}</strong>
+                        serves to
+                        <em>{{scoreProjection.currentSet.receiving.fullName()}}</em>
+                    </div>
+                    <a class="small-box-footer clickable">
+                        More stats <i class="fa fa-plus-circle"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div ng-show="scoreProjection.isWon && !commit.committed">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="box box-primary">
+                    <div class="box-body">
+                        <h1 class="text-center text-success">
+                            <strong><em>Victory</em></strong>  for <strong>{{scoreProjection.winner.name}}</strong> !
+                        </h1>
+
+                        <h3 class="text-center">Final Score: <strong>{{scoreProjection.finalScore[0]}}</strong> - {{scoreProjection.finalScore[1]}}</h3>
+
+                        <button class="btn bg-navy btn-lg btn-block" ng-click="commit()" ng-disabled="commit.committing">
+                            <i class="fa fa-cloud-upload"></i>
+                            <span ng-hide="commit.confirm || commit.committing">Commit clash</span>
+                            <span ng-show="commit.confirm">Press again to confirm clash submission</span>
+                            <span ng-show="commit.committing">Committing clash...</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div ng-show="commit.committed">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="box box-primary">
+                    <div class="box-body">
+                        <h1 class="text-center text-success">
+                            Clash committed!
+                        </h1>
+
+                        <button class="btn bg-navy btn-lg btn-block" ng-click="restart()">
+                            <i class="fa fa-cloud-upload"></i>
+                            New clash
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
