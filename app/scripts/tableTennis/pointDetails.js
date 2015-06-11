@@ -26,7 +26,7 @@
 			insideOut: 'InsideOut',
 			downTheLine: 'DownTheLine'
 		},
-		ballGrapStyle = {
+		ballGrabStyle = {
 			regular: 'Regular',
 			volley: 'Volley',
 			halfVolley: 'HalfVolley'
@@ -38,13 +38,13 @@
 		this.spin = spin || shotSpin.flat;
 		this.handle = handle || handling.forehand;
 		this.style = style || shotStyle.regular;
-		this.grab = grab || ballGrapStyle.regular;
+		this.grab = grab || ballGrabStyle.regular;
 	}
 	PointDetails.reason = pointReason;
 	PointDetails.spin = shotSpin;
 	PointDetails.handle = handling;
 	PointDetails.style = shotStyle;
-	PointDetails.grab = ballGrapStyle;
+	PointDetails.grab = ballGrabStyle;
 
 	angular.module('ScoreKeeper.TableTennis').value('PointDetails', PointDetails);
 
