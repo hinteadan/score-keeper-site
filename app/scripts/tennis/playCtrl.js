@@ -14,7 +14,7 @@
 
 	    function currentSet() {
 	        /// <returns type="H.ScoreKeeper.ClashSet" />
-	        return _.first(fray.clash().activeClash()) || _.last(fray.clash().clashes);
+	        return fray.clash().activeClash() || _.last(fray.clash().clashes);
 	    }
 
 	    function currentGame() {
