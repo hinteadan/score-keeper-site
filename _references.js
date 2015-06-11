@@ -11,7 +11,7 @@
 
 /// <reference path="~/app/scripts/config.js" />
 
-/// <reference path="app/scripts/common/foolproof.js" />
+/// <reference path="~/app/scripts/common/foolproof.js" />
 
 /// <reference path="~/app/scripts/common/module.js" />
 /// <reference path="~/app/scripts/common/localStore.js" />
@@ -29,6 +29,7 @@
 /// <reference path="~/app/scripts/tennis/frayDetails.js" />
 /// <reference path="~/app/scripts/tennis/fray.js" />
 /// <reference path="~/app/scripts/tennis/projector.js" />
+/// <reference path="~/app/scripts/tennis/pointDetails.js" />
 
 /// <reference path="~/app/scripts/tournamentWizard.js" />
 /// <reference path="~/app/scripts/app.js" />
