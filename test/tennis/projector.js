@@ -37,22 +37,22 @@
     }
 
     function setOf(nGames) {
-    	clash = new k.ClashSet(_.map(_.range(0, nGames), function () {
-    		return new k.Clash(parties);
-    	}), parties, details);
-    	p = new Projector.Set(clash);
+        clash = new k.ClashSet(_.map(_.range(0, nGames), function () {
+            return new k.Clash(parties);
+        }), parties, details);
+        p = new Projector.Set(clash);
     }
 
     function setScoreProjectionOk(forFed, forRafa) {
-    	proj = p.now();
-    	expect(proj.scorePerPartyName.Fed).toEqual(forFed);
-    	expect(proj.scorePerPartyName.Rafa).toEqual(forRafa);
+        proj = p.now();
+        expect(proj.scorePerPartyName.Fed).toEqual(forFed);
+        expect(proj.scorePerPartyName.Rafa).toEqual(forRafa);
     }
 
     function setWinProjectionOk(shouldBeWonBy) {
-    	proj = p.now();
-    	expect(proj.isWon).toBe(shouldBeWonBy ? true : false);
-    	expect(proj.winner).toBe(shouldBeWonBy ? shouldBeWonBy : null);
+        proj = p.now();
+        expect(proj.isWon).toBe(shouldBeWonBy ? true : false);
+        expect(proj.winner).toBe(shouldBeWonBy ? shouldBeWonBy : null);
     }
 
     describe('Tennis scoring', function () {
@@ -130,9 +130,9 @@
             });
 
             it('is not won when less than 4 points are scored', function () {
-            	score(2).for(parties[1]);
-            	score(2).for(parties[0]);
-            	gameWinProjectionOk();
+                score(2).for(parties[1]);
+                score(2).for(parties[0]);
+                gameWinProjectionOk();
             });
 
             it('is won on 4th point if not tied', function () {
@@ -142,65 +142,74 @@
             });
 
             it('is not won on tie', function () {
-            	score(4).for(parties[1]);
-            	score(4).for(parties[0]);
-            	gameWinProjectionOk();
+                score(4).for(parties[1]);
+                score(4).for(parties[0]);
+                gameWinProjectionOk();
             });
 
             it('is won on tie after 2 point advantage', function () {
-            	score(3).for(parties[1]);
-            	score(3).for(parties[0]);
-            	score().for(parties[1]);
-            	score().for(parties[0]);
-            	score().for(parties[1]);
-            	score().for(parties[1]);
-            	gameWinProjectionOk(parties[1]);
+                score(3).for(parties[1]);
+                score(3).for(parties[0]);
+                score().for(parties[1]);
+                score().for(parties[0]);
+                score().for(parties[1]);
+                score().for(parties[1]);
+                gameWinProjectionOk(parties[1]);
             });
 
             it('is won on tie point if mode is no-advantage win', function () {
-            	clash.details.tieMode = gameTieMode.noAdvantageWin;
-            	score(3).for(parties[1]);
-            	score(3).for(parties[0]);
-            	score().for(parties[0]);
-            	gameWinProjectionOk(parties[0]);
+                clash.details.tieMode = gameTieMode.noAdvantageWin;
+                score(3).for(parties[1]);
+                score(3).for(parties[0]);
+                score().for(parties[0]);
+                gameWinProjectionOk(parties[0]);
             });
 
         });
 
         describe('Set scoring', function () {
-        	beforeEach(function () {
-        		parties = [
+            beforeEach(function () {
+                parties = [
 				    new k.Party('Fed').addMembers([new k.Individual('Roger', 'Federer')]),
 				    new k.Party('Rafa').addMembers([new k.Individual('Rafael', 'Nadal')])
-        		];
-        		details = new SetDetails();
-        		details.firstToServe = parties[0].individuals[0];
-        		details.firstToReceive = parties[1].individuals[0];
-        	});
+                ];
+                details = new SetDetails();
+                details.firstToServe = parties[0].individuals[0];
+                details.firstToReceive = parties[1].individuals[0];
+            });
 
-        	it('starts at 0 - 0', function () {
-        		setOf(6);
-        		setScoreProjectionOk(0, 0);
-        	});
+            it('starts at 0 - 0', function () {
+                setOf(6);
+                setScoreProjectionOk(0, 0);
+            });
 
-        	it('scores correctly after winning some games', function () {
-        		setOf(4);
-        		clash.clashes[0].close(parties[0]);
-        		clash.clashes[1].close(parties[0]);
-        		clash.clashes[2].close(parties[0]);
-        		clash.clashes[3].close(parties[1]);
-        		setScoreProjectionOk(3, 1);
-        	});
+            it('scores correctly after winning some games', function () {
+                setOf(4);
+                clash.clashes[0].close(parties[0]);
+                clash.clashes[1].close(parties[0]);
+                clash.clashes[2].close(parties[0]);
+                clash.clashes[3].close(parties[1]);
+                setScoreProjectionOk(3, 1);
+            });
 
-        	it('wins on straight <<games per set point>>', function () {
-        		setOf(6);
-        		_.each(clash.clashes, function (c) { c.close(parties[0]); });
-        		setWinProjectionOk(parties[0]);
-        		details.gamesCount = 3;
-        		setOf(3);
-        		_.each(clash.clashes, function (c) { c.close(parties[1]); });
-        		setWinProjectionOk(parties[1]);
-        	});
+            it('wins on straight <<games per set point>>', function () {
+                setOf(6);
+                _.each(clash.clashes, function (c) { c.close(parties[0]); });
+                setWinProjectionOk(parties[0]);
+                details.gamesCount = 3;
+                setOf(3);
+                _.each(clash.clashes, function (c) { c.close(parties[1]); });
+                setWinProjectionOk(parties[1]);
+            });
+
+            it('does not end at 1 point difference on tie break', function () {
+                setOf(12);
+                for (var i = 0; i < 10; i++) {
+                    clash.clashes[i].close(parties[Math.floor(i / 5)]);
+                }// 5 - 5
+                clash.clashes[10].close(parties[0]);// 6 - 5
+                setWinProjectionOk();
+            });
         });
 
     });
