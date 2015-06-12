@@ -17,7 +17,7 @@
         </div>
     </div>
 
-    <div class="row">
+    <div class="row" ng-hide="scoreProjection.currentSet.currentGame.isWon || scoreProjection.isWon">
         <div class="col-sm-6" ng-repeat="party in game().parties">
             <div class="small-box-footer clickable">
 
@@ -28,9 +28,9 @@
                     <div class="box-body">
                         <h1 class="text-center"><strong>{{scoreProjection.currentSet.currentGame.scorePerPartyName[party.name]}}</strong></h1>
                         <h3 class="text-center">{{scoreProjection.currentSet.scorePerPartyName[party.name]}}</h3>
-                        <h3 class="text-center" ng-repeat="set in scoreProjection.sets">{{set.scorePerPartyName[party.name]}}</h3>
+                        <h3 class="text-center" ng-class="{ 'text-green bold': set.winner == party, 'text-muted': set.winner != party }" ng-repeat="set in scoreProjection.sets">{{set.scorePerPartyName[party.name]}}</h3>
 
-                        <button class="btn btn-success btn-lg btn-block" ng-click="pointFor(party)" ng-disabled="scoreProjection.currentSet.currentGame.isWon">
+                        <button class="btn btn-success btn-lg btn-block" ng-click="pointFor(party)">
                             <h4><i class="fa fa-plus"></i></h4>
                         </button>
 
@@ -41,7 +41,7 @@
         </div>
     </div>
 
-    <div class="row">
+    <div class="row" ng-hide="scoreProjection.isWon">
         <div class="col-sm-12">
             <div class="box box-primary">
                 <div class="box-body">
@@ -54,7 +54,30 @@
         </div>
     </div>
 
-    <pre>{{scoreProjection|json}}</pre>
-    <pre>{{pointDetails|json}}</pre>
+    <div class="row" ng-show="scoreProjection.isWon">
+        <div class="col-sm-12">
+            <div class="box box-primary">
+                <div class="box-body">
+                    <h1 class="text-center text-success">
+                        <strong><em>Victory</em></strong>  for <strong>{{scoreProjection.winner.name}}</strong> !
+                    </h1>
+
+                    <div class="row">
+                        <div class="col-sm-6" ng-repeat="party in game().parties">
+                            <h2 class="box-title text-center" style="width: 100%;"><strong>{{party.name}}</strong></h2>
+                            <h3 class="text-center" ng-class="{ 'text-green bold': set.winner == party, 'text-muted': set.winner != party }" ng-repeat="set in scoreProjection.sets">{{set.scorePerPartyName[party.name]}}</h3>
+                        </div>
+                    </div>
+
+                    <button class="btn bg-navy btn-lg btn-block" ng-click="commit()" ng-disabled="commit.committing">
+                        <i class="fa fa-cloud-upload"></i>
+                        <span ng-hide="commit.confirm || commit.committing">Commit clash</span>
+                        <span ng-show="commit.confirm">Press again to confirm clash submission</span>
+                        <span ng-show="commit.committing">Committing clash...</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
 
 </div>
