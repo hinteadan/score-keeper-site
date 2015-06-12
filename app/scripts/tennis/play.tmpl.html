@@ -1,14 +1,56 @@
 ﻿<div>
 
+    <div class="row" ng-show="scoreProjection.currentSet.currentGame.isWon">
+        <div class="col-sm-12">
+            <div class="box box-primary">
+                <div class="box-body">
+                    <h1 class="text-center text-success">
+                        Game won by <strong>{{scoreProjection.currentSet.currentGame.winner.name}}</strong>
+                    </h1>
+
+                    <button class="btn bg-primary btn-lg btn-block" ng-click="closeGame()">
+                        Close it and move to next game
+                        <i class="fa fa-play"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="row">
         <div class="col-sm-6" ng-repeat="party in game().parties">
-
             <div class="small-box-footer clickable">
-                <button class="btn btn-success btn-lg btn-block" ng-click="pointFor(party)">
-                    <h4><i class="fa fa-plus"></i></h4>
-                </button>
-            </div>
 
+                <div class="box" ng-class="{ 'box-success': $index == 0, 'box-warning': $index == 1 }">
+                    <div class="box-header">
+                        <h2 class="box-title text-center" style="width: 100%;"><strong>{{party.name}}</strong></h2>
+                    </div>
+                    <div class="box-body">
+                        <h1 class="text-center"><strong>{{scoreProjection.currentSet.currentGame.scorePerPartyName[party.name]}}</strong></h1>
+                        <h3 class="text-center">{{scoreProjection.currentSet.scorePerPartyName[party.name]}}</h3>
+                        <h3 class="text-center" ng-repeat="set in scoreProjection.sets">{{set.scorePerPartyName[party.name]}}</h3>
+
+                        <button class="btn btn-success btn-lg btn-block" ng-click="pointFor(party)" ng-disabled="scoreProjection.currentSet.currentGame.isWon">
+                            <h4><i class="fa fa-plus"></i></h4>
+                        </button>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="box box-primary">
+                <div class="box-body">
+                    <button class="btn bg-orange btn-lg btn-block" ng-click="undoPoint()">
+                        <i class="fa fa-undo"></i>
+                        Undo last point
+                    </button>
+                </div>
+            </div>
         </div>
     </div>
 

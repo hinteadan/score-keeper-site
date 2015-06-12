@@ -16,6 +16,7 @@
 				});
 			};
 			$s.next = function () {
+			    fray.play();
 				$l.path('/play');
 			};
 		}])

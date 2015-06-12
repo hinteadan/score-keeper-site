@@ -44,6 +44,19 @@
 	        persist();
 	    };
 
+	    $s.closeGame = function () {
+	        fray.clash().activeClash().activeClash().close($s.scoreProjection.currentSet.currentGame.winner);
+	        refreshScoreProjection();
+	        if ($s.scoreProjection.currentSet.isWon) {
+	            fray.clash().activeClash().close();
+	            refreshScoreProjection();
+	            if ($s.scoreProjection.isWon) {
+	                fray.stop();
+	            }
+	        }
+	        persist();
+	    };
+
 	    $s.game = currentGame;
 	    $s.scoreProjection = null;
 	    refreshScoreProjection();

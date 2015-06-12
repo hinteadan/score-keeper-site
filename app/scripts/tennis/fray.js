@@ -44,6 +44,13 @@
 	        ensureScoreProjector();
 	        return projector;
 	    };
+
+	    this.play = function () {
+	        frayDetails.startedOn = new Date();
+	    };
+	    this.stop = function () {
+	        frayDetails.endedOn = new Date();
+	    };
 	}]);
 
 }).call(this, this.angular, this.H.ScoreKeeper, this._);
