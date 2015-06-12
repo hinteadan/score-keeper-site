@@ -161,6 +161,8 @@
         this.sets = [];
         this.currentSet = null;
     };
+    Projector.Game = GameProjector;
+    Projector.Set = SetProjector;
 
     angular.module('ScoreKeeper.Tennis')
     .value('Projector', Projector);

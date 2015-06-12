@@ -22,6 +22,7 @@ module.exports = function(config) {
       'app/scripts/config.js',
 
       'app/scripts/tableTennis/module.js',
+      'app/scripts/tableTennis/dataStore.js',
 	  'app/scripts/tableTennis/clash.js',
       'app/scripts/tableTennis/scoreProjector.js',
       'app/scripts/tableTennis/clashStateRouter.js',
