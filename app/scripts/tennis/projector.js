@@ -82,9 +82,23 @@
         function projectWinner(projection) {
             var fed = clash.parties[0],
                 rafa = clash.parties[1],
-    			minToWin = clash.details.gamesCount;
-            projection.winner = clash.scoreFor(fed) === minToWin ? fed : clash.scoreFor(rafa) === minToWin ? rafa : null;
-            projection.isWon = projection.winner !== null;
+    			minToWin = clash.details.gamesCount,
+                scoreForFed = clash.scoreFor(fed),
+    			scoreForRafa = clash.scoreFor(rafa),
+                diff = Math.abs(scoreForFed - scoreForRafa),
+                maxScore = Math.max(scoreForFed, scoreForRafa),
+                possibleWinner = scoreForFed > scoreForRafa ? fed : rafa;
+
+            if (scoreForFed < minToWin && scoreForRafa < minToWin) {
+                return projection;
+            }
+            
+            if ((maxScore === minToWin && diff >= 2) || (maxScore === minToWin + 1 && diff === 2)) {
+                projection.winner = possibleWinner;
+                projection.isWon = true;
+                return projection;
+            }
+
             return projection;
         }
 
@@ -115,6 +129,7 @@
         this.isWon = false;
         this.winner = null;
         this.games = [];
+        this.isTie = false;
         this.currentGame = null;
     };
 
