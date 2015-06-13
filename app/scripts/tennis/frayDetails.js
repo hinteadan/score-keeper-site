@@ -15,6 +15,8 @@
         this.serving = null;
         this.receiving = null;
         this.tieMode = gameTieMode.advantageWin;
+        this.isTieBreaker = false;
+        this.tieBreakerMinPoints = 7;
 
         this.set = function (property, value) {
             self[property] = value;

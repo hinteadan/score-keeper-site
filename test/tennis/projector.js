@@ -56,7 +56,7 @@
     }
 
     describe('Tennis scoring', function () {
-        it('uses inject-ables', function () {
+        it('uses inject-abeles', function () {
             expect(MatchDetails).toBeDefined();
             expect(GameDetails).toBeDefined();
             expect(SetDetails).toBeDefined();
@@ -165,6 +165,12 @@
                 gameWinProjectionOk(parties[0]);
             });
 
+            it('is not on 4 points if is a tie breaker game', function () {
+                clash.details.isTieBreaker = true;
+                score(4).for(parties[0]);
+                gameWinProjectionOk();
+            });
+
         });
 
         describe('Set scoring', function () {
@@ -208,6 +214,14 @@
                     clash.clashes[i].close(parties[Math.floor(i / 5)]);
                 }// 5 - 5
                 clash.clashes[10].close(parties[0]);// 6 - 5
+                setWinProjectionOk();
+            });
+
+            it('does not end at 6-all on tie break', function () {
+                setOf(12);
+                for (var i = 0; i < 12; i++) {
+                    clash.clashes[i].close(parties[Math.floor(i / 6)]);
+                }// 6 - 6
                 setWinProjectionOk();
             });
         });

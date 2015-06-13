@@ -36,17 +36,20 @@
             /// <param name='projection' type='GameProjector.Projection' />
             var fed = clash.parties[0],
                 rafa = clash.parties[1],
-        		diff = clash.scoreFor(fed) - clash.scoreFor(rafa),
+                scoreForFed = clash.scoreFor(fed),
+                scoreForRafa = clash.scoreFor(rafa),
+        		diff = scoreForFed - scoreForRafa,
+                minPointsToWin = clash.details.isTieBreaker ? clash.details.tieBreakerMinPoints : 4,
                 winnerProjector = {
                     AdvantageWin: projectWinnerOnAdvanatage,
                     NoAdvantageWin: projectWinnerOnNoAdvantage
                 };
 
-            if (clash.scoreFor(fed) < 4 && clash.scoreFor(rafa) < 4) {
+            if (scoreForFed < minPointsToWin && scoreForRafa < minPointsToWin) {
                 return projection;
             }
 
-            if (Math.abs(diff) > 2 && clash.scoreFor(fed) >= 4 && clash.scoreFor(rafa) >= 4) {
+            if (Math.abs(diff) > 2 && scoreForFed >= minPointsToWin && scoreForRafa >= minPointsToWin) {
                 throw new Error('The point advantage must not be greater than two!');
             }
 
