@@ -267,6 +267,15 @@
                 }// 6 - 6
                 setWinProjectionOk();
             });
+
+            it('ends on 7-6 on tie break', function () {
+                setOf(13);
+                for (var i = 0; i < 12; i++) {
+                    clash.clashes[i].close(parties[Math.floor(i / 6)]);
+                }// 6 - 6
+                clash.clashes[i].close(parties[0]);
+                setWinProjectionOk(parties[0]);
+            });
         });
 
     });

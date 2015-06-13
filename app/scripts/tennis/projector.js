@@ -100,7 +100,15 @@
             if (scoreForFed < minToWin && scoreForRafa < minToWin) {
                 return projection;
             }
-            
+
+            if (clash.details.tieMode === 'TieBreak' || clash.details.tieMode === 'SuperTieBreak') {
+                if ((scoreForFed === minToWin + 1 || scoreForRafa === minToWin + 1) && diff === 1) {
+                    projection.winner = possibleWinner;
+                    projection.isWon = true;
+                    return projection;
+                }
+            }
+
             if ((maxScore === minToWin && diff >= 2) || (maxScore === minToWin + 1 && diff === 2)) {
                 projection.winner = possibleWinner;
                 projection.isWon = true;
