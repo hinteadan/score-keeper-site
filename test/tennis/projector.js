@@ -197,6 +197,23 @@
                 gameWinProjectionOk();
             });
 
+            it('is won on tie breaker on 7 to less than 6', function () {
+                clash.details.isTieBreaker = true;
+                score(7).for(parties[0]);
+                score(4).for(parties[1]);
+                gameWinProjectionOk(parties[0]);
+            });
+
+            it('is won on 2 point difference on tie breaker', function () {
+                clash.details.isTieBreaker = true;
+                score(7).for(parties[0]);
+                score(6).for(parties[1]);
+                gameWinProjectionOk();
+                score(2).for(parties[1]);
+                gameWinProjectionOk();
+                score().for(parties[1]);
+                gameWinProjectionOk(parties[1]);
+            });
         });
 
         describe('Set scoring', function () {
