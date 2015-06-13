@@ -12,6 +12,7 @@
         };
 
     function GameDetails() {
+        var self = this;
         this.serving = null;
         this.receiving = null;
         this.tieMode = gameTieMode.advantageWin;
@@ -71,9 +72,10 @@
             .set('gamesCount', self.gamesPerSet)
             .set('gameTieMode', self.gameTieMode);
         };
-        this.defaultGameDetails = function () {
+        this.defaultGameDetails = function (isTieBreak) {
             return new GameDetails()
-            .set('tieMode', self.gameTieMode);
+            .set('tieMode', self.gameTieMode)
+            .set('isTieBreaker', Boolean(isTieBreak));
         };
     }
 

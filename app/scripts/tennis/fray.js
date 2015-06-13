@@ -19,7 +19,7 @@
 	        skClashSet = new k.ClashSet(
                     _.map(_.range(0, frayDetails.setsToWin * 2 - 1, 1), function (i) {
                         return new k.ClashSet(_.map(_.range(0, frayDetails.gamesPerSet * 2 + 1, 1), function (i) {
-                            return new k.Clash(parties, frayDetails.defaultGameDetails());
+                            return new k.Clash(parties, frayDetails.defaultGameDetails(i === frayDetails.gamesPerSet * 2));
                         }), parties, frayDetails.defaultSetDetails());
                     }), parties, frayDetails);
 	    }
