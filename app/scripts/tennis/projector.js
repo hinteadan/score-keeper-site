@@ -9,6 +9,11 @@
 
         function gameScoreFor(pointScore, otherPointScore) {
             var diff = pointScore - otherPointScore;
+
+            if (clash.details.isTieBreaker) {
+                return pointScore.toString();
+            }
+
             if (pointScore < 3) {
                 return gameScore[pointScore];
             }

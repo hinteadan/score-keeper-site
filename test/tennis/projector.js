@@ -111,6 +111,32 @@
                 gameScoreProjectionOk('Wn', '-');
             });
 
+            it('scores correctly on tie breaker game', function () {
+                clash.details.isTieBreaker = true;
+                score().for(parties[0]);
+                gameScoreProjectionOk('1', '0');
+                score().for(parties[1]);
+                gameScoreProjectionOk('1', '1');
+                score().for(parties[0]);
+                gameScoreProjectionOk('2', '1');
+                score().for(parties[1]);
+                gameScoreProjectionOk('2', '2');
+                score().for(parties[1]);
+                gameScoreProjectionOk('2', '3');
+                score().for(parties[0]);
+                gameScoreProjectionOk('3', '3');
+                score().for(parties[0]);
+                gameScoreProjectionOk('4', '3');
+                score().for(parties[1]);
+                gameScoreProjectionOk('4', '4');
+                score().for(parties[1]);
+                gameScoreProjectionOk('4', '5');
+                score().for(parties[0]);
+                gameScoreProjectionOk('5', '5');
+                score(2).for(parties[0]);
+                gameScoreProjectionOk('7', '5');
+            });
+
             it('counts deuces', function () {
                 expect(p.now().deuceCount).toBe(0);
                 score(3).for(parties[0]);
