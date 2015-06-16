@@ -2,14 +2,14 @@
     'use strict';
 
     angular.module('ScoreKeeper.Tennis')
-	.controller('play', ['$scope', 'Fray', 'PointDetails', function ($s, fray, PointDetails) {
+	.controller('play', ['$scope', 'Fray', 'PointDetails', 'LocalStore', function ($s, fray, PointDetails, store) {
 
 	    function refreshScoreProjection() {
 	        $s.scoreProjection = fray.projectScore().now();
 	    }
 
 	    function persist() {
-
+	        store.save();
 	    }
 
 	    function currentSet() {

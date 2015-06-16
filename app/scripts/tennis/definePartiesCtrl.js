@@ -2,7 +2,7 @@
     'use strict';
 
     angular.module('ScoreKeeper.Tennis')
-		.controller('defineParties', ['$scope', '$location', 'Fray', function ($s, $l, fray) {
+		.controller('defineParties', ['$scope', '$location', 'Fray', 'LocalStore', function ($s, $l, fray, store) {
 		    
 			$s.parties = fray.parties;
 			$s.add = {
@@ -16,6 +16,7 @@
 				}
 			};
 			$s.next = function () {
+			    store.add(fray);
 				$l.path('/clash');
 			};
 			$s.isDefinitionValid = function () {

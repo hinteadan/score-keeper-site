@@ -30,6 +30,7 @@
 /// <reference path="~/app/scripts/tennis/fray.js" />
 /// <reference path="~/app/scripts/tennis/projector.js" />
 /// <reference path="~/app/scripts/tennis/pointDetails.js" />
+/// <reference path="~/app/scripts/tennis/localStore.js" />
 
 /// <reference path="~/app/scripts/tournamentWizard.js" />
 /// <reference path="~/app/scripts/app.js" />

@@ -2,7 +2,7 @@
 	'use strict';
 
 	angular.module('ScoreKeeper.Tennis')
-		.controller('defineClash', ['$scope', '$location', 'Fray', 'GameTieModes', 'SetTieModes', function ($s, $l, fray, gameTieMode, setTieMode) {
+		.controller('defineClash', ['$scope', '$location', 'Fray', 'GameTieModes', 'SetTieModes', 'LocalStore', function ($s, $l, fray, gameTieMode, setTieMode, store) {
 			$s.details = fray.details;
 			$s.gameTieModes = gameTieMode;
 			$s.setTieModes = setTieMode;
@@ -17,6 +17,7 @@
 			};
 			$s.next = function () {
 			    fray.play();
+			    store.save();
 				$l.path('/play');
 			};
 		}])
