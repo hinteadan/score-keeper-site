@@ -32,12 +32,27 @@
 	        grabs: PointDetails.grab
 	    };
 
+	    $s.pointCreditPossibleMembers = function (scoringParty) {
+	        var candidates =
+                $s.pointDetails.current.reason === PointDetails.reason.unforcedErrorByOpponent ||
+                $s.pointDetails.current.reason === PointDetails.reason.fault ?
+                clash.theOtherParty(scoringParty).individuals :
+                scoringParty.individuals;
+
+	        if (candidates.length === 1) {
+	            $s.pointDetails.current.creditTo = candidates[0];
+	        }
+
+	        return candidates;
+	    };
+
 	    $s.pointFor = function (party) {
 	        currentGame().pointWith($s.pointDetails.current).for(party);
 	        $s.pointDetails.current = new PointDetails();
 	        refreshScoreProjection();
 	        persist();
 	    };
+
 	    $s.undoPoint = function () {
 	        currentGame().undoPoint();
 	        refreshScoreProjection();
@@ -61,6 +76,20 @@
 	    $s.scoreProjection = null;
 	    refreshScoreProjection();
 
-	}]);
+	}])
+    .filter('pointLabel', ['PointDetails', function (PointDetails) {
+        return function (input) {
+            switch (input) {
+                case PointDetails.reason.winningShot: return 'Winner';
+                case PointDetails.reason.forcedErrorOnOpponent: return 'Forced Er.';
+                case PointDetails.reason.unforcedErrorByOpponent: return 'Unforced Er.';
+
+                case PointDetails.style.downTheLine: return 'Dn.Th.Ln.';
+                case PointDetails.style.insideOut: return 'InOut';
+
+                default: return input;
+            }
+        };
+    }]);
 
 }).call(this, this.angular, this._);

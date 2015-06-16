@@ -5,8 +5,8 @@
 	.service('Fray', ['FrayDetails', 'Projector', function (FrayDetails, Projector) {
 	    var self = this,
             parties = [
-				new k.Party('Fed'),
-				new k.Party('Rafa')
+				new k.Party('Fed').addMember(new k.Individual('Fed')),
+				new k.Party('Rafa').addMember(new k.Individual('Rafa'))
             ],
             skClashSet = null,
             projector = null,

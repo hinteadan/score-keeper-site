@@ -30,9 +30,53 @@
                         <h3 class="text-center">{{scoreProjection.currentSet.scorePerPartyName[party.name]}}</h3>
                         <h3 class="text-center" ng-class="{ 'text-green bold': set.winner == party, 'text-muted': set.winner != party }" ng-repeat="set in scoreProjection.sets">{{set.scorePerPartyName[party.name]}}</h3>
 
-                        <button class="btn btn-success btn-lg btn-block" ng-click="pointFor(party)">
-                            <h4><i class="fa fa-plus"></i></h4>
-                        </button>
+                        <div class="small-box bg-aqua">
+                            <div class="inner">
+
+                                <div class="btn-group btn-group-justified">
+                                    <div class="btn-group btn-group-lg" ng-repeat="reason in pointDetails.reasons">
+                                        <button class="btn bg-olive btn-block" ng-disabled="pointDetails.current.reason == reason" ng-click="pointDetails.current.reason = reason">{{reason|pointLabel}}</button>
+                                    </div>
+                                </div>
+                                <div class="btn-group btn-group-justified">
+                                    <div class="btn-group btn-group-lg" ng-repeat="handle in pointDetails.handles">
+                                        <button class="btn btn-warning btn-block" ng-disabled="pointDetails.current.handle == handle" ng-click="pointDetails.current.handle = handle">{{handle|pointLabel}}</button>
+                                    </div>
+                                </div>
+                                <div class="btn-group btn-group-justified">
+                                    <div class="btn-group btn-group-lg" ng-repeat="spin in pointDetails.spins">
+                                        <button class="btn btn-info btn-block" ng-disabled="pointDetails.current.spin == spin" ng-click="pointDetails.current.spin = spin">{{spin|pointLabel}}</button>
+                                    </div>
+                                </div>
+                                <div class="btn-group btn-group-justified">
+                                    <div class="btn-group btn-group-lg" ng-repeat="style in pointDetails.styles">
+                                        <button class="btn btn-info btn-block" ng-disabled="pointDetails.current.style == style" ng-click="pointDetails.current.style = style">{{style|pointLabel}}</button>
+                                    </div>
+                                </div>
+                                <div class="btn-group btn-group-justified">
+                                    <div class="btn-group btn-group-lg" ng-repeat="grab in pointDetails.grabs">
+                                        <button class="btn btn-info btn-block" ng-disabled="pointDetails.current.grab == grab" ng-click="pointDetails.current.grab = grab">{{grab|pointLabel}}</button>
+                                    </div>
+                                </div>
+                                <div class="text-center" ng-hide="party.individuals.length == 1">
+                                    Credit for point goes to:
+                                    <div class="btn-group btn-group-justified">
+                                        <div class="btn-group btn-group-lg" ng-repeat="member in pointCreditPossibleMembers(party)">
+                                            <button class="btn btn-info btn-block" ng-disabled="pointDetails.current.creditTo == member" ng-click="pointDetails.current.creditTo = member">{{member.fullName()}}</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <span class="text-center" ng-show="party.individuals.length == 1">
+                                    Credit for point goes to:
+                                    <strong><em>{{pointCreditPossibleMembers(party)[0].fullName()}}</em></strong>
+                                </span>
+                            </div>
+                            <div class="small-box-footer clickable">
+                                <button class="btn btn-success btn-lg btn-block" ng-click="pointFor(party)">
+                                    <h4><i class="fa fa-plus"></i></h4>
+                                </button>
+                            </div>
+                        </div>
 
                     </div>
                 </div>
