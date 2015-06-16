@@ -41,7 +41,7 @@
         <nav role="navigation" class="navbar navbar-static-top">
             <div class="navbar-right">
                 <ul class="nav navbar-nav">
-                    <!--<li class="dropdown tasks-menu" ng-controller="restore">
+                    <li class="dropdown tasks-menu" ng-hide="isDecoupled" ng-controller="restore">
                         <a data-toggle="dropdown" class="dropdown-toggle clickable" ng-show="any()">
                             <i class="fa fa-tasks"></i>
                             <span class="label label-danger">{{clashes.length}}</span>
@@ -70,7 +70,7 @@
                                 <a class="clickable" ng-click="purgeAll()">Purge All</a>
                             </li>
                         </ul>
-                    </li>-->
+                    </li>
                     <li ng-controller="navigation">
                         <a class="clickable" ng-click="goHome()">
                             <i class="fa fa-home fa-lg" ng-class="{ 'fa-home': !goHome.confirm, 'fa-question': goHome.confirm }"></i>
@@ -123,6 +123,7 @@
 	<script src="scripts/tennis/defineClashCtrl.js"></script>
     <script src="scripts/tennis/pointDetails.js"></script>
     <script src="scripts/tennis/playCtrl.js"></script>
+    <script src="scripts/tennis/restoreCtrl.js"></script>
     <!-- endbuild -->
 
 </body>

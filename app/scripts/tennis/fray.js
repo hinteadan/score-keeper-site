@@ -3,10 +3,11 @@
 
     angular.module('ScoreKeeper.Tennis')
 	.service('Fray', ['FrayDetails', 'Projector', function (FrayDetails, Projector) {
-	    var parties = [
+	    var self = this,
+            parties = [
 				new k.Party('Fed'),
 				new k.Party('Rafa')
-	    ],
+            ],
             skClashSet = null,
             projector = null,
 			frayDetails = new FrayDetails();
@@ -50,6 +51,10 @@
 	    };
 	    this.stop = function () {
 	        frayDetails.endedOn = new Date();
+	    };
+
+	    this.revive = function (dto) {
+	        return self;
 	    };
 	}]);
 
